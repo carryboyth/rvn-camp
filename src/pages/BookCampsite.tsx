@@ -15,8 +15,8 @@ import { Label } from "@/components/ui/label";
 import {
   MapPin,
   Wifi,
-  Shower,
-  Parking,
+  ShowerHead,
+  CircleParking,
   UtensilsCrossed,
   Clock,
   Info,
@@ -269,8 +269,8 @@ const BookCampsite = () => {
                 {selectedCampsite?.amenities.map((amenity: string) => (
                   <div key={amenity} className="flex items-center gap-2">
                     {amenity === "WiFi" && <Wifi className="h-4 w-4" />}
-                    {amenity === "Showers" && <Shower className="h-4 w-4" />}
-                    {amenity === "RV Parking" && <Parking className="h-4 w-4" />}
+                    {amenity === "Showers" && <ShowerHead className="h-4 w-4" />}
+                    {amenity === "RV Parking" && <CircleParking className="h-4 w-4" />}
                     {amenity === "Kitchen" && (
                       <UtensilsCrossed className="h-4 w-4" />
                     )}
