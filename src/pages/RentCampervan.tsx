@@ -10,7 +10,7 @@ import {
 } from "@/components/ui/select";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
-import { MapPin, Users, Coffee, Bed, Kitchen } from "lucide-react";
+import { MapPin, Users, Coffee, Bed, UtensilsCrossed } from "lucide-react";
 import Header from "@/components/Header";
 import Footer from "@/components/Footer";
 
@@ -260,7 +260,7 @@ const RentCampervan = () => {
               <span>{van.bedSize} bed</span>
             </div>
             <div className="flex items-center gap-2">
-              <Kitchen className="h-4 w-4" />
+              <UtensilsCrossed className="h-4 w-4" />
               <span>{van.amenities.join(", ")}</span>
             </div>
             <Button
