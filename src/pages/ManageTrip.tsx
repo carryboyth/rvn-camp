@@ -1,5 +1,6 @@
 import { useState } from "react";
 import { useForm } from "react-hook-form";
+import { Link } from "react-router-dom";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
@@ -81,7 +82,7 @@ const ManageTrip = () => {
           {
             title: "Rent a Campervan",
             image: "/placeholder.svg",
-            link: "/campervan-rental",
+            link: "/rent-campervan",
             description: "Choose from our fleet of modern campervans",
           },
           {
@@ -98,20 +99,20 @@ const ManageTrip = () => {
           },
         ].map((item, index) => (
           <Card key={index} className="group overflow-hidden">
-            <a href={item.link} className="block">
-              <div className="aspect-video overflow-hidden">
-                <img
-                  src={item.image}
-                  alt={item.title}
-                  className="h-full w-full object-cover transition-transform duration-300 group-hover:scale-105"
-                />
-              </div>
-              <CardContent className="p-4">
-                <h3 className="mb-2 text-xl font-semibold">{item.title}</h3>
-                <p className="mb-4 text-muted-foreground">{item.description}</p>
+            <div className="aspect-video overflow-hidden">
+              <img
+                src={item.image}
+                alt={item.title}
+                className="h-full w-full object-cover transition-transform duration-300 group-hover:scale-105"
+              />
+            </div>
+            <CardContent className="p-4">
+              <h3 className="mb-2 text-xl font-semibold">{item.title}</h3>
+              <p className="mb-4 text-muted-foreground">{item.description}</p>
+              <Link to={item.link}>
                 <Button className="w-full">Learn More</Button>
-              </CardContent>
-            </a>
+              </Link>
+            </CardContent>
           </Card>
         ))}
       </div>
