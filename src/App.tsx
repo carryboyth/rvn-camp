@@ -3,6 +3,7 @@ import Index from "@/pages/Index";
 import ManageTrip from "@/pages/ManageTrip";
 import RentCampervan from "@/pages/RentCampervan";
 import NotFound from "@/pages/NotFound";
+import BookCampsite from "@/pages/BookCampsite";
 
 function App() {
   return (
@@ -11,6 +12,7 @@ function App() {
         <Route path="/" element={<Index />} />
         <Route path="/manage-trip" element={<ManageTrip />} />
         <Route path="/rent-campervan" element={<RentCampervan />} />
+        <Route path="/book-campsite" element={<BookCampsite />} />
         <Route path="*" element={<NotFound />} />
       </Routes>
     </Router>
