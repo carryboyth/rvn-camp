@@ -16,15 +16,10 @@ import {
 import { MapPin, Calendar as CalendarIcon, Users } from "lucide-react";
 import { format } from "date-fns";
 import { cn } from "@/lib/utils";
+import { DateRange } from "react-day-picker";
 
 const BookCampsite = () => {
-  const [date, setDate] = React.useState<{
-    from: Date | undefined;
-    to: Date | undefined;
-  }>({
-    from: undefined,
-    to: undefined,
-  });
+  const [date, setDate] = React.useState<DateRange | undefined>();
   const [selectedProvince, setSelectedProvince] = React.useState("");
   const [guests, setGuests] = React.useState("1");
 
