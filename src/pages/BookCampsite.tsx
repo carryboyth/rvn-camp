@@ -1,6 +1,7 @@
 import React from "react";
 import { Button } from "@/components/ui/button";
 import { Calendar } from "@/components/ui/calendar";
+import { useNavigate } from "react-router-dom";
 import {
   Select,
   SelectContent,
@@ -19,6 +20,7 @@ import { cn } from "@/lib/utils";
 import { DateRange } from "react-day-picker";
 
 const BookCampsite = () => {
+  const navigate = useNavigate();
   const [date, setDate] = React.useState<DateRange | undefined>();
   const [selectedProvince, setSelectedProvince] = React.useState("");
   const [guests, setGuests] = React.useState("1");
@@ -31,6 +33,10 @@ const BookCampsite = () => {
     "Koh Samui",
     "Pattaya",
   ];
+
+  const handleSearch = () => {
+    navigate("/search-results");
+  };
 
   return (
     <div className="min-h-screen bg-background">
@@ -138,7 +144,11 @@ const BookCampsite = () => {
           </div>
 
           {/* Search Button */}
-          <Button className="w-full md:w-auto px-8" size="lg">
+          <Button 
+            className="w-full md:w-auto px-8" 
+            size="lg"
+            onClick={handleSearch}
+          >
             Search Campsites
           </Button>
         </div>
