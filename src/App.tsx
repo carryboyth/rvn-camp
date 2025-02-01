@@ -4,6 +4,8 @@ import ManageTrip from "@/pages/ManageTrip";
 import RentCampervan from "@/pages/RentCampervan";
 import NotFound from "@/pages/NotFound";
 import BookCampsite from "@/pages/BookCampsite";
+import CampsiteDetails from "@/pages/CampsiteDetails";
+import Booking from "@/pages/Booking";
 
 function App() {
   return (
@@ -13,6 +15,8 @@ function App() {
         <Route path="/manage-trip" element={<ManageTrip />} />
         <Route path="/rent-campervan" element={<RentCampervan />} />
         <Route path="/book-campsite" element={<BookCampsite />} />
+        <Route path="/campsite/:id" element={<CampsiteDetails />} />
+        <Route path="/booking/:id" element={<Booking />} />
         <Route path="*" element={<NotFound />} />
       </Routes>
     </Router>
