@@ -4,8 +4,8 @@ import { Card, CardContent } from "@/components/ui/card";
 import {
   Clock,
   Wifi,
-  Parking,
-  Shower,
+  Car,
+  Droplets,
   Power,
   AlertCircle,
 } from "lucide-react";
@@ -54,10 +54,10 @@ const CampsiteDetails = ({ campsite }: CampsiteDetailsProps) => {
                   <div key={index} className="flex items-center gap-2">
                     {facility.includes("WiFi") && <Wifi className="h-5 w-5" />}
                     {facility.includes("Parking") && (
-                      <Parking className="h-5 w-5" />
+                      <Car className="h-5 w-5" />
                     )}
                     {facility.includes("Shower") && (
-                      <Shower className="h-5 w-5" />
+                      <Droplets className="h-5 w-5" />
                     )}
                     {facility.includes("Power") && <Power className="h-5 w-5" />}
                     <span>{facility}</span>
