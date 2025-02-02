@@ -94,7 +94,7 @@ const ManageTrip = () => {
           {
             title: "Campervan + Accommodation Package",
             image: "/placeholder.svg",
-            link: "/package-booking",
+            link: "/book-motorhome",
             description: "Get the best of both worlds with our combined packages",
           },
         ].map((item, index) => (
