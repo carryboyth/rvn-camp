@@ -7,6 +7,7 @@ import BookCampsite from "@/pages/BookCampsite";
 import CampsiteDetails from "@/pages/CampsiteDetails";
 import Booking from "@/pages/Booking";
 import SearchResults from "@/pages/SearchResults";
+import BookMotorhome from "@/pages/BookMotorhome";
 
 function App() {
   return (
@@ -19,6 +20,7 @@ function App() {
         <Route path="/search-results" element={<SearchResults />} />
         <Route path="/campsite/:id" element={<CampsiteDetails />} />
         <Route path="/booking/:id" element={<Booking />} />
+        <Route path="/book-motorhome" element={<BookMotorhome />} />
         <Route path="*" element={<NotFound />} />
       </Routes>
     </Router>
