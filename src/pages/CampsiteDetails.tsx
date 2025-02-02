@@ -1,5 +1,7 @@
 import React from "react";
 import { useParams } from "react-router-dom";
+import Header from "@/components/Header";
+import Footer from "@/components/Footer";
 import CampsiteDetailsComponent from "@/components/CampsiteDetails";
 
 // This is mock data - in a real app, this would come from an API
@@ -34,8 +36,14 @@ const CampsiteDetails = () => {
   // In a real app, you would fetch the campsite data based on the ID
   // For now, we'll use the mock data
   return (
-    <div>
-      <CampsiteDetailsComponent campsite={mockCampsite} />
+    <div className="min-h-screen flex flex-col">
+      <Header />
+      <main className="flex-1">
+        <div className="max-w-7xl mx-auto px-4 py-8">
+          <CampsiteDetailsComponent campsite={mockCampsite} />
+        </div>
+      </main>
+      <Footer />
     </div>
   );
 };

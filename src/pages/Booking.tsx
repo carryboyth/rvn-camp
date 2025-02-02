@@ -1,6 +1,8 @@
 import React from "react";
 import { useParams, useNavigate } from "react-router-dom";
 import BookingForm from "@/components/BookingForm";
+import Header from "@/components/Header";
+import Footer from "@/components/Footer";
 
 const Booking = () => {
   const { id } = useParams();
@@ -35,16 +37,22 @@ const Booking = () => {
   };
 
   return (
-    <div className="min-h-screen bg-background">
-      <div className="max-w-7xl mx-auto px-4 py-8">
-        <h1 className="text-3xl font-bold mb-8">Complete Your Booking</h1>
-        <BookingForm
-          campsite={mockCampsite}
-          onSubmit={handleSubmit}
-          onSave={handleSave}
-          onCancel={handleCancel}
-        />
-      </div>
+    <div className="min-h-screen flex flex-col">
+      <Header />
+      <main className="flex-1">
+        <div className="min-h-screen bg-background">
+          <div className="max-w-7xl mx-auto px-4 py-8">
+            <h1 className="text-3xl font-bold mb-8">Complete Your Booking</h1>
+            <BookingForm
+              campsite={mockCampsite}
+              onSubmit={handleSubmit}
+              onSave={handleSave}
+              onCancel={handleCancel}
+            />
+          </div>
+        </div>
+      </main>
+      <Footer />
     </div>
   );
 };
