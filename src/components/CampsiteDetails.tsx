@@ -1,4 +1,5 @@
 import React from "react";
+import { useNavigate } from "react-router-dom";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent } from "@/components/ui/card";
 import {
@@ -25,6 +26,12 @@ interface CampsiteDetailsProps {
 }
 
 const CampsiteDetails = ({ campsite }: CampsiteDetailsProps) => {
+  const navigate = useNavigate();
+
+  const handleBookNow = () => {
+    navigate(`/booking/1`); // Using a mock ID of 1 for demonstration
+  };
+
   return (
     <div className="max-w-7xl mx-auto px-4 py-8">
       {/* Image Gallery */}
@@ -116,7 +123,7 @@ const CampsiteDetails = ({ campsite }: CampsiteDetailsProps) => {
                 </div>
               )}
 
-              <Button className="w-full">Book Now</Button>
+              <Button className="w-full" onClick={handleBookNow}>Book Now</Button>
             </CardContent>
           </Card>
         </div>
