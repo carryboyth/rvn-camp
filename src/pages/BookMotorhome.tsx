@@ -9,7 +9,6 @@ import {
   SelectValue,
 } from "@/components/ui/select";
 import { Button } from "@/components/ui/button";
-import { Input } from "@/components/ui/input";
 import { Calendar as CalendarIcon, MapPin, Users, Search } from "lucide-react";
 import Header from "@/components/Header";
 import Footer from "@/components/Footer";
@@ -32,7 +31,11 @@ const BookMotorhome = () => {
   const [passengers, setPassengers] = useState("2");
 
   const handleSearch = () => {
-    // Navigate to search results with query params
+    if (!pickupLocation || !dropoffLocation || !departureDate || !returnDate) {
+      console.log("Please fill in all required fields");
+      return;
+    }
+    
     navigate("/search-results", {
       state: {
         pickupLocation,
@@ -48,7 +51,6 @@ const BookMotorhome = () => {
     <div className="min-h-screen flex flex-col">
       <Header />
       
-      {/* Hero Banner */}
       <div className="relative h-[60vh] md:h-[70vh] flex items-center justify-center">
         <div
           className="absolute inset-0 bg-cover bg-center"
@@ -61,23 +63,21 @@ const BookMotorhome = () => {
         </div>
         
         <div className="relative z-10 text-center px-4">
-          <h1 className="text-3xl md:text-5xl font-bold text-white mb-4 animate-fade-up">
+          <h1 className="text-4xl md:text-5xl font-bold text-white mb-6 animate-fade-up">
             Your entire holiday in one click!
           </h1>
-          <p className="text-xl text-white/90 animate-fade-up" style={{ animationDelay: "0.2s" }}>
+          <p className="text-xl md:text-2xl text-white/90 animate-fade-up" style={{ animationDelay: "0.2s" }}>
             Book Car Rental + Hotel
           </p>
         </div>
       </div>
 
-      {/* Search Form */}
       <div className="container mx-auto px-4 -mt-16 relative z-20 mb-12">
         <div className="bg-white rounded-lg shadow-xl p-6 md:p-8 animate-fade-up" style={{ animationDelay: "0.4s" }}>
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-            {/* Pick-up Location */}
             <div className="space-y-2">
               <label className="text-sm font-medium">Pick-up Location</label>
-              <Select onValueChange={setPickupLocation}>
+              <Select onValueChange={setPickupLocation} value={pickupLocation}>
                 <SelectTrigger className="w-full">
                   <SelectValue placeholder="Select location">
                     <div className="flex items-center">
@@ -96,10 +96,9 @@ const BookMotorhome = () => {
               </Select>
             </div>
 
-            {/* Drop-off Location */}
             <div className="space-y-2">
               <label className="text-sm font-medium">Drop-off Location</label>
-              <Select onValueChange={setDropoffLocation}>
+              <Select onValueChange={setDropoffLocation} value={dropoffLocation}>
                 <SelectTrigger className="w-full">
                   <SelectValue placeholder="Select location">
                     <div className="flex items-center">
@@ -118,7 +117,6 @@ const BookMotorhome = () => {
               </Select>
             </div>
 
-            {/* Departure Date */}
             <div className="space-y-2">
               <label className="text-sm font-medium">Departure Date</label>
               <div className="relative">
@@ -134,7 +132,6 @@ const BookMotorhome = () => {
               </div>
             </div>
 
-            {/* Return Date */}
             <div className="space-y-2">
               <label className="text-sm font-medium">Return Date</label>
               <div className="relative">
@@ -150,7 +147,6 @@ const BookMotorhome = () => {
               </div>
             </div>
 
-            {/* Passengers */}
             <div className="space-y-2">
               <label className="text-sm font-medium">Passengers</label>
               <Select value={passengers} onValueChange={setPassengers}>
@@ -172,11 +168,10 @@ const BookMotorhome = () => {
               </Select>
             </div>
 
-            {/* Search Button */}
             <div className="flex items-end">
               <Button
                 onClick={handleSearch}
-                className="w-full bg-primary hover:bg-primary/90 text-primary-foreground"
+                className="w-full bg-primary hover:bg-primary/90 text-white"
                 size="lg"
               >
                 <Search className="w-4 h-4 mr-2" />
