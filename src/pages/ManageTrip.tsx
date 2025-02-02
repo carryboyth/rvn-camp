@@ -88,7 +88,7 @@ const ManageTrip = () => {
           {
             title: "Book a Campsite",
             image: "/placeholder.svg",
-            link: "/campsite-booking",
+            link: "/book-campsite",
             description: "Find the perfect spot to park and camp",
           },
           {
