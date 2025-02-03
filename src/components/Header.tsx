@@ -1,6 +1,6 @@
 import { useState } from "react";
-import { Link } from "react-router-dom";
-import { ChevronDown, Globe, Menu, X } from "lucide-react";
+import { Link, useLocation } from "react-router-dom";
+import { ChevronDown, Globe, Menu } from "lucide-react";
 import { Button } from "./ui/button";
 import {
   DropdownMenu,
@@ -19,6 +19,10 @@ import {
 const Header = () => {
   const [currency, setCurrency] = useState("USD");
   const [totalAmount] = useState(1234.56);
+  const location = useLocation();
+
+  // Show total price only on rent-campervan page
+  const showTotalPrice = location.pathname === "/rent-campervan";
 
   return (
     <header className="sticky top-0 z-50 w-full border-b bg-background/95 backdrop-blur supports-[backdrop-filter]:bg-background/60">
@@ -55,29 +59,31 @@ const Header = () => {
           </Link>
 
           <div className="flex items-center space-x-4">
-            <div className="flex items-center space-x-2">
-              <span className="text-sm font-medium">
-                {totalAmount.toLocaleString(undefined, {
-                  style: "currency",
-                  currency: currency,
-                })}
-              </span>
-              <DropdownMenu>
-                <DropdownMenuTrigger className="flex items-center space-x-1">
-                  <Globe className="h-4 w-4" />
-                  <span className="text-sm font-medium">{currency}</span>
-                  <ChevronDown className="h-4 w-4" />
-                </DropdownMenuTrigger>
-                <DropdownMenuContent>
-                  <DropdownMenuItem onClick={() => setCurrency("USD")}>
-                    USD
-                  </DropdownMenuItem>
-                  <DropdownMenuItem onClick={() => setCurrency("THB")}>
-                    THB
-                  </DropdownMenuItem>
-                </DropdownMenuContent>
-              </DropdownMenu>
-            </div>
+            {showTotalPrice && (
+              <div className="flex items-center space-x-2">
+                <span className="text-sm font-medium">
+                  {totalAmount.toLocaleString(undefined, {
+                    style: "currency",
+                    currency: currency,
+                  })}
+                </span>
+                <DropdownMenu>
+                  <DropdownMenuTrigger className="flex items-center space-x-1">
+                    <Globe className="h-4 w-4" />
+                    <span className="text-sm font-medium">{currency}</span>
+                    <ChevronDown className="h-4 w-4" />
+                  </DropdownMenuTrigger>
+                  <DropdownMenuContent>
+                    <DropdownMenuItem onClick={() => setCurrency("USD")}>
+                      USD
+                    </DropdownMenuItem>
+                    <DropdownMenuItem onClick={() => setCurrency("THB")}>
+                      THB
+                    </DropdownMenuItem>
+                  </DropdownMenuContent>
+                </DropdownMenu>
+              </div>
+            )}
             <Button variant="default" size="sm">
               Login
             </Button>
@@ -125,29 +131,31 @@ const Header = () => {
                   Download
                 </Link>
                 <div className="flex flex-col space-y-4 pt-4 border-t">
-                  <div className="flex items-center justify-between">
-                    <span className="text-sm font-medium">
-                      {totalAmount.toLocaleString(undefined, {
-                        style: "currency",
-                        currency: currency,
-                      })}
-                    </span>
-                    <DropdownMenu>
-                      <DropdownMenuTrigger className="flex items-center space-x-1">
-                        <Globe className="h-4 w-4" />
-                        <span className="text-sm font-medium">{currency}</span>
-                        <ChevronDown className="h-4 w-4" />
-                      </DropdownMenuTrigger>
-                      <DropdownMenuContent>
-                        <DropdownMenuItem onClick={() => setCurrency("USD")}>
-                          USD
-                        </DropdownMenuItem>
-                        <DropdownMenuItem onClick={() => setCurrency("THB")}>
-                          THB
-                        </DropdownMenuItem>
-                      </DropdownMenuContent>
-                    </DropdownMenu>
-                  </div>
+                  {showTotalPrice && (
+                    <div className="flex items-center justify-between">
+                      <span className="text-sm font-medium">
+                        {totalAmount.toLocaleString(undefined, {
+                          style: "currency",
+                          currency: currency,
+                        })}
+                      </span>
+                      <DropdownMenu>
+                        <DropdownMenuTrigger className="flex items-center space-x-1">
+                          <Globe className="h-4 w-4" />
+                          <span className="text-sm font-medium">{currency}</span>
+                          <ChevronDown className="h-4 w-4" />
+                        </DropdownMenuTrigger>
+                        <DropdownMenuContent>
+                          <DropdownMenuItem onClick={() => setCurrency("USD")}>
+                            USD
+                          </DropdownMenuItem>
+                          <DropdownMenuItem onClick={() => setCurrency("THB")}>
+                            THB
+                          </DropdownMenuItem>
+                        </DropdownMenuContent>
+                      </DropdownMenu>
+                    </div>
+                  )}
                   <Button variant="default" size="sm" className="w-full">
                     Login
                   </Button>
