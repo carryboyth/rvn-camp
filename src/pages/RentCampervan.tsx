@@ -13,6 +13,7 @@ import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { MapPin, Users, Coffee, Bed, UtensilsCrossed } from "lucide-react";
 import Header from "@/components/Header";
 import Footer from "@/components/Footer";
+import { useNavigate } from "react-router-dom";
 
 type BookingState = "search" | "results" | "summary";
 
@@ -38,6 +39,7 @@ const RentCampervan = () => {
   });
 
   const { handleSubmit } = useForm();
+  const navigate = useNavigate();
 
   const locations = [
     "Bangkok",
@@ -335,13 +337,18 @@ const RentCampervan = () => {
 
         <div className="flex gap-4">
           <Button
+            onClick={() => navigate("/campervan-summary")}
+            className="w-full"
+          >
+            Proceed to Checkout
+          </Button>
+          <Button
             onClick={() => setBookingState("search")}
             variant="outline"
             className="w-full"
           >
             Cancel
           </Button>
-          <Button className="w-full">Save Plan</Button>
         </div>
       </CardContent>
     </Card>
