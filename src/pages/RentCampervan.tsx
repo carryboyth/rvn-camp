@@ -341,7 +341,12 @@ const RentCampervan = () => {
           >
             Cancel
           </Button>
-          <Button className="w-full">Save Plan</Button>
+          <Button 
+            className="w-full"
+            onClick={() => window.location.href = '/motorhome-summary'}
+          >
+            Check Out
+          </Button>
         </div>
       </CardContent>
     </Card>
