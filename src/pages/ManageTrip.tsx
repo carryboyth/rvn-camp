@@ -81,19 +81,19 @@ const ManageTrip = () => {
         {[
           {
             title: "Rent a Campervan",
-            image: "/placeholder.svg",
+            image: "/lovable-uploads/3e1b13b0-4b5b-4eec-85e7-d9d8ff30e668.png",
             link: "/rent-campervan",
             description: "Choose from our fleet of modern campervans",
           },
           {
             title: "Book a Campsite",
-            image: "/placeholder.svg",
+            image: "/lovable-uploads/e4ce7067-7522-45d6-82c0-56a7fb4d8543.png",
             link: "/book-campsite",
             description: "Find the perfect spot to park and camp",
           },
           {
             title: "Campervan + Accommodation Package",
-            image: "/placeholder.svg",
+            image: "/lovable-uploads/b7d87dfa-8531-459d-aa23-7eeb6c5fae70.png",
             link: "/book-motorhome",
             description: "Get the best of both worlds with our combined packages",
           },
