@@ -9,6 +9,7 @@ import Booking from "@/pages/Booking";
 import SearchResults from "@/pages/SearchResults";
 import BookMotorhome from "@/pages/BookMotorhome";
 import CampervanSummary from "@/pages/CampervanSummary";
+import Contact from "@/pages/Contact";
 
 function App() {
   return (
@@ -23,6 +24,7 @@ function App() {
         <Route path="/booking/:id" element={<Booking />} />
         <Route path="/book-motorhome" element={<BookMotorhome />} />
         <Route path="/campervan-summary" element={<CampervanSummary />} />
+        <Route path="/contact" element={<Contact />} />
         <Route path="*" element={<NotFound />} />
       </Routes>
     </Router>
