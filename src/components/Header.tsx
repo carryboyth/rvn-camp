@@ -1,6 +1,6 @@
 import { useState } from "react";
 import { Link } from "react-router-dom";
-import { ChevronDown, Globe, Menu, X } from "lucide-react";
+import { ChevronDown, Globe, Menu } from "lucide-react";
 import { Button } from "./ui/button";
 import {
   DropdownMenu,
@@ -24,7 +24,11 @@ const Header = () => {
     <header className="sticky top-0 z-50 w-full border-b bg-background/95 backdrop-blur supports-[backdrop-filter]:bg-background/60">
       <div className="container flex h-16 items-center">
         <Link to="/" className="flex items-center space-x-2">
-          <span className="text-2xl font-bold text-primary">RVnCamp</span>
+          <img 
+            src="/lovable-uploads/064c497f-316d-4fbd-9300-f9927b5f4208.png" 
+            alt="RVnCamp Logo" 
+            className="h-8"
+          />
         </Link>
 
         {/* Desktop Navigation */}
@@ -96,7 +100,11 @@ const Header = () => {
             <SheetContent side="right" className="w-[300px] sm:w-[400px]">
               <SheetHeader>
                 <SheetTitle>
-                  <span className="text-2xl font-bold text-primary">RVnCamp</span>
+                  <img 
+                    src="/lovable-uploads/064c497f-316d-4fbd-9300-f9927b5f4208.png" 
+                    alt="RVnCamp Logo" 
+                    className="h-8"
+                  />
                 </SheetTitle>
               </SheetHeader>
               <nav className="mt-6 flex flex-col space-y-4">
