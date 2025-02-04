@@ -25,7 +25,7 @@ const Header = () => {
       <div className="container flex h-16 items-center">
         <Link to="/" className="flex items-center space-x-2">
           <img 
-            src="/lovable-uploads/064c497f-316d-4fbd-9300-f9927b5f4208.png" 
+            src="/lovable-uploads/185d641b-79c4-4ff4-8a62-6492f5109a4e.png" 
             alt="RVnCamp Logo" 
             className="h-8"
           />
@@ -101,7 +101,7 @@ const Header = () => {
               <SheetHeader>
                 <SheetTitle>
                   <img 
-                    src="/lovable-uploads/064c497f-316d-4fbd-9300-f9927b5f4208.png" 
+                    src="/lovable-uploads/185d641b-79c4-4ff4-8a62-6492f5109a4e.png" 
                     alt="RVnCamp Logo" 
                     className="h-8"
                   />
