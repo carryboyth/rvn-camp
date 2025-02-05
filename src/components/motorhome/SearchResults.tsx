@@ -1,3 +1,4 @@
+
 import { useLocation, useNavigate } from "react-router-dom";
 import { Card } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
@@ -85,24 +86,36 @@ const SearchResults = ({ filters }: SearchResultsProps) => {
   const searchParams = location.state;
   const [filteredMotorhomes, setFilteredMotorhomes] = useState(motorhomes);
 
-  const calculateTotalPrice = (price: number) => {
-    if (!searchParams?.departureDate || !searchParams?.returnDate) return price;
+  const calculateTotalDays = () => {
+    if (!searchParams?.departureDate || !searchParams?.returnDate) return 0;
     const start = new Date(searchParams.departureDate);
     const end = new Date(searchParams.returnDate);
-    const days = Math.ceil((end.getTime() - start.getTime()) / (1000 * 60 * 60 * 24));
-    return price * days;
+    return Math.ceil((end.getTime() - start.getTime()) / (1000 * 60 * 60 * 24)) || 0;
+  };
+
+  const calculateTotalPrice = (price: number) => {
+    const days = calculateTotalDays();
+    return (price * days) || 0;
   };
 
   const handleSelectMotorhome = (motorhome: Motorhome) => {
+    const totalDays = calculateTotalDays();
+    const totalPrice = calculateTotalPrice(motorhome.price);
+
     toast({
-      title: "Motorhome Selected",
-      description: `You have selected the ${motorhome.name}. Redirecting to hotel search...`,
+      title: "รถบ้านที่เลือก",
+      description: `คุณได้เลือก ${motorhome.name} กำลังนำคุณไปยังหน้าค้นหาที่พัก...`,
     });
     
     navigate("/search-hotels", {
       state: {
         ...searchParams,
-        selectedMotorhome: motorhome,
+        selectedMotorhome: {
+          ...motorhome,
+          price: totalPrice || 0,
+        },
+        totalDays: totalDays || 0,
+        totalPrice: totalPrice || 0,
       },
     });
   };
@@ -115,7 +128,6 @@ const SearchResults = ({ filters }: SearchResultsProps) => {
           className="overflow-hidden hover:shadow-lg transition-shadow duration-300 animate-fade-up"
         >
           <div className="grid md:grid-cols-[1fr,2fr,1fr] gap-6">
-            {/* Column 1: Vehicle Image */}
             <div className="relative h-64 md:h-full min-h-[300px]">
               <img
                 src={motorhome.image}
@@ -124,7 +136,6 @@ const SearchResults = ({ filters }: SearchResultsProps) => {
               />
             </div>
             
-            {/* Column 2: Motorhome Details */}
             <div className="p-6 space-y-4">
               <div>
                 <h3 className="text-2xl font-semibold mb-1">{motorhome.name}</h3>
@@ -134,11 +145,11 @@ const SearchResults = ({ filters }: SearchResultsProps) => {
               <div className="space-y-3">
                 <div className="flex items-center gap-2 text-muted-foreground">
                   <Users className="w-5 h-5" />
-                  <span className="text-foreground">{motorhome.seats} seats</span>
+                  <span className="text-foreground">{motorhome.seats} ที่นั่ง</span>
                 </div>
                 <div className="flex items-center gap-2 text-muted-foreground">
                   <Bed className="w-5 h-5" />
-                  <span className="text-foreground">{motorhome.bedSize} bed</span>
+                  <span className="text-foreground">เตียง {motorhome.bedSize}</span>
                 </div>
                 <div className="flex items-center gap-2 text-muted-foreground">
                   <Coffee className="w-5 h-5" />
@@ -147,32 +158,29 @@ const SearchResults = ({ filters }: SearchResultsProps) => {
                 <div className="flex items-center gap-2 text-muted-foreground pt-2">
                   <MapPin className="w-5 h-5 flex-shrink-0" />
                   <div className="flex flex-col">
-                    <span className="text-foreground">Pick-up: {motorhome.pickupLocation}</span>
-                    <span className="text-foreground">Drop-off: {motorhome.dropoffLocation}</span>
+                    <span className="text-foreground">รับรถ: {motorhome.pickupLocation}</span>
+                    <span className="text-foreground">คืนรถ: {motorhome.dropoffLocation}</span>
                   </div>
                 </div>
               </div>
             </div>
             
-            {/* Column 3: Pricing */}
             <div className="p-6 flex flex-col justify-between border-l bg-muted/10">
               <div className="text-right space-y-2">
                 <div className="bg-primary/10 p-4 rounded-lg inline-block">
-                  <p className="text-3xl font-bold text-primary-foreground">${motorhome.price}</p>
-                  <p className="text-sm text-muted-foreground">per day</p>
+                  <p className="text-3xl font-bold text-primary-foreground">
+                    ฿{motorhome.price.toLocaleString()}
+                  </p>
+                  <p className="text-sm text-muted-foreground">ต่อวัน</p>
                 </div>
                 
-                {searchParams?.departureDate && searchParams?.returnDate && (
+                {calculateTotalDays() > 0 && (
                   <div className="bg-secondary/10 p-4 rounded-lg">
                     <p className="text-xl font-semibold text-secondary-foreground">
-                      Total: ${calculateTotalPrice(motorhome.price)}
+                      ราคารวม: ฿{calculateTotalPrice(motorhome.price).toLocaleString()}
                     </p>
                     <p className="text-sm text-muted-foreground">
-                      for {Math.ceil(
-                        (new Date(searchParams.returnDate).getTime() -
-                          new Date(searchParams.departureDate).getTime()) /
-                          (1000 * 60 * 60 * 24)
-                      )} days
+                      สำหรับ {calculateTotalDays()} วัน
                     </p>
                   </div>
                 )}
@@ -184,7 +192,7 @@ const SearchResults = ({ filters }: SearchResultsProps) => {
                 size="lg"
               >
                 <Car className="w-5 h-5 mr-2" />
-                Select Motorhome
+                เลือกรถบ้าน
               </Button>
             </div>
           </div>
