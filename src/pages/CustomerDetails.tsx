@@ -5,7 +5,7 @@ import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { Checkbox } from "@/components/ui/checkbox";
 import { Form, FormField, FormItem, FormLabel } from "@/components/ui/form";
-import { ArrowLeft, CreditCard, X } from "lucide-react";
+import { ArrowLeft, CreditCard, Save, X } from "lucide-react";
 import { useToast } from "@/components/ui/use-toast";
 import Header from "@/components/Header";
 import Footer from "@/components/Footer";
@@ -39,8 +39,8 @@ const CustomerDetails = () => {
   const onSubmit = (data: CustomerDetailsForm) => {
     if (!data.termsAccepted) {
       toast({
-        title: "Terms & Conditions Required",
-        description: "Please accept the terms and conditions to proceed.",
+        title: "ต้องยอมรับข้อตกลงและเงื่อนไข",
+        description: "กรุณายอมรับข้อตกลงและเงื่อนไขเพื่อดำเนินการต่อ",
         variant: "destructive",
       });
       return;
@@ -48,18 +48,26 @@ const CustomerDetails = () => {
 
     console.log("Form submitted:", data);
     toast({
-      title: "Booking Confirmed",
-      description: "Your booking has been successfully processed.",
+      title: "ยืนยันการจอง",
+      description: "การจองของคุณได้รับการดำเนินการเรียบร้อยแล้ว",
     });
     navigate("/manage-trip");
+  };
+
+  const handleSavePlan = () => {
+    toast({
+      title: "บันทึกแผนการเดินทาง",
+      description: "กรุณาเข้าสู่ระบบเพื่อบันทึกแผนการเดินทางของคุณ",
+    });
+    navigate("/login");
   };
 
   if (!motorhome && !hotel) {
     return (
       <div className="min-h-screen flex flex-col items-center justify-center">
-        <h1 className="text-2xl font-bold mb-4">No Booking Selected</h1>
+        <h1 className="text-2xl font-bold mb-4">ไม่พบการจอง</h1>
         <Button onClick={() => navigate("/book-motorhome")}>
-          Start New Booking
+          เริ่มการจองใหม่
         </Button>
       </div>
     );
@@ -71,7 +79,7 @@ const CustomerDetails = () => {
       <main className="flex-1 container mx-auto px-4 py-8">
         <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
           <div className="lg:col-span-2 space-y-6">
-            <h1 className="text-3xl font-bold">Complete Your Booking</h1>
+            <h1 className="text-3xl font-bold">ยืนยันการจอง</h1>
 
             <BookingSummary motorhome={motorhome} hotel={hotel} />
 
@@ -79,7 +87,7 @@ const CustomerDetails = () => {
               <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-8">
                 <Card>
                   <CardHeader>
-                    <CardTitle>Personal Information</CardTitle>
+                    <CardTitle>ข้อมูลส่วนตัว</CardTitle>
                   </CardHeader>
                   <CardContent>
                     <CustomerInformationForm form={form} />
@@ -88,7 +96,7 @@ const CustomerDetails = () => {
 
                 <Card>
                   <CardHeader>
-                    <CardTitle>Payment Information</CardTitle>
+                    <CardTitle>ข้อมูลการชำระเงิน</CardTitle>
                   </CardHeader>
                   <CardContent>
                     <PaymentForm form={form} />
@@ -106,17 +114,17 @@ const CustomerDetails = () => {
                       />
                       <div className="space-y-1 leading-none">
                         <FormLabel>
-                          I accept the terms and conditions
+                          ยอมรับข้อตกลงและเงื่อนไข
                         </FormLabel>
                       </div>
                     </FormItem>
                   )}
                 />
 
-                <div className="flex gap-4">
+                <div className="flex flex-wrap gap-4">
                   <Button type="submit" className="flex-1">
                     <CreditCard className="mr-2 h-4 w-4" />
-                    Confirm & Pay
+                    ยืนยันและชำระเงิน
                   </Button>
                   <Button
                     type="button"
@@ -125,7 +133,16 @@ const CustomerDetails = () => {
                     className="gap-2"
                   >
                     <ArrowLeft className="h-4 w-4" />
-                    Back
+                    ย้อนกลับ
+                  </Button>
+                  <Button
+                    type="button"
+                    variant="secondary"
+                    onClick={handleSavePlan}
+                    className="gap-2"
+                  >
+                    <Save className="h-4 w-4" />
+                    บันทึกแผน
                   </Button>
                   <Button
                     type="button"
@@ -134,7 +151,7 @@ const CustomerDetails = () => {
                     className="gap-2"
                   >
                     <X className="h-4 w-4" />
-                    Cancel
+                    ยกเลิก
                   </Button>
                 </div>
               </form>
