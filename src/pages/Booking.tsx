@@ -3,13 +3,16 @@ import { useParams, useNavigate } from "react-router-dom";
 import BookingForm from "@/components/BookingForm";
 import Header from "@/components/Header";
 import Footer from "@/components/Footer";
+import { useToast } from "@/components/ui/use-toast";
 
 const Booking = () => {
   const { id } = useParams();
   const navigate = useNavigate();
+  const { toast } = useToast();
 
   // This would typically come from an API
   const mockCampsite = {
+    id: "1",
     name: "Mountain View Campsite",
     price: 1500,
     checkIn: "2:00 PM",
@@ -22,14 +25,33 @@ const Booking = () => {
     ],
   };
 
+  // Verify the booking exists
+  React.useEffect(() => {
+    if (id !== mockCampsite.id) {
+      toast({
+        variant: "destructive",
+        title: "Booking not found",
+        description: "The requested booking could not be found.",
+      });
+      navigate("/");
+    }
+  }, [id, navigate, toast]);
+
   const handleSubmit = (data: any) => {
     console.log("Form submitted:", data);
     // Handle form submission
+    toast({
+      title: "Booking submitted",
+      description: "Your booking has been submitted successfully.",
+    });
   };
 
   const handleSave = () => {
     console.log("Saving plan...");
-    // Handle save functionality
+    toast({
+      title: "Plan saved",
+      description: "Your booking plan has been saved.",
+    });
   };
 
   const handleCancel = () => {
