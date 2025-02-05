@@ -1,11 +1,15 @@
+
 import React from "react";
 import { useLocation, useNavigate } from "react-router-dom";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
-import { ArrowLeft, Calendar, MapPin, Users, Building, Car, CreditCard } from "lucide-react";
+import { ArrowLeft, CreditCard } from "lucide-react";
 import Header from "@/components/Header";
 import Footer from "@/components/Footer";
 import { useToast } from "@/components/ui/use-toast";
+import TripDetails from "@/components/booking/TripDetails";
+import SelectedMotorhome from "@/components/booking/SelectedMotorhome";
+import SelectedHotel from "@/components/booking/SelectedHotel";
 
 interface BookingDetails {
   pickupLocation: string;
@@ -89,121 +93,19 @@ const BookingSummary = () => {
         <h1 className="text-2xl md:text-3xl font-bold mb-8">Booking Summary</h1>
 
         <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
-          {/* Trip Details */}
-          <Card className="lg:col-span-2">
-            <CardHeader>
-              <CardTitle className="flex items-center gap-2">
-                <Calendar className="h-5 w-5" />
-                Trip Details
-              </CardTitle>
-            </CardHeader>
-            <CardContent className="space-y-6">
-              <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-                <div className="flex items-start gap-2">
-                  <MapPin className="w-5 h-5 mt-1 text-muted-foreground" />
-                  <div>
-                    <p className="font-medium">Pick-up Location</p>
-                    <p className="text-muted-foreground">{bookingDetails?.pickupLocation}</p>
-                  </div>
-                </div>
-                <div className="flex items-start gap-2">
-                  <MapPin className="w-5 h-5 mt-1 text-muted-foreground" />
-                  <div>
-                    <p className="font-medium">Destination</p>
-                    <p className="text-muted-foreground">{bookingDetails?.destination}</p>
-                  </div>
-                </div>
-                <div className="flex items-start gap-2">
-                  <Calendar className="w-5 h-5 mt-1 text-muted-foreground" />
-                  <div>
-                    <p className="font-medium">Departure Date</p>
-                    <p className="text-muted-foreground">
-                      {new Date(bookingDetails?.departureDate).toLocaleDateString()}
-                    </p>
-                  </div>
-                </div>
-                <div className="flex items-start gap-2">
-                  <Calendar className="w-5 h-5 mt-1 text-muted-foreground" />
-                  <div>
-                    <p className="font-medium">Return Date</p>
-                    <p className="text-muted-foreground">
-                      {new Date(bookingDetails?.returnDate).toLocaleDateString()}
-                    </p>
-                  </div>
-                </div>
-                <div className="flex items-start gap-2">
-                  <Users className="w-5 h-5 mt-1 text-muted-foreground" />
-                  <div>
-                    <p className="font-medium">Passengers</p>
-                    <p className="text-muted-foreground">{bookingDetails?.passengers}</p>
-                  </div>
-                </div>
-                <div className="flex items-start gap-2">
-                  <Building className="w-5 h-5 mt-1 text-muted-foreground" />
-                  <div>
-                    <p className="font-medium">Rooms</p>
-                    <p className="text-muted-foreground">{bookingDetails?.rooms}</p>
-                  </div>
-                </div>
-              </div>
+          <div className="lg:col-span-2 space-y-6">
+            <TripDetails {...bookingDetails} />
+            
+            {bookingDetails?.selectedMotorhome && (
+              <SelectedMotorhome motorhome={bookingDetails.selectedMotorhome} />
+            )}
 
-              {bookingDetails?.selectedMotorhome && (
-                <div className="border-t pt-4">
-                  <h3 className="text-lg font-semibold mb-4 flex items-center gap-2">
-                    <Car className="h-5 w-5" />
-                    Selected Motorhome
-                  </h3>
-                  <div className="grid md:grid-cols-2 gap-4">
-                    <img
-                      src={bookingDetails.selectedMotorhome.image}
-                      alt={bookingDetails.selectedMotorhome.name}
-                      className="w-full h-48 object-cover rounded-lg"
-                    />
-                    <div>
-                      <p className="font-medium">{bookingDetails.selectedMotorhome.name}</p>
-                      <p className="text-muted-foreground">{bookingDetails.selectedMotorhome.brand}</p>
-                      <p className="mt-2">
-                        <span className="font-medium">Pick-up:</span>{" "}
-                        {bookingDetails.selectedMotorhome.pickupLocation}
-                      </p>
-                      <p>
-                        <span className="font-medium">Drop-off:</span>{" "}
-                        {bookingDetails.selectedMotorhome.dropoffLocation}
-                      </p>
-                      <p className="mt-2 text-lg font-semibold">
-                        ${bookingDetails.selectedMotorhome.price} per day
-                      </p>
-                    </div>
-                  </div>
-                </div>
-              )}
+            {bookingDetails?.selectedHotel && (
+              <SelectedHotel hotel={bookingDetails.selectedHotel} />
+            )}
+          </div>
 
-              {bookingDetails?.selectedHotel && (
-                <div className="border-t pt-4">
-                  <h3 className="text-lg font-semibold mb-4 flex items-center gap-2">
-                    <Building className="h-5 w-5" />
-                    Selected Hotel
-                  </h3>
-                  <div className="grid md:grid-cols-2 gap-4">
-                    <img
-                      src={bookingDetails.selectedHotel.image}
-                      alt={bookingDetails.selectedHotel.name}
-                      className="w-full h-48 object-cover rounded-lg"
-                    />
-                    <div>
-                      <p className="font-medium">{bookingDetails.selectedHotel.name}</p>
-                      <p className="text-muted-foreground">{bookingDetails.selectedHotel.location}</p>
-                      <p className="mt-2 text-lg font-semibold">
-                        ${bookingDetails.selectedHotel.pricePerNight} per night
-                      </p>
-                    </div>
-                  </div>
-                </div>
-              )}
-            </CardContent>
-          </Card>
-
-          {/* Price Summary */}
+          {/* Price Summary Card */}
           <Card>
             <CardHeader>
               <CardTitle className="flex items-center gap-2">
