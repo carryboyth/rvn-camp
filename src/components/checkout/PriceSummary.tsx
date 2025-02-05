@@ -18,38 +18,38 @@ const PriceSummary = ({ motorhome, hotel, totalDays, totalPrice }: PriceSummaryP
   return (
     <Card className="sticky top-4">
       <CardHeader>
-        <CardTitle>สรุปราคา</CardTitle>
+        <CardTitle>Price Summary</CardTitle>
       </CardHeader>
       <CardContent className="space-y-4">
         <div className="flex justify-between">
-          <span>ระยะเวลา</span>
-          <span>{totalDays || 0} วัน</span>
+          <span>Duration</span>
+          <span>{totalDays || 0} days</span>
         </div>
 
         {motorhome && (
           <div>
-            <h3 className="font-medium">ค่าเช่ารถ</h3>
+            <h3 className="font-medium">Motorhome Rental</h3>
             <p className="text-muted-foreground">{motorhome.name}</p>
             <p className="text-muted-foreground">
-              ฿{(motorhome.price || 0).toLocaleString()}
+              ${(motorhome.price || 0).toLocaleString()}
             </p>
           </div>
         )}
         
         {hotel && (
           <div>
-            <h3 className="font-medium">ค่าที่พัก</h3>
+            <h3 className="font-medium">Hotel Stay</h3>
             <p className="text-muted-foreground">{hotel.name}</p>
             <p className="text-muted-foreground">
-              ฿{(hotel.price || 0).toLocaleString()}
+              ${(hotel.price || 0).toLocaleString()}
             </p>
           </div>
         )}
         
         <div className="border-t pt-4">
           <div className="flex justify-between font-medium text-lg">
-            <span>ราคารวมทั้งหมด</span>
-            <span>฿{(totalPrice || 0).toLocaleString()}</span>
+            <span>Total Price</span>
+            <span>${(totalPrice || 0).toLocaleString()}</span>
           </div>
         </div>
       </CardContent>
@@ -58,3 +58,4 @@ const PriceSummary = ({ motorhome, hotel, totalDays, totalPrice }: PriceSummaryP
 };
 
 export default PriceSummary;
+

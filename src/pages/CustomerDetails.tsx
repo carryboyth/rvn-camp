@@ -1,3 +1,4 @@
+
 import { useLocation, useNavigate } from "react-router-dom";
 import { useForm } from "react-hook-form";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
@@ -38,8 +39,8 @@ const CustomerDetails = () => {
   const onSubmit = (data: CustomerDetailsForm) => {
     if (!data.termsAccepted) {
       toast({
-        title: "ต้องยอมรับข้อตกลงและเงื่อนไข",
-        description: "กรุณายอมรับข้อตกลงและเงื่อนไขเพื่อดำเนินการต่อ",
+        title: "Terms and Conditions Required",
+        description: "Please accept the terms and conditions to proceed",
         variant: "destructive",
       });
       return;
@@ -47,16 +48,16 @@ const CustomerDetails = () => {
 
     console.log("Form submitted:", data);
     toast({
-      title: "ยืนยันการจอง",
-      description: "การจองของคุณได้รับการดำเนินการเรียบร้อยแล้ว",
+      title: "Booking Confirmed",
+      description: "Your booking has been processed successfully",
     });
     navigate("/manage-trip");
   };
 
   const handleSavePlan = () => {
     toast({
-      title: "บันทึกแผนการเดินทาง",
-      description: "กรุณาเข้าสู่ระบบเพื่อบันทึกแผนการเดินทางของคุณ",
+      title: "Save Travel Plan",
+      description: "Please login to save your travel plan",
     });
     navigate("/login");
   };
@@ -64,9 +65,9 @@ const CustomerDetails = () => {
   if (!motorhome && !hotel) {
     return (
       <div className="min-h-screen flex flex-col items-center justify-center">
-        <h1 className="text-2xl font-bold mb-4">ไม่พบการจอง</h1>
+        <h1 className="text-2xl font-bold mb-4">No Booking Found</h1>
         <Button onClick={() => navigate("/book-motorhome")}>
-          เริ่มการจองใหม่
+          Start New Booking
         </Button>
       </div>
     );
@@ -78,7 +79,7 @@ const CustomerDetails = () => {
       <main className="flex-1 container mx-auto px-4 py-8">
         <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
           <div className="lg:col-span-2 space-y-6">
-            <h1 className="text-3xl font-bold">ยืนยันการจอง</h1>
+            <h1 className="text-3xl font-bold">Confirm Booking</h1>
 
             <BookingSummary motorhome={motorhome} hotel={hotel} />
 
@@ -86,7 +87,7 @@ const CustomerDetails = () => {
               <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-8">
                 <Card>
                   <CardHeader>
-                    <CardTitle>ข้อมูลส่วนตัว</CardTitle>
+                    <CardTitle>Personal Information</CardTitle>
                   </CardHeader>
                   <CardContent>
                     <CustomerInformationForm form={form} />
@@ -95,7 +96,7 @@ const CustomerDetails = () => {
 
                 <Card>
                   <CardHeader>
-                    <CardTitle>ข้อมูลการชำระเงิน</CardTitle>
+                    <CardTitle>Payment Information</CardTitle>
                   </CardHeader>
                   <CardContent>
                     <PaymentForm form={form} />
@@ -113,7 +114,7 @@ const CustomerDetails = () => {
                       />
                       <div className="space-y-1 leading-none">
                         <FormLabel>
-                          ยอมรับข้อตกลงและเงื่อนไข
+                          Accept Terms and Conditions
                         </FormLabel>
                       </div>
                     </FormItem>
@@ -123,7 +124,7 @@ const CustomerDetails = () => {
                 <div className="flex flex-wrap gap-4">
                   <Button type="submit" className="flex-1">
                     <CreditCard className="mr-2 h-4 w-4" />
-                    ยืนยันและชำระเงิน
+                    Confirm and Pay
                   </Button>
                   <Button
                     type="button"
@@ -132,7 +133,7 @@ const CustomerDetails = () => {
                     className="gap-2"
                   >
                     <ArrowLeft className="h-4 w-4" />
-                    ย้อนกลับ
+                    Back
                   </Button>
                   <Button
                     type="button"
@@ -141,7 +142,7 @@ const CustomerDetails = () => {
                     className="gap-2"
                   >
                     <Save className="h-4 w-4" />
-                    บันทึกแผน
+                    Save Plan
                   </Button>
                   <Button
                     type="button"
@@ -150,7 +151,7 @@ const CustomerDetails = () => {
                     className="gap-2"
                   >
                     <X className="h-4 w-4" />
-                    ยกเลิก
+                    Cancel
                   </Button>
                 </div>
               </form>
@@ -173,3 +174,4 @@ const CustomerDetails = () => {
 };
 
 export default CustomerDetails;
+
