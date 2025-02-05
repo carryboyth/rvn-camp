@@ -1,4 +1,3 @@
-
 import { useLocation, useNavigate } from "react-router-dom";
 import { useForm } from "react-hook-form";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
@@ -34,7 +33,7 @@ const CustomerDetails = () => {
   const { toast } = useToast();
   const form = useForm<CustomerDetailsForm>();
   
-  const { motorhome, hotel } = location.state || {};
+  const { motorhome, hotel, totalPrice, totalDays } = location.state || {};
 
   const onSubmit = (data: CustomerDetailsForm) => {
     if (!data.termsAccepted) {
@@ -159,7 +158,12 @@ const CustomerDetails = () => {
           </div>
 
           <div className="lg:col-span-1">
-            <PriceSummary motorhome={motorhome} hotel={hotel} />
+            <PriceSummary 
+              motorhome={motorhome} 
+              hotel={hotel} 
+              totalDays={totalDays}
+              totalPrice={totalPrice}
+            />
           </div>
         </div>
       </main>
