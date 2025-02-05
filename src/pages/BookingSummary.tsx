@@ -2,22 +2,25 @@ import React from "react";
 import { useLocation, useNavigate } from "react-router-dom";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
-import { ArrowLeft, Calendar, MapPin, Users, Building, Car } from "lucide-react";
+import { ArrowLeft, Calendar, MapPin, Users, Building, Car, CreditCard } from "lucide-react";
 import Header from "@/components/Header";
 import Footer from "@/components/Footer";
+import { useToast } from "@/components/ui/use-toast";
 
 interface BookingDetails {
   pickupLocation: string;
   destination: string;
-  departureDate: Date;
-  returnDate: Date;
-  passengers: string;
-  rooms: string;
+  departureDate: string;
+  returnDate: string;
+  passengers: number;
+  rooms: number;
   selectedMotorhome?: {
     name: string;
     brand: string;
     price: number;
     image: string;
+    pickupLocation: string;
+    dropoffLocation: string;
   };
   selectedHotel?: {
     name: string;
@@ -30,6 +33,7 @@ interface BookingDetails {
 const BookingSummary = () => {
   const location = useLocation();
   const navigate = useNavigate();
+  const { toast } = useToast();
   const bookingDetails = location.state as BookingDetails;
 
   const calculateTotalDays = () => {
@@ -50,6 +54,25 @@ const BookingSummary = () => {
     return motorhomeTotal + hotelTotal;
   };
 
+  const handleProceedToCustomerDetails = () => {
+    if (!bookingDetails?.selectedMotorhome || !bookingDetails?.selectedHotel) {
+      toast({
+        title: "Incomplete Booking",
+        description: "Please select both a motorhome and hotel to proceed.",
+        variant: "destructive",
+      });
+      return;
+    }
+    
+    navigate("/customer-details", { 
+      state: {
+        ...bookingDetails,
+        totalPrice: calculateTotalPrice(),
+        totalDays: calculateTotalDays(),
+      }
+    });
+  };
+
   return (
     <div className="min-h-screen flex flex-col">
       <Header />
@@ -63,13 +86,16 @@ const BookingSummary = () => {
           Back
         </Button>
 
-        <h1 className="text-3xl font-bold mb-8">Booking Summary</h1>
+        <h1 className="text-2xl md:text-3xl font-bold mb-8">Booking Summary</h1>
 
         <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
           {/* Trip Details */}
           <Card className="lg:col-span-2">
             <CardHeader>
-              <CardTitle>Trip Details</CardTitle>
+              <CardTitle className="flex items-center gap-2">
+                <Calendar className="h-5 w-5" />
+                Trip Details
+              </CardTitle>
             </CardHeader>
             <CardContent className="space-y-6">
               <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
@@ -92,7 +118,7 @@ const BookingSummary = () => {
                   <div>
                     <p className="font-medium">Departure Date</p>
                     <p className="text-muted-foreground">
-                      {bookingDetails?.departureDate?.toLocaleDateString()}
+                      {new Date(bookingDetails?.departureDate).toLocaleDateString()}
                     </p>
                   </div>
                 </div>
@@ -101,7 +127,7 @@ const BookingSummary = () => {
                   <div>
                     <p className="font-medium">Return Date</p>
                     <p className="text-muted-foreground">
-                      {bookingDetails?.returnDate?.toLocaleDateString()}
+                      {new Date(bookingDetails?.returnDate).toLocaleDateString()}
                     </p>
                   </div>
                 </div>
@@ -120,59 +146,104 @@ const BookingSummary = () => {
                   </div>
                 </div>
               </div>
+
+              {bookingDetails?.selectedMotorhome && (
+                <div className="border-t pt-4">
+                  <h3 className="text-lg font-semibold mb-4 flex items-center gap-2">
+                    <Car className="h-5 w-5" />
+                    Selected Motorhome
+                  </h3>
+                  <div className="grid md:grid-cols-2 gap-4">
+                    <img
+                      src={bookingDetails.selectedMotorhome.image}
+                      alt={bookingDetails.selectedMotorhome.name}
+                      className="w-full h-48 object-cover rounded-lg"
+                    />
+                    <div>
+                      <p className="font-medium">{bookingDetails.selectedMotorhome.name}</p>
+                      <p className="text-muted-foreground">{bookingDetails.selectedMotorhome.brand}</p>
+                      <p className="mt-2">
+                        <span className="font-medium">Pick-up:</span>{" "}
+                        {bookingDetails.selectedMotorhome.pickupLocation}
+                      </p>
+                      <p>
+                        <span className="font-medium">Drop-off:</span>{" "}
+                        {bookingDetails.selectedMotorhome.dropoffLocation}
+                      </p>
+                      <p className="mt-2 text-lg font-semibold">
+                        ${bookingDetails.selectedMotorhome.price} per day
+                      </p>
+                    </div>
+                  </div>
+                </div>
+              )}
+
+              {bookingDetails?.selectedHotel && (
+                <div className="border-t pt-4">
+                  <h3 className="text-lg font-semibold mb-4 flex items-center gap-2">
+                    <Building className="h-5 w-5" />
+                    Selected Hotel
+                  </h3>
+                  <div className="grid md:grid-cols-2 gap-4">
+                    <img
+                      src={bookingDetails.selectedHotel.image}
+                      alt={bookingDetails.selectedHotel.name}
+                      className="w-full h-48 object-cover rounded-lg"
+                    />
+                    <div>
+                      <p className="font-medium">{bookingDetails.selectedHotel.name}</p>
+                      <p className="text-muted-foreground">{bookingDetails.selectedHotel.location}</p>
+                      <p className="mt-2 text-lg font-semibold">
+                        ${bookingDetails.selectedHotel.pricePerNight} per night
+                      </p>
+                    </div>
+                  </div>
+                </div>
+              )}
             </CardContent>
           </Card>
 
           {/* Price Summary */}
           <Card>
             <CardHeader>
-              <CardTitle>Price Summary</CardTitle>
+              <CardTitle className="flex items-center gap-2">
+                <CreditCard className="h-5 w-5" />
+                Price Summary
+              </CardTitle>
             </CardHeader>
             <CardContent className="space-y-4">
-              {bookingDetails?.selectedMotorhome && (
-                <div className="space-y-2">
-                  <div className="flex items-center justify-between">
-                    <div className="flex items-center gap-2">
-                      <Car className="w-4 h-4" />
-                      <span>Motorhome</span>
-                    </div>
-                    <span>${bookingDetails.selectedMotorhome.price} per day</span>
-                  </div>
-                  <p className="text-sm text-muted-foreground">
-                    {bookingDetails.selectedMotorhome.name} - {bookingDetails.selectedMotorhome.brand}
-                  </p>
-                </div>
-              )}
-
-              {bookingDetails?.selectedHotel && (
-                <div className="space-y-2">
-                  <div className="flex items-center justify-between">
-                    <div className="flex items-center gap-2">
-                      <Building className="w-4 h-4" />
-                      <span>Hotel</span>
-                    </div>
-                    <span>${bookingDetails.selectedHotel.pricePerNight} per night</span>
-                  </div>
-                  <p className="text-sm text-muted-foreground">
-                    {bookingDetails.selectedHotel.name} - {bookingDetails.selectedHotel.location}
-                  </p>
-                </div>
-              )}
-
-              <div className="pt-4 border-t">
-                <div className="flex justify-between font-medium">
+              <div className="space-y-2">
+                <div className="flex justify-between">
                   <span>Duration</span>
                   <span>{calculateTotalDays()} days</span>
                 </div>
-                <div className="flex justify-between font-medium text-lg mt-2">
-                  <span>Total Price</span>
-                  <span>${calculateTotalPrice()}</span>
+                {bookingDetails?.selectedMotorhome && (
+                  <div className="flex justify-between">
+                    <span>Motorhome Total</span>
+                    <span>
+                      ${bookingDetails.selectedMotorhome.price * calculateTotalDays()}
+                    </span>
+                  </div>
+                )}
+                {bookingDetails?.selectedHotel && (
+                  <div className="flex justify-between">
+                    <span>Hotel Total</span>
+                    <span>
+                      ${bookingDetails.selectedHotel.pricePerNight * calculateTotalDays()}
+                    </span>
+                  </div>
+                )}
+                <div className="pt-4 border-t">
+                  <div className="flex justify-between font-semibold text-lg">
+                    <span>Total Price</span>
+                    <span>${calculateTotalPrice()}</span>
+                  </div>
                 </div>
               </div>
 
               <Button 
                 className="w-full mt-4"
-                onClick={() => navigate("/customer-details", { state: bookingDetails })}
+                onClick={handleProceedToCustomerDetails}
               >
                 Proceed to Customer Details
               </Button>

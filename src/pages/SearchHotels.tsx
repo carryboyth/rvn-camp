@@ -1,11 +1,11 @@
-import { useNavigate } from "react-router-dom";
+import { useLocation, useNavigate } from "react-router-dom";
 import Header from "@/components/Header";
 import Footer from "@/components/Footer";
 import { Button } from "@/components/ui/button";
-import { Card, CardContent } from "@/components/ui/card";
+import { Card } from "@/components/ui/card";
 import { MapPin, Star, Users } from "lucide-react";
+import { useToast } from "@/components/ui/use-toast";
 
-// Mock data for hotels
 const hotels = [
   {
     id: 1,
@@ -51,6 +51,27 @@ const hotels = [
 
 const SearchHotels = () => {
   const navigate = useNavigate();
+  const location = useLocation();
+  const { toast } = useToast();
+  const searchParams = location.state;
+
+  const handleBookHotel = (hotel: typeof hotels[0]) => {
+    if (!searchParams?.selectedMotorhome) {
+      toast({
+        title: "No Motorhome Selected",
+        description: "Please select a motorhome first before booking a hotel.",
+        variant: "destructive",
+      });
+      return;
+    }
+
+    navigate("/booking-summary", {
+      state: {
+        ...searchParams,
+        selectedHotel: hotel,
+      },
+    });
+  };
 
   return (
     <div className="min-h-screen flex flex-col">
@@ -96,7 +117,7 @@ const SearchHotels = () => {
                     <p className="text-muted-foreground">per night</p>
                   </div>
                   <Button
-                    onClick={() => navigate(`/booking/${hotel.id}`)}
+                    onClick={() => handleBookHotel(hotel)}
                     className="w-full md:w-auto"
                   >
                     Book Hotel
