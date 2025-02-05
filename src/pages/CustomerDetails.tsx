@@ -1,8 +1,10 @@
+
 import { useLocation, useNavigate } from "react-router-dom";
 import { useForm } from "react-hook-form";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
+import { Checkbox } from "@/components/ui/checkbox";
 import {
   Form,
   FormControl,
@@ -35,6 +37,7 @@ interface CustomerDetailsForm {
   securityCode?: string;
   cardholderName?: string;
   expiryDate?: string;
+  termsAccepted: boolean;
 }
 
 const CustomerDetails = () => {
@@ -46,6 +49,15 @@ const CustomerDetails = () => {
   const { motorhome, hotel } = location.state || {};
 
   const onSubmit = (data: CustomerDetailsForm) => {
+    if (!data.termsAccepted) {
+      toast({
+        title: "Terms & Conditions Required",
+        description: "Please accept the terms and conditions to proceed.",
+        variant: "destructive",
+      });
+      return;
+    }
+
     console.log("Form submitted:", data);
     toast({
       title: "Booking Confirmed",
@@ -60,6 +72,17 @@ const CustomerDetails = () => {
     return motorhomeTotal + hotelTotal;
   };
 
+  if (!motorhome && !hotel) {
+    return (
+      <div className="min-h-screen flex flex-col items-center justify-center">
+        <h1 className="text-2xl font-bold mb-4">No Booking Selected</h1>
+        <Button onClick={() => navigate("/book-motorhome")}>
+          Start New Booking
+        </Button>
+      </div>
+    );
+  }
+
   return (
     <div className="min-h-screen flex flex-col">
       <Header />
@@ -68,6 +91,61 @@ const CustomerDetails = () => {
           {/* Main Content */}
           <div className="lg:col-span-2 space-y-6">
             <h1 className="text-3xl font-bold">Complete Your Booking</h1>
+
+            {/* Booking Summary */}
+            <Card>
+              <CardHeader>
+                <CardTitle>Booking Summary</CardTitle>
+              </CardHeader>
+              <CardContent className="space-y-4">
+                {motorhome && (
+                  <div className="space-y-2">
+                    <h3 className="font-semibold">Motorhome Details</h3>
+                    <div className="grid grid-cols-2 gap-4 text-sm">
+                      <div>
+                        <p className="text-muted-foreground">Pick-up Location</p>
+                        <p>{motorhome.pickupLocation}</p>
+                      </div>
+                      <div>
+                        <p className="text-muted-foreground">Drop-off Location</p>
+                        <p>{motorhome.dropoffLocation}</p>
+                      </div>
+                      <div>
+                        <p className="text-muted-foreground">Start Date</p>
+                        <p>{motorhome.startDate}</p>
+                      </div>
+                      <div>
+                        <p className="text-muted-foreground">End Date</p>
+                        <p>{motorhome.endDate}</p>
+                      </div>
+                    </div>
+                  </div>
+                )}
+                {hotel && (
+                  <div className="space-y-2">
+                    <h3 className="font-semibold">Hotel Details</h3>
+                    <div className="grid grid-cols-2 gap-4 text-sm">
+                      <div>
+                        <p className="text-muted-foreground">Check-in Date</p>
+                        <p>{hotel.checkIn}</p>
+                      </div>
+                      <div>
+                        <p className="text-muted-foreground">Check-out Date</p>
+                        <p>{hotel.checkOut}</p>
+                      </div>
+                      <div>
+                        <p className="text-muted-foreground">Location</p>
+                        <p>{hotel.location}</p>
+                      </div>
+                      <div>
+                        <p className="text-muted-foreground">Room Type</p>
+                        <p>{hotel.roomType}</p>
+                      </div>
+                    </div>
+                  </div>
+                )}
+              </CardContent>
+            </Card>
 
             <Form {...form}>
               <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-8">
@@ -261,10 +339,32 @@ const CustomerDetails = () => {
                   </CardContent>
                 </Card>
 
+                {/* Terms & Conditions */}
+                <FormField
+                  control={form.control}
+                  name="termsAccepted"
+                  render={({ field }) => (
+                    <FormItem className="flex flex-row items-start space-x-3 space-y-0">
+                      <FormControl>
+                        <Checkbox
+                          checked={field.value}
+                          onCheckedChange={field.onChange}
+                        />
+                      </FormControl>
+                      <div className="space-y-1 leading-none">
+                        <FormLabel>
+                          I accept the terms and conditions
+                        </FormLabel>
+                      </div>
+                    </FormItem>
+                  )}
+                />
+
                 {/* Action Buttons */}
                 <div className="flex gap-4">
                   <Button type="submit" className="flex-1">
-                    Check Out
+                    <CreditCard className="mr-2 h-4 w-4" />
+                    Confirm & Pay
                   </Button>
                   <Button
                     type="button"
@@ -293,12 +393,12 @@ const CustomerDetails = () => {
           <div className="lg:col-span-1">
             <Card className="sticky top-4">
               <CardHeader>
-                <CardTitle>Booking Summary</CardTitle>
+                <CardTitle>Price Summary</CardTitle>
               </CardHeader>
               <CardContent className="space-y-4">
                 {motorhome && (
                   <div>
-                    <h3 className="font-medium">Selected Motorhome</h3>
+                    <h3 className="font-medium">Motorhome Rental</h3>
                     <p className="text-muted-foreground">{motorhome.name}</p>
                     <p className="text-muted-foreground">
                       ฿{motorhome.price.toLocaleString()} / night
@@ -307,7 +407,7 @@ const CustomerDetails = () => {
                 )}
                 {hotel && (
                   <div>
-                    <h3 className="font-medium">Selected Hotel</h3>
+                    <h3 className="font-medium">Hotel Stay</h3>
                     <p className="text-muted-foreground">{hotel.name}</p>
                     <p className="text-muted-foreground">
                       ฿{hotel.price.toLocaleString()} / night
