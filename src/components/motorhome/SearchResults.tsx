@@ -114,15 +114,17 @@ const SearchResults = ({ filters }: SearchResultsProps) => {
           key={motorhome.id} 
           className="overflow-hidden hover:shadow-lg transition-shadow duration-300 animate-fade-up"
         >
-          <div className="grid md:grid-cols-3 gap-6">
-            <div className="relative h-64 md:h-full">
+          <div className="grid md:grid-cols-[1fr,2fr,1fr] gap-6">
+            {/* Column 1: Vehicle Image */}
+            <div className="relative h-64 md:h-full min-h-[300px]">
               <img
                 src={motorhome.image}
                 alt={motorhome.name}
-                className="absolute inset-0 w-full h-full object-cover rounded-l-lg"
+                className="absolute inset-0 w-full h-full object-cover"
               />
             </div>
             
+            {/* Column 2: Motorhome Details */}
             <div className="p-6 space-y-4">
               <div>
                 <h3 className="text-2xl font-semibold mb-1">{motorhome.name}</h3>
@@ -152,6 +154,7 @@ const SearchResults = ({ filters }: SearchResultsProps) => {
               </div>
             </div>
             
+            {/* Column 3: Pricing */}
             <div className="p-6 flex flex-col justify-between border-l bg-muted/10">
               <div className="text-right space-y-2">
                 <div className="bg-primary/10 p-4 rounded-lg inline-block">
