@@ -10,6 +10,7 @@ import SearchResults from "@/pages/SearchResults";
 import BookMotorhome from "@/pages/BookMotorhome";
 import CampervanSummary from "@/pages/CampervanSummary";
 import Contact from "@/pages/Contact";
+import MotorhomeResults from "@/pages/MotorhomeResults";
 
 function App() {
   return (
@@ -23,6 +24,7 @@ function App() {
         <Route path="/campsite/:id" element={<CampsiteDetails />} />
         <Route path="/booking/:id" element={<Booking />} />
         <Route path="/book-motorhome" element={<BookMotorhome />} />
+        <Route path="/motorhome-results" element={<MotorhomeResults />} />
         <Route path="/campervan-summary" element={<CampervanSummary />} />
         <Route path="/contact" element={<Contact />} />
         <Route path="*" element={<NotFound />} />
