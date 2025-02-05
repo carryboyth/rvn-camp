@@ -41,7 +41,7 @@ const SearchForm = () => {
       return;
     }
     
-    navigate("/search-results", {
+    navigate("/motorhome-results", {
       state: {
         pickupLocation,
         destination,
