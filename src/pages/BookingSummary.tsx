@@ -59,10 +59,10 @@ const BookingSummary = () => {
   };
 
   const handleProceedToCustomerDetails = () => {
-    if (!bookingDetails?.selectedMotorhome || !bookingDetails?.selectedHotel) {
+    if (!bookingDetails?.selectedMotorhome && !bookingDetails?.selectedHotel) {
       toast({
-        title: "Incomplete Booking",
-        description: "Please select both a motorhome and hotel to proceed.",
+        title: "ข้อมูลไม่ครบถ้วน",
+        description: "กรุณาเลือกรถและโรงแรมเพื่อดำเนินการต่อ",
         variant: "destructive",
       });
       return;
@@ -70,7 +70,8 @@ const BookingSummary = () => {
     
     navigate("/customer-details", { 
       state: {
-        ...bookingDetails,
+        motorhome: bookingDetails.selectedMotorhome,
+        hotel: bookingDetails.selectedHotel,
         totalPrice: calculateTotalPrice(),
         totalDays: calculateTotalDays(),
       }
@@ -87,10 +88,10 @@ const BookingSummary = () => {
           onClick={() => navigate(-1)}
         >
           <ArrowLeft className="mr-2 h-4 w-4" />
-          Back
+          ย้อนกลับ
         </Button>
 
-        <h1 className="text-2xl md:text-3xl font-bold mb-8">Booking Summary</h1>
+        <h1 className="text-2xl md:text-3xl font-bold mb-8">สรุปการจอง</h1>
 
         <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
           <div className="lg:col-span-2 space-y-6">
@@ -110,35 +111,35 @@ const BookingSummary = () => {
             <CardHeader>
               <CardTitle className="flex items-center gap-2">
                 <CreditCard className="h-5 w-5" />
-                Price Summary
+                สรุปราคา
               </CardTitle>
             </CardHeader>
             <CardContent className="space-y-4">
               <div className="space-y-2">
                 <div className="flex justify-between">
-                  <span>Duration</span>
-                  <span>{calculateTotalDays()} days</span>
+                  <span>ระยะเวลา</span>
+                  <span>{calculateTotalDays()} วัน</span>
                 </div>
                 {bookingDetails?.selectedMotorhome && (
                   <div className="flex justify-between">
-                    <span>Motorhome Total</span>
+                    <span>ค่าเช่ารถ</span>
                     <span>
-                      ${bookingDetails.selectedMotorhome.price * calculateTotalDays()}
+                      ฿{bookingDetails.selectedMotorhome.price * calculateTotalDays()}
                     </span>
                   </div>
                 )}
                 {bookingDetails?.selectedHotel && (
                   <div className="flex justify-between">
-                    <span>Hotel Total</span>
+                    <span>ค่าที่พัก</span>
                     <span>
-                      ${bookingDetails.selectedHotel.pricePerNight * calculateTotalDays()}
+                      ฿{bookingDetails.selectedHotel.pricePerNight * calculateTotalDays()}
                     </span>
                   </div>
                 )}
                 <div className="pt-4 border-t">
                   <div className="flex justify-between font-semibold text-lg">
-                    <span>Total Price</span>
-                    <span>${calculateTotalPrice()}</span>
+                    <span>ราคารวมทั้งหมด</span>
+                    <span>฿{calculateTotalPrice()}</span>
                   </div>
                 </div>
               </div>
@@ -147,7 +148,7 @@ const BookingSummary = () => {
                 className="w-full mt-4"
                 onClick={handleProceedToCustomerDetails}
               >
-                Proceed to Customer Details
+                ดำเนินการต่อ
               </Button>
             </CardContent>
           </Card>
