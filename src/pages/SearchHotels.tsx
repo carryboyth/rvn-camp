@@ -1,3 +1,4 @@
+
 import { useLocation, useNavigate } from "react-router-dom";
 import Header from "@/components/Header";
 import Footer from "@/components/Footer";
@@ -89,11 +90,14 @@ const SearchHotels = () => {
       return;
     }
 
-    navigate("/booking-summary", {
+    navigate("/hotels-calculator", {
       state: {
         ...searchParams,
         selectedHotel: hotel,
-      },
+        checkIn: checkIn,
+        checkOut: checkOut,
+        totalPrice: hotel.pricePerNight * totalDays
+      }
     });
   };
 

@@ -48,13 +48,13 @@ const HotelCard = ({ hotel, totalDays, onBookNow }: HotelCardProps) => {
         <div className="p-6 md:p-0 flex flex-col justify-center items-end">
           <div className="text-right mb-4">
             <p className="text-2xl font-bold">
-              ${hotel.pricePerNight.toLocaleString()}
+              ฿{hotel.pricePerNight.toLocaleString()}
             </p>
             <p className="text-muted-foreground">per night</p>
             {totalDays > 0 && (
               <div className="mt-2 p-2 bg-secondary/10 rounded-lg">
                 <p className="font-semibold">
-                  ${(hotel.pricePerNight * totalDays).toLocaleString()}
+                  ฿{(hotel.pricePerNight * totalDays).toLocaleString()}
                 </p>
                 <p className="text-sm text-muted-foreground">
                   for {totalDays} days
