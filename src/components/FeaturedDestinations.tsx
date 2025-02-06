@@ -1,5 +1,6 @@
 
 import { ArrowRight } from "lucide-react";
+import { Link } from "react-router-dom";
 
 const destinations = [
   {
@@ -46,10 +47,13 @@ const FeaturedDestinations = () => {
                 <h3 className="text-xl font-semibold mb-2">{destination.name}</h3>
                 <p className="text-gray-600 mb-4">{destination.description}</p>
                 
-                <button className="flex items-center text-primary font-semibold hover:text-primary/80 transition-colors">
+                <Link 
+                  to="/search-results"
+                  className="flex items-center text-primary font-semibold hover:text-primary/80 transition-colors"
+                >
                   Explore
                   <ArrowRight className="w-4 h-4 ml-2" />
-                </button>
+                </Link>
               </div>
             </div>
           ))}
