@@ -1,7 +1,7 @@
 
 import { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
-import { Menu, Flag } from "lucide-react";
+import { Menu, Globe } from "lucide-react";
 import { Button } from "./ui/button";
 import {
   Sheet,
@@ -67,17 +67,17 @@ const Header = () => {
             <DropdownMenu>
               <DropdownMenuTrigger asChild>
                 <Button variant="ghost" size="sm" className="flex items-center gap-2">
-                  <Flag className="h-4 w-4" />
+                  <Globe className="h-4 w-4" />
                   {language === "en" ? "ENG" : "ไทย"}
                 </Button>
               </DropdownMenuTrigger>
               <DropdownMenuContent>
                 <DropdownMenuItem onClick={() => setLanguage("en")}>
-                  <Flag className="h-4 w-4 mr-2" />
+                  <Globe className="h-4 w-4 mr-2" />
                   English
                 </DropdownMenuItem>
                 <DropdownMenuItem onClick={() => setLanguage("th")}>
-                  <Flag className="h-4 w-4 mr-2" />
+                  <Globe className="h-4 w-4 mr-2" />
                   ไทย
                 </DropdownMenuItem>
               </DropdownMenuContent>
@@ -139,17 +139,17 @@ const Header = () => {
                   <DropdownMenu>
                     <DropdownMenuTrigger asChild>
                       <Button variant="ghost" size="sm" className="flex items-center gap-2 justify-start">
-                        <Flag className="h-4 w-4" />
+                        <Globe className="h-4 w-4" />
                         {language === "en" ? "ENG" : "ไทย"}
                       </Button>
                     </DropdownMenuTrigger>
                     <DropdownMenuContent>
                       <DropdownMenuItem onClick={() => setLanguage("en")}>
-                        <Flag className="h-4 w-4 mr-2" />
+                        <Globe className="h-4 w-4 mr-2" />
                         English
                       </DropdownMenuItem>
                       <DropdownMenuItem onClick={() => setLanguage("th")}>
-                        <Flag className="h-4 w-4 mr-2" />
+                        <Globe className="h-4 w-4 mr-2" />
                         ไทย
                       </DropdownMenuItem>
                     </DropdownMenuContent>
@@ -170,3 +170,4 @@ const Header = () => {
 };
 
 export default Header;
+
