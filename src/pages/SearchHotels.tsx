@@ -4,7 +4,7 @@ import Header from "@/components/Header";
 import Footer from "@/components/Footer";
 import { Button } from "@/components/ui/button";
 import { Card } from "@/components/ui/card";
-import { MapPin, Star, Users, Calendar } from "lucide-react";
+import { MapPin, Star, Users, Calendar, ArrowLeft } from "lucide-react";
 import { useToast } from "@/components/ui/use-toast";
 
 const hotels = [
@@ -156,6 +156,18 @@ const SearchHotels = () => {
             </Card>
           ))}
         </div>
+
+        {/* Back Button */}
+        <div className="mt-8 flex justify-center">
+          <Button
+            variant="outline"
+            onClick={() => navigate(-1)}
+            className="flex items-center gap-2"
+          >
+            <ArrowLeft className="w-4 h-4" />
+            Back
+          </Button>
+        </div>
       </main>
       <Footer />
     </div>
@@ -163,3 +175,4 @@ const SearchHotels = () => {
 };
 
 export default SearchHotels;
+
