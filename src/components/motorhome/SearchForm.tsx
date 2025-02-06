@@ -56,57 +56,61 @@ const SearchForm = () => {
   return (
     <Card className="w-full max-w-4xl mx-auto bg-white/95 backdrop-blur shadow-xl">
       <CardContent className="p-6">
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-          <div className="space-y-2">
-            <label className="text-sm font-medium">Pick-up Location</label>
-            <Select onValueChange={setPickupLocation} value={pickupLocation}>
-              <SelectTrigger>
-                <SelectValue placeholder="Select airport">
-                  <div className="flex items-center">
-                    <MapPin className="w-4 h-4 mr-2" />
-                    <span>Select airport</span>
-                  </div>
-                </SelectValue>
-              </SelectTrigger>
-              <SelectContent>
-                {airports.map((airport) => (
-                  <SelectItem key={airport} value={airport}>
-                    {airport}
-                  </SelectItem>
-                ))}
-              </SelectContent>
-            </Select>
+        <div className="space-y-6">
+          {/* First Row - Pickup and Destination */}
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+            <div className="space-y-2">
+              <label className="text-sm font-medium">Pick-up Location</label>
+              <Select onValueChange={setPickupLocation} value={pickupLocation}>
+                <SelectTrigger className="h-12">
+                  <SelectValue placeholder="Select airport">
+                    <div className="flex items-center">
+                      <MapPin className="w-4 h-4 mr-2" />
+                      <span>Select airport</span>
+                    </div>
+                  </SelectValue>
+                </SelectTrigger>
+                <SelectContent>
+                  {airports.map((airport) => (
+                    <SelectItem key={airport} value={airport}>
+                      {airport}
+                    </SelectItem>
+                  ))}
+                </SelectContent>
+              </Select>
+            </div>
+
+            <div className="space-y-2">
+              <label className="text-sm font-medium">Destination</label>
+              <Select onValueChange={setDestination} value={destination}>
+                <SelectTrigger className="h-12">
+                  <SelectValue placeholder="Select destination">
+                    <div className="flex items-center">
+                      <Building className="w-4 h-4 mr-2" />
+                      <span>Select destination</span>
+                    </div>
+                  </SelectValue>
+                </SelectTrigger>
+                <SelectContent>
+                  {destinations.map((dest) => (
+                    <SelectItem key={dest} value={dest}>
+                      {dest}
+                    </SelectItem>
+                  ))}
+                </SelectContent>
+              </Select>
+            </div>
           </div>
 
-          <div className="space-y-2">
-            <label className="text-sm font-medium">Destination</label>
-            <Select onValueChange={setDestination} value={destination}>
-              <SelectTrigger>
-                <SelectValue placeholder="Select destination">
-                  <div className="flex items-center">
-                    <Building className="w-4 h-4 mr-2" />
-                    <span>Select destination</span>
-                  </div>
-                </SelectValue>
-              </SelectTrigger>
-              <SelectContent>
-                {destinations.map((dest) => (
-                  <SelectItem key={dest} value={dest}>
-                    {dest}
-                  </SelectItem>
-                ))}
-              </SelectContent>
-            </Select>
-          </div>
-
+          {/* Second Row - Travel Dates */}
           <div className="space-y-2">
             <label className="text-sm font-medium">Travel Dates</label>
-            <div className="grid grid-cols-2 gap-4">
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
               <Calendar
                 mode="single"
                 selected={departureDate}
                 onSelect={setDepartureDate}
-                className="rounded-md border"
+                className="rounded-md border bg-white"
                 disabled={(date) =>
                   date < new Date() || (returnDate && date > returnDate)
                 }
@@ -115,7 +119,7 @@ const SearchForm = () => {
                 mode="single"
                 selected={returnDate}
                 onSelect={setReturnDate}
-                className="rounded-md border"
+                className="rounded-md border bg-white"
                 disabled={(date) =>
                   date < new Date() || (departureDate && date < departureDate)
                 }
@@ -123,11 +127,12 @@ const SearchForm = () => {
             </div>
           </div>
 
+          {/* Third Row - Passengers & Rooms */}
           <div className="space-y-2">
             <label className="text-sm font-medium">Passengers & Rooms</label>
             <div className="grid grid-cols-2 gap-4">
               <Select value={passengers} onValueChange={setPassengers}>
-                <SelectTrigger>
+                <SelectTrigger className="h-12">
                   <SelectValue>
                     <div className="flex items-center">
                       <Users className="w-4 h-4 mr-2" />
@@ -145,7 +150,7 @@ const SearchForm = () => {
               </Select>
 
               <Select value={rooms} onValueChange={setRooms}>
-                <SelectTrigger>
+                <SelectTrigger className="h-12">
                   <SelectValue>
                     <div className="flex items-center">
                       <Building className="w-4 h-4 mr-2" />
@@ -164,16 +169,14 @@ const SearchForm = () => {
             </div>
           </div>
 
-          <div className="md:col-span-2 lg:col-span-3">
-            <Button
-              onClick={handleSearch}
-              className="w-full bg-primary hover:bg-primary/90 text-primary-foreground"
-              size="lg"
-            >
-              <Search className="w-4 h-4 mr-2" />
-              Search Motorhome & Hotel
-            </Button>
-          </div>
+          {/* Search Button */}
+          <Button
+            onClick={handleSearch}
+            className="w-full bg-primary hover:bg-primary/90 text-primary-foreground h-12 text-lg"
+          >
+            <Search className="w-5 h-5 mr-2" />
+            Search Motorhome & Hotel
+          </Button>
         </div>
       </CardContent>
     </Card>
