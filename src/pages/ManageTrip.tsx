@@ -1,3 +1,4 @@
+
 import { useState } from "react";
 import { useForm } from "react-hook-form";
 import { Link } from "react-router-dom";
@@ -101,10 +102,10 @@ const ManageTrip = () => {
             description: "Find the perfect spot to park and camp",
           },
           {
-            title: "Campervan + Accommodation Package",
+            title: "Your Entire Holiday in One Click!",
             image: "/lovable-uploads/b7d87dfa-8531-459d-aa23-7eeb6c5fae70.png",
             link: "/book-motorhome",
-            description: "Get the best of both worlds with our combined packages",
+            description: "Plan your ultimate road trip with ease",
           },
         ].map((item, index) => (
           <Card key={index} className="group overflow-hidden">
