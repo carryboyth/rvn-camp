@@ -1,3 +1,4 @@
+
 import { Mail } from "lucide-react";
 import { Button } from "./ui/button";
 import { Input } from "./ui/input";
@@ -16,10 +17,10 @@ const Footer = () => {
           <div>
             <h3 className="text-lg font-semibold mb-4">Contact Us</h3>
             <address className="not-italic space-y-2">
-              <p>123 Adventure Road</p>
-              <p>Bangkok, Thailand 10110</p>
-              <p>Phone: +66 2 123 4567</p>
-              <p>Email: info@rvncamp.com</p>
+              <p>888,Luangphaeng rd.</p>
+              <p>Bangkok,10520 Thailand</p>
+              <p>Phone: 063 891 6161</p>
+              <p>Email: rvncamp@carryboy.com</p>
             </address>
           </div>
 
