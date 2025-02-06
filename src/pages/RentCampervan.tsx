@@ -176,14 +176,17 @@ const RentCampervan = () => {
         <div className="space-y-2">
           <label className="text-sm font-medium">Pick-up Time</label>
           <Select
+            value={bookingDetails.pickupTime}
             onValueChange={(value) =>
               setBookingDetails({ ...bookingDetails, pickupTime: value })
             }
           >
-            <SelectTrigger>
-              <SelectValue placeholder="Select time" />
+            <SelectTrigger className="h-12 bg-white">
+              <SelectValue>
+                <span>{bookingDetails.pickupTime}</span>
+              </SelectValue>
             </SelectTrigger>
-            <SelectContent>
+            <SelectContent className="bg-white border shadow-lg">
               {timeSlots.map((time) => (
                 <SelectItem key={time} value={time}>
                   {time}
@@ -195,14 +198,17 @@ const RentCampervan = () => {
         <div className="space-y-2">
           <label className="text-sm font-medium">Drop-off Time</label>
           <Select
+            value={bookingDetails.dropoffTime}
             onValueChange={(value) =>
               setBookingDetails({ ...bookingDetails, dropoffTime: value })
             }
           >
-            <SelectTrigger>
-              <SelectValue placeholder="Select time" />
+            <SelectTrigger className="h-12 bg-white">
+              <SelectValue>
+                <span>{bookingDetails.dropoffTime}</span>
+              </SelectValue>
             </SelectTrigger>
-            <SelectContent>
+            <SelectContent className="bg-white border shadow-lg">
               {timeSlots.map((time) => (
                 <SelectItem key={time} value={time}>
                   {time}
