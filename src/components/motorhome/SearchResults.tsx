@@ -1,4 +1,3 @@
-
 import { useLocation, useNavigate } from "react-router-dom";
 import { Card } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
@@ -103,19 +102,16 @@ const SearchResults = ({ filters }: SearchResultsProps) => {
     const totalPrice = calculateTotalPrice(motorhome.price);
 
     toast({
-      title: "Selected Motorhome",
-      description: `You've selected ${motorhome.name}. Taking you to accommodation search...`,
+      title: "เลือกรถ Motorhome",
+      description: `คุณได้เลือก ${motorhome.name} กำลังพาคุณไปยังหน้ารายละเอียด...`,
     });
     
-    navigate("/search-hotels", {
+    navigate("/motorhome-calculator", {
       state: {
         ...searchParams,
-        selectedMotorhome: {
-          ...motorhome,
-          price: totalPrice || 0,
-        },
-        totalDays: totalDays || 0,
-        totalPrice: totalPrice || 0,
+        selectedMotorhome: motorhome,
+        totalDays: totalDays,
+        totalPrice: totalPrice,
       },
     });
   };

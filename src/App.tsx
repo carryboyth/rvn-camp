@@ -19,6 +19,7 @@ import Login from "@/pages/Login";
 import SignUp from "@/pages/SignUp";
 import Profile from "@/pages/Profile";
 import Download from "@/pages/Download";
+import MotorhomeCalculator from "@/pages/MotorhomeCalculator";
 
 function App() {
   return (
@@ -33,6 +34,7 @@ function App() {
         <Route path="/booking/:id" element={<Booking />} />
         <Route path="/book-motorhome" element={<BookMotorhome />} />
         <Route path="/motorhome-results" element={<MotorhomeResults />} />
+        <Route path="/motorhome-calculator" element={<MotorhomeCalculator />} />
         <Route path="/campervan-summary" element={<CampervanSummary />} />
         <Route path="/contact" element={<Contact />} />
         <Route path="/search-hotels" element={<SearchHotels />} />
