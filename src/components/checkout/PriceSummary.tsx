@@ -58,4 +58,3 @@ const PriceSummary = ({ motorhome, hotel, totalDays, totalPrice }: PriceSummaryP
 };
 
 export default PriceSummary;
-

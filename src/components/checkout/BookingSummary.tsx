@@ -79,4 +79,3 @@ const BookingSummary = ({ motorhome, hotel }: BookingSummaryProps) => {
 };
 
 export default BookingSummary;
-
