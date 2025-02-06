@@ -1,3 +1,4 @@
+
 import React from "react";
 import { Button } from "@/components/ui/button";
 import { Calendar } from "@/components/ui/calendar";
@@ -44,18 +45,29 @@ const BookCampsite = () => {
     <div className="min-h-screen flex flex-col">
       <Header />
       <main className="flex-1">
-        <div className="min-h-screen bg-background">
-          <div className="max-w-4xl mx-auto px-4 py-12">
+        <div className="relative min-h-[90vh] flex items-start justify-center">
+          {/* Background Image */}
+          <div
+            className="absolute inset-0 bg-cover bg-center"
+            style={{
+              backgroundImage: "url('/lovable-uploads/294814b5-3ade-43a3-a63d-a4c6bfc84df4.png')",
+            }}
+          >
+            <div className="absolute inset-0 bg-black/40" />
+          </div>
+
+          {/* Content */}
+          <div className="relative z-10 w-full max-w-4xl mx-auto px-4 pt-24">
             {/* Header Section */}
-            <div className="text-center mb-12">
-              <h1 className="text-4xl font-bold mb-4">Find your Camp Site</h1>
-              <p className="text-muted-foreground text-lg">
+            <div className="text-center mb-8">
+              <h1 className="text-5xl font-bold mb-4 text-white">Find your Camp Site</h1>
+              <p className="text-white/90 text-lg">
                 Search low prices on hotels, homes, and much more...
               </p>
             </div>
 
             {/* Search Form */}
-            <div className="bg-white rounded-lg shadow-lg p-6 space-y-6">
+            <div className="bg-white/95 backdrop-blur-sm rounded-lg shadow-lg p-6 space-y-6">
               <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4">
                 {/* Location Selector */}
                 <div className="space-y-2">
