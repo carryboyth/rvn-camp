@@ -74,11 +74,18 @@ const BookCampsite = () => {
                   <label className="text-sm font-medium">Location</label>
                   <Select value={selectedProvince} onValueChange={setSelectedProvince}>
                     <SelectTrigger className="w-full bg-white border-gray-300">
-                      <SelectValue placeholder="Select location">
-                        <div className="flex items-center gap-2">
-                          <MapPin className="h-4 w-4" />
-                          <span>Select location</span>
-                        </div>
+                      <SelectValue>
+                        {selectedProvince ? (
+                          <div className="flex items-center gap-2">
+                            <MapPin className="h-4 w-4" />
+                            {selectedProvince}
+                          </div>
+                        ) : (
+                          <div className="flex items-center gap-2">
+                            <MapPin className="h-4 w-4" />
+                            <span>Select location</span>
+                          </div>
+                        )}
                       </SelectValue>
                     </SelectTrigger>
                     <SelectContent className="bg-white z-50 border shadow-lg">
