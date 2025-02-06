@@ -1,3 +1,4 @@
+
 import { useState } from "react";
 import { useForm } from "react-hook-form";
 import { Link } from "react-router-dom";
@@ -95,13 +96,13 @@ const ManageTrip = () => {
             description: "perfect campervan for your journey!",
           },
           {
-            title: "Book a Campsite",
+            title: "CampSite",
             image: "/lovable-uploads/e4ce7067-7522-45d6-82c0-56a7fb4d8543.png",
             link: "/book-campsite",
             description: "Find the perfect spot to park and camp",
           },
           {
-            title: "Your Entire Holiday in One Click!",
+            title: "Campervan and CampSite",
             image: "/lovable-uploads/b7d87dfa-8531-459d-aa23-7eeb6c5fae70.png",
             link: "/book-motorhome",
             description: "Plan your ultimate road trip with ease",
@@ -140,3 +141,4 @@ const ManageTrip = () => {
 };
 
 export default ManageTrip;
+
