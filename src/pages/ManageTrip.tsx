@@ -90,7 +90,7 @@ const ManageTrip = () => {
       <div className="grid gap-8 md:grid-cols-3">
         {[
           {
-            title: "Rent a Campervan",
+            title: "Campervan",
             image: "/lovable-uploads/3e1b13b0-4b5b-4eec-85e7-d9d8ff30e668.png",
             link: "/rent-campervan",
             description: "perfect campervan for your journey!",
