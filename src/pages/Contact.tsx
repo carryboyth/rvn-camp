@@ -113,6 +113,14 @@ const Contact = () => {
                   www.rvncamp.com
                 </a>
               </div>
+
+              <div className="flex justify-center mt-4">
+                <img 
+                  src="/lovable-uploads/8508ac30-4e38-47ee-94f9-27aaea1f39d7.png" 
+                  alt="RVN Camp QR Code" 
+                  className="w-32 h-32"
+                />
+              </div>
             </div>
           </div>
 
