@@ -1,6 +1,6 @@
 
 import { useState } from "react";
-import { useLocation } from "react-router-dom";
+import { useLocation, useNavigate } from "react-router-dom";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import Header from "@/components/Header";
@@ -22,9 +22,22 @@ interface Motorhome {
 
 const MotorhomeCalculator = () => {
   const location = useLocation();
+  const navigate = useNavigate();
   const motorhome = location.state?.selectedMotorhome as Motorhome;
   const totalDays = location.state?.totalDays || 0;
   const totalPrice = location.state?.totalPrice || 0;
+
+  const handleContinue = () => {
+    navigate("/search-hotels", {
+      state: {
+        selectedMotorhome: motorhome,
+        totalDays: totalDays,
+        totalPrice: totalPrice,
+        departureDate: location.state?.departureDate,
+        returnDate: location.state?.returnDate
+      }
+    });
+  };
 
   if (!motorhome) {
     return (
@@ -114,7 +127,7 @@ const MotorhomeCalculator = () => {
                 >
                   กลับไปหน้าที่แล้ว
                 </Button>
-                <Button onClick={() => window.location.href = "/book-motorhome"}>
+                <Button onClick={handleContinue}>
                   ดำเนินการต่อ
                 </Button>
               </div>
