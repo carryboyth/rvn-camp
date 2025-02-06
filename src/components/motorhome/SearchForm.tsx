@@ -63,11 +63,18 @@ const SearchForm = () => {
               <label className="text-sm font-medium">Pick-up Location</label>
               <Select onValueChange={setPickupLocation} value={pickupLocation}>
                 <SelectTrigger className="h-12">
-                  <SelectValue placeholder="Select airport">
-                    <div className="flex items-center">
-                      <MapPin className="w-4 h-4 mr-2" />
-                      <span>Select airport</span>
-                    </div>
+                  <SelectValue>
+                    {pickupLocation ? (
+                      <div className="flex items-center">
+                        <MapPin className="w-4 h-4 mr-2" />
+                        <span>{pickupLocation}</span>
+                      </div>
+                    ) : (
+                      <div className="flex items-center">
+                        <MapPin className="w-4 h-4 mr-2" />
+                        <span>Select airport</span>
+                      </div>
+                    )}
                   </SelectValue>
                 </SelectTrigger>
                 <SelectContent>
@@ -84,11 +91,18 @@ const SearchForm = () => {
               <label className="text-sm font-medium">Destination</label>
               <Select onValueChange={setDestination} value={destination}>
                 <SelectTrigger className="h-12">
-                  <SelectValue placeholder="Select destination">
-                    <div className="flex items-center">
-                      <Building className="w-4 h-4 mr-2" />
-                      <span>Select destination</span>
-                    </div>
+                  <SelectValue>
+                    {destination ? (
+                      <div className="flex items-center">
+                        <Building className="w-4 h-4 mr-2" />
+                        <span>{destination}</span>
+                      </div>
+                    ) : (
+                      <div className="flex items-center">
+                        <Building className="w-4 h-4 mr-2" />
+                        <span>Select destination</span>
+                      </div>
+                    )}
                   </SelectValue>
                 </SelectTrigger>
                 <SelectContent>
