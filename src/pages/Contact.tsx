@@ -62,6 +62,14 @@ const Contact = () => {
     <div className="min-h-screen flex flex-col">
       <Header />
       
+      <div className="w-full h-[400px] relative">
+        <img
+          src="/lovable-uploads/e057b8ac-7c8d-49ec-93ab-fce4ba591922.png"
+          alt="RVN Camp Banner"
+          className="w-full h-full object-cover"
+        />
+      </div>
+
       <main className="flex-grow container mx-auto px-4 py-8">
         <div className="text-center mb-12">
           <h1 className="text-4xl font-bold mb-4">Get in Touch with Us</h1>
