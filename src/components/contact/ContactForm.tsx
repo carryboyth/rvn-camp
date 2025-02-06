@@ -45,13 +45,35 @@ const ContactForm = () => {
     },
   });
 
-  const onSubmit = (data: z.infer<typeof formSchema>) => {
-    console.log(data);
-    toast({
-      title: "Message Sent!",
-      description: "We'll get back to you shortly.",
-    });
-    form.reset();
+  const onSubmit = async (data: z.infer<typeof formSchema>) => {
+    try {
+      // Create email content
+      const emailBody = `
+        Name: ${data.fullName}
+        Email: ${data.email}
+        Phone: ${data.phone || 'Not provided'}
+        Subject: ${data.subject}
+        Message: ${data.message}
+      `;
+
+      // Using mailto to open email client
+      const mailtoLink = `mailto:webmaster@carryboy.com,carryboyonline@gmail.com?subject=${encodeURIComponent(data.subject)}&body=${encodeURIComponent(emailBody)}`;
+      window.location.href = mailtoLink;
+
+      toast({
+        title: "Message Ready to Send!",
+        description: "Your email client has been opened with the message.",
+      });
+
+      // Reset form after sending
+      form.reset();
+    } catch (error) {
+      toast({
+        title: "Error",
+        description: "There was a problem preparing your message. Please try again.",
+        variant: "destructive",
+      });
+    }
   };
 
   return (
