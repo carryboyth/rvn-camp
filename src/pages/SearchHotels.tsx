@@ -4,8 +4,15 @@ import Header from "@/components/Header";
 import Footer from "@/components/Footer";
 import { Button } from "@/components/ui/button";
 import { Card } from "@/components/ui/card";
-import { MapPin, Star, Users, Calendar, ArrowLeft } from "lucide-react";
+import { MapPin, Star, Users, Calendar, ArrowLeft, Car, Clock, Wallet } from "lucide-react";
 import { useToast } from "@/components/ui/use-toast";
+import {
+  Sidebar,
+  SidebarContent,
+  SidebarGroup,
+  SidebarGroupContent,
+  SidebarGroupLabel,
+} from "@/components/ui/sidebar";
 
 const hotels = [
   {
@@ -58,6 +65,7 @@ const SearchHotels = () => {
 
   const totalDays = searchParams?.totalDays || 0;
   const motorhomePrice = searchParams?.selectedMotorhome?.price || 0;
+  const motorhome = searchParams?.selectedMotorhome;
 
   const handleBookHotel = (hotel: typeof hotels[0]) => {
     if (!searchParams?.selectedMotorhome) {
@@ -81,92 +89,143 @@ const SearchHotels = () => {
     <div className="min-h-screen flex flex-col">
       <Header />
       <main className="flex-1 container mx-auto px-4 py-8">
-        <h1 className="text-3xl font-bold mb-4">Available Hotels</h1>
-        
-        {/* Summary Card */}
-        <Card className="p-6 mb-8 bg-muted/10">
-          <div className="flex items-center gap-4">
-            <Calendar className="w-5 h-5 text-muted-foreground" />
-            <div>
-              <span className="font-medium">Duration: </span>
-              <span>{totalDays} days</span>
-            </div>
-            <div className="ml-auto">
-              <span className="font-medium">Motorhome Total: </span>
-              <span>฿{motorhomePrice.toLocaleString()}</span>
-            </div>
-          </div>
-        </Card>
-        
-        <div className="grid gap-6">
-          {hotels.map((hotel) => (
-            <Card key={hotel.id} className="overflow-hidden animate-fade-up">
-              <div className="grid md:grid-cols-3 gap-6">
-                {/* Column 1: Hotel Image */}
-                <div className="relative h-[200px] md:h-full">
-                  <img
-                    src={hotel.image}
-                    alt={hotel.name}
-                    className="absolute inset-0 w-full h-full object-cover"
-                  />
-                </div>
+        <div className="grid grid-cols-1 md:grid-cols-4 gap-6">
+          {/* Sidebar */}
+          <aside className="md:col-span-1">
+            <Card className="sticky top-24">
+              <div className="p-6">
+                <h2 className="text-xl font-bold mb-4">Booking Summary</h2>
+                
+                {motorhome ? (
+                  <div className="space-y-4">
+                    <div className="flex items-start gap-3">
+                      <Car className="w-5 h-5 mt-1 text-muted-foreground" />
+                      <div>
+                        <p className="font-medium">{motorhome.name}</p>
+                        <p className="text-sm text-muted-foreground">{motorhome.brand}</p>
+                      </div>
+                    </div>
 
-                {/* Column 2: Hotel Details */}
-                <div className="p-6 md:p-0">
-                  <h2 className="text-2xl font-semibold mb-2">{hotel.name}</h2>
-                  <div className="flex items-center gap-2 text-muted-foreground mb-2">
-                    <MapPin className="w-4 h-4" />
-                    <span>{hotel.location}</span>
-                  </div>
-                  <div className="flex items-center gap-2 mb-4">
-                    <Star className="w-4 h-4 text-yellow-400" />
-                    <span>{hotel.rating}</span>
-                    <Users className="w-4 h-4 ml-4" />
-                    <span>Up to {hotel.guests} guests</span>
-                  </div>
-                  <p className="text-muted-foreground">{hotel.description}</p>
-                </div>
+                    <div className="flex items-center gap-3">
+                      <Clock className="w-5 h-5 text-muted-foreground" />
+                      <div>
+                        <p className="font-medium">Duration</p>
+                        <p className="text-sm text-muted-foreground">{totalDays} days</p>
+                      </div>
+                    </div>
 
-                {/* Column 3: Pricing and Booking */}
-                <div className="p-6 md:p-0 flex flex-col justify-center items-end">
-                  <div className="text-right mb-4">
-                    <p className="text-2xl font-bold">
-                      ฿{hotel.pricePerNight.toLocaleString()}
-                    </p>
-                    <p className="text-muted-foreground">per night</p>
-                    {totalDays > 0 && (
-                      <div className="mt-2 p-2 bg-secondary/10 rounded-lg">
-                        <p className="font-semibold">
-                          Total: ฿{(hotel.pricePerNight * totalDays).toLocaleString()}
-                        </p>
+                    <div className="flex items-center gap-3">
+                      <Calendar className="w-5 h-5 text-muted-foreground" />
+                      <div>
+                        <p className="font-medium">Check-in</p>
                         <p className="text-sm text-muted-foreground">
-                          for {totalDays} days
+                          {searchParams?.departureDate}
                         </p>
                       </div>
-                    )}
+                    </div>
+
+                    <div className="flex items-center gap-3">
+                      <Calendar className="w-5 h-5 text-muted-foreground" />
+                      <div>
+                        <p className="font-medium">Check-out</p>
+                        <p className="text-sm text-muted-foreground">
+                          {searchParams?.returnDate}
+                        </p>
+                      </div>
+                    </div>
+
+                    <div className="flex items-center gap-3">
+                      <Wallet className="w-5 h-5 text-muted-foreground" />
+                      <div>
+                        <p className="font-medium">Total Price</p>
+                        <p className="text-sm text-muted-foreground">
+                          ฿{motorhomePrice.toLocaleString()}
+                        </p>
+                      </div>
+                    </div>
                   </div>
-                  <Button
-                    onClick={() => handleBookHotel(hotel)}
-                    className="w-full md:w-auto"
-                  >
-                    Book Hotel
-                  </Button>
-                </div>
+                ) : (
+                  <p className="text-muted-foreground">No motorhome selected</p>
+                )}
               </div>
             </Card>
-          ))}
-        </div>
+          </aside>
 
-        {/* Back Button */}
-        <div className="mt-8 flex justify-center">
-          <Button
-            variant="outline"
-            onClick={() => navigate(-1)}
-            className="flex items-center gap-2"
-          >
-            <ArrowLeft className="w-4 h-4" />
-            Back
-          </Button>
+          {/* Main Content */}
+          <div className="md:col-span-3">
+            <h1 className="text-3xl font-bold mb-4">Available Hotels</h1>
+            
+            <div className="grid gap-6">
+              {hotels.map((hotel) => (
+                <Card key={hotel.id} className="overflow-hidden animate-fade-up">
+                  <div className="grid md:grid-cols-3 gap-6">
+                    {/* Column 1: Hotel Image */}
+                    <div className="relative h-[200px] md:h-full">
+                      <img
+                        src={hotel.image}
+                        alt={hotel.name}
+                        className="absolute inset-0 w-full h-full object-cover"
+                      />
+                    </div>
+
+                    {/* Column 2: Hotel Details */}
+                    <div className="p-6 md:p-0">
+                      <h2 className="text-2xl font-semibold mb-2">{hotel.name}</h2>
+                      <div className="flex items-center gap-2 text-muted-foreground mb-2">
+                        <MapPin className="w-4 h-4" />
+                        <span>{hotel.location}</span>
+                      </div>
+                      <div className="flex items-center gap-2 mb-4">
+                        <Star className="w-4 h-4 text-yellow-400" />
+                        <span>{hotel.rating}</span>
+                        <Users className="w-4 h-4 ml-4" />
+                        <span>Up to {hotel.guests} guests</span>
+                      </div>
+                      <p className="text-muted-foreground">{hotel.description}</p>
+                    </div>
+
+                    {/* Column 3: Pricing and Booking */}
+                    <div className="p-6 md:p-0 flex flex-col justify-center items-end">
+                      <div className="text-right mb-4">
+                        <p className="text-2xl font-bold">
+                          ฿{hotel.pricePerNight.toLocaleString()}
+                        </p>
+                        <p className="text-muted-foreground">per night</p>
+                        {totalDays > 0 && (
+                          <div className="mt-2 p-2 bg-secondary/10 rounded-lg">
+                            <p className="font-semibold">
+                              Total: ฿{(hotel.pricePerNight * totalDays).toLocaleString()}
+                            </p>
+                            <p className="text-sm text-muted-foreground">
+                              for {totalDays} days
+                            </p>
+                          </div>
+                        )}
+                      </div>
+                      <Button
+                        onClick={() => handleBookHotel(hotel)}
+                        className="w-full md:w-auto"
+                      >
+                        Book Hotel
+                      </Button>
+                    </div>
+                  </div>
+                </Card>
+              ))}
+            </div>
+
+            {/* Back Button */}
+            <div className="mt-8 flex justify-center">
+              <Button
+                variant="outline"
+                onClick={() => navigate(-1)}
+                className="flex items-center gap-2"
+              >
+                <ArrowLeft className="w-4 h-4" />
+                Back
+              </Button>
+            </div>
+          </div>
         </div>
       </main>
       <Footer />
@@ -175,4 +234,3 @@ const SearchHotels = () => {
 };
 
 export default SearchHotels;
-
