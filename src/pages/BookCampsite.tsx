@@ -1,3 +1,4 @@
+
 import React from "react";
 import { Button } from "@/components/ui/button";
 import { Calendar } from "@/components/ui/calendar";
@@ -36,7 +37,6 @@ const BookCampsite = () => {
     "Pattaya",
   ];
 
-  // Set first option as default value on component mount
   React.useEffect(() => {
     if (!selectedProvince && provinces.length > 0) {
       setSelectedProvince(provinces[0]);
@@ -56,10 +56,10 @@ const BookCampsite = () => {
           <div
             className="absolute inset-0 bg-cover bg-center"
             style={{
-              backgroundImage: "url('/lovable-uploads/294814b5-3ade-43a3-a63d-a4c6bfc84df4.png')",
+              backgroundImage: "url('/lovable-uploads/1c68e1b4-9fe2-4968-a384-030737e07ca5.png')",
             }}
           >
-            <div className="absolute inset-0 bg-black/40" />
+            <div className="absolute inset-0 bg-black/30" /> {/* Reduced overlay opacity */}
           </div>
 
           {/* Content */}
@@ -184,3 +184,4 @@ const BookCampsite = () => {
 };
 
 export default BookCampsite;
+
