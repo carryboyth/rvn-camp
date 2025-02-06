@@ -120,6 +120,11 @@ const RentCampervan = () => {
     return selectedVan ? days * selectedVan.price : 0;
   };
 
+  const airports = [
+    "Suvarnabhumi Airport (BKK)",
+    "Don Mueang International Airport (BKK)",
+  ];
+
   const BookingForm = () => (
     <form onSubmit={handleSubmit(onSearch)} className="space-y-6">
       <div className="grid gap-6 md:grid-cols-2">
@@ -155,13 +160,16 @@ const RentCampervan = () => {
               setBookingDetails({ ...bookingDetails, pickupLocation: value })
             }
           >
-            <SelectTrigger>
-              <SelectValue placeholder="Select location" />
+            <SelectTrigger className="h-12">
+              <SelectValue placeholder="Pick-up Location" />
             </SelectTrigger>
-            <SelectContent>
-              {locations.map((location) => (
+            <SelectContent className="bg-white border shadow-lg">
+              {airports.map((location) => (
                 <SelectItem key={location} value={location}>
-                  {location}
+                  <div className="flex items-center gap-2">
+                    <MapPin className="h-4 w-4" />
+                    {location}
+                  </div>
                 </SelectItem>
               ))}
             </SelectContent>
@@ -177,7 +185,7 @@ const RentCampervan = () => {
             <SelectTrigger>
               <SelectValue placeholder="Select location" />
             </SelectTrigger>
-            <SelectContent>
+            <SelectContent className="bg-white border shadow-lg">
               {locations.map((location) => (
                 <SelectItem key={location} value={location}>
                   {location}
