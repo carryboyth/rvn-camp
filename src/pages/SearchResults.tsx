@@ -1,4 +1,3 @@
-
 import React from "react";
 import CampsiteList from "@/components/CampsiteList";
 import Header from "@/components/Header";
@@ -10,13 +9,13 @@ import { useNavigate } from "react-router-dom";
 const mockCampsites = [
   {
     id: "1",
-    name: "Pine Valley Campground",
+    name: "Mountain View Campsite",
     description: "Beautiful campsite nestled in a pine forest with scenic mountain views.",
     location: "Chiang Mai, Thailand",
     amenities: ["WiFi", "Parking", "Pet Friendly"],
     rating: 4.5,
     price: 1500,
-    image: "https://images.unsplash.com/photo-1504280390367-361c6d9f38f4?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1470&q=80"
+    image: "/lovable-uploads/b047e00a-8752-47a7-8444-d4d4063f3d7a.png"
   },
   {
     id: "2",
@@ -73,4 +72,3 @@ const SearchResults = () => {
 };
 
 export default SearchResults;
-
