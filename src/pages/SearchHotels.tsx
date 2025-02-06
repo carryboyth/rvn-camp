@@ -9,6 +9,7 @@ import { useState } from "react";
 import SearchForm from "@/components/hotels/search/SearchForm";
 import BookingSummary from "@/components/hotels/booking/BookingSummary";
 import HotelCard from "@/components/hotels/HotelCard";
+import { differenceInDays } from "date-fns";
 
 const hotels = [
   {
@@ -59,7 +60,6 @@ const SearchHotels = () => {
   const { toast } = useToast();
   const searchParams = location.state;
 
-  const totalDays = searchParams?.totalDays || 0;
   const motorhomePrice = searchParams?.selectedMotorhome?.price || 0;
   const motorhome = searchParams?.selectedMotorhome;
 
@@ -69,6 +69,10 @@ const SearchHotels = () => {
   const [checkIn, setCheckIn] = useState<Date>();
   const [checkOut, setCheckOut] = useState<Date>();
   const [guests, setGuests] = useState("1");
+
+  // Calculate total days based on check-in and check-out dates
+  const totalDays = checkIn && checkOut ? 
+    Math.max(differenceInDays(checkOut, checkIn), 0) : 0;
 
   const formatDate = (date: string | Date | undefined) => {
     if (!date) return "";
@@ -90,19 +94,56 @@ const SearchHotels = () => {
       return;
     }
 
+    if (!checkIn || !checkOut) {
+      toast({
+        title: "Select Dates",
+        description: "Please select check-in and check-out dates before booking.",
+        variant: "destructive",
+      });
+      return;
+    }
+
+    if (totalDays <= 0) {
+      toast({
+        title: "Invalid Dates",
+        description: "Check-out date must be after check-in date.",
+        variant: "destructive",
+      });
+      return;
+    }
+
     navigate("/hotels-calculator", {
       state: {
         ...searchParams,
         selectedHotel: hotel,
         checkIn: checkIn,
         checkOut: checkOut,
+        totalDays: totalDays,
         totalPrice: hotel.pricePerNight * totalDays
       }
     });
   };
 
   const handleSearch = () => {
-    console.log("Searching with params:", { searchLocation, checkIn, checkOut, guests });
+    if (!checkIn || !checkOut) {
+      toast({
+        title: "Select Dates",
+        description: "Please select both check-in and check-out dates.",
+        variant: "destructive",
+      });
+      return;
+    }
+
+    if (totalDays <= 0) {
+      toast({
+        title: "Invalid Dates",
+        description: "Check-out date must be after check-in date.",
+        variant: "destructive",
+      });
+      return;
+    }
+
+    console.log("Searching with params:", { searchLocation, checkIn, checkOut, guests, totalDays });
   };
 
   return (
