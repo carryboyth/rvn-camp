@@ -53,7 +53,7 @@ const LocationSelector = ({
             )}
           </SelectValue>
         </SelectTrigger>
-        <SelectContent className="bg-white z-50">
+        <SelectContent className="bg-white z-50 border shadow-lg">
           {options.map((option) => (
             <SelectItem key={option} value={option}>
               {option}
@@ -66,4 +66,3 @@ const LocationSelector = ({
 };
 
 export default LocationSelector;
-
