@@ -13,7 +13,7 @@ const BookMotorhome = () => {
           className="absolute inset-0 bg-cover bg-center"
           style={{
             backgroundImage:
-              "url('/lovable-uploads/673cf222-4bbf-4a47-804f-ee4ff7ba7a14.png')",
+              "url('/lovable-uploads/09c9410f-d40a-4c36-87b7-cf613510a6d9.png')",
           }}
         >
           <div className="absolute inset-0 bg-black/40" />
