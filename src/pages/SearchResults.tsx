@@ -1,3 +1,4 @@
+
 import React from "react";
 import CampsiteList from "@/components/CampsiteList";
 import Header from "@/components/Header";
@@ -47,12 +48,12 @@ const SearchResults = () => {
       <Header />
       <main className="flex-1">
         <div className="container mx-auto px-4 py-8">
-          <div className="flex items-center gap-4 mb-6">
+          <div className="flex flex-col items-center text-center mb-6">
             <Button
               variant="outline"
               size="icon"
               onClick={() => navigate('/book-campsite')}
-              className="h-10 w-10"
+              className="h-10 w-10 mb-4"
             >
               <ArrowLeft className="h-4 w-4" />
             </Button>

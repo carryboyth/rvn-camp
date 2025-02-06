@@ -1,3 +1,4 @@
+
 import React from "react";
 import { Button } from "@/components/ui/button";
 import { Card } from "@/components/ui/card";
@@ -50,8 +51,8 @@ const CampsiteList = ({ campsites }: CampsiteListProps) => {
             </div>
 
             {/* Middle Column - Details */}
-            <div className="p-6">
-              <div className="flex items-center gap-2 mb-2">
+            <div className="p-6 text-center">
+              <div className="flex items-center justify-center gap-2 mb-2">
                 <h3 className="text-xl font-semibold">{campsite.name}</h3>
                 <div className="flex items-center text-yellow-500">
                   <Star className="h-4 w-4 fill-current" />
@@ -62,7 +63,7 @@ const CampsiteList = ({ campsites }: CampsiteListProps) => {
                 {campsite.location}
               </p>
               <p className="text-muted-foreground mb-4">{campsite.description}</p>
-              <div className="flex flex-wrap gap-3">
+              <div className="flex flex-wrap justify-center gap-3">
                 {campsite.amenities.map((amenity, index) => (
                   <div
                     key={index}
