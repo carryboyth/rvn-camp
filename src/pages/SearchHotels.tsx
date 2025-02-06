@@ -66,8 +66,11 @@ const SearchHotels = () => {
   const motorhomePrice = searchParams?.selectedMotorhome?.price || 0;
   const motorhome = searchParams?.selectedMotorhome;
 
+  // Array of available locations
+  const locations = ["Bangkok", "Chiang Mai", "Phuket", "Ayutthaya"];
+
   // New state for search form
-  const [searchLocation, setSearchLocation] = useState("");
+  const [searchLocation, setSearchLocation] = useState(locations[0]);
   const [checkIn, setCheckIn] = useState<Date>();
   const [checkOut, setCheckOut] = useState<Date>();
   const [guests, setGuests] = useState("1");
@@ -115,13 +118,26 @@ const SearchHotels = () => {
           <div className="flex flex-col md:flex-row gap-4 items-end">
             <div className="flex-1">
               <label className="text-sm font-medium mb-2 block">Location</label>
-              <Input 
-                placeholder="Where are you going?"
-                value={searchLocation}
-                onChange={(e) => setSearchLocation(e.target.value)}
-                className="h-12"
-                icon={<MapPin className="h-4 w-4" />}
-              />
+              <Select value={searchLocation} onValueChange={setSearchLocation}>
+                <SelectTrigger className="h-12">
+                  <SelectValue>
+                    <div className="flex items-center">
+                      <MapPin className="mr-2 h-4 w-4" />
+                      {searchLocation}
+                    </div>
+                  </SelectValue>
+                </SelectTrigger>
+                <SelectContent>
+                  {locations.map((location) => (
+                    <SelectItem key={location} value={location}>
+                      <div className="flex items-center">
+                        <MapPin className="mr-2 h-4 w-4" />
+                        {location}
+                      </div>
+                    </SelectItem>
+                  ))}
+                </SelectContent>
+              </Select>
             </div>
             
             <div className="flex-1">
@@ -174,7 +190,7 @@ const SearchHotels = () => {
               <label className="text-sm font-medium mb-2 block">Guests</label>
               <Select value={guests} onValueChange={setGuests}>
                 <SelectTrigger className="h-12">
-                  <SelectValue placeholder="Select guests">
+                  <SelectValue>
                     <div className="flex items-center">
                       <Users className="mr-2 h-4 w-4" />
                       {guests} {parseInt(guests) === 1 ? 'Guest' : 'Guests'}
