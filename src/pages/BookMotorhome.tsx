@@ -1,4 +1,3 @@
-
 import Header from "@/components/Header";
 import Footer from "@/components/Footer";
 import SearchForm from "@/components/motorhome/SearchForm";
@@ -13,7 +12,7 @@ const BookMotorhome = () => {
           className="absolute inset-0 bg-cover bg-center"
           style={{
             backgroundImage:
-              "url('/lovable-uploads/09c9410f-d40a-4c36-87b7-cf613510a6d9.png')",
+              "url('https://images.unsplash.com/photo-1469474968028-56623f02e42e')",
           }}
         >
           <div className="absolute inset-0 bg-black/40" />
