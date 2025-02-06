@@ -17,7 +17,7 @@ const Download = () => {
           </CardHeader>
           <CardContent className="flex flex-col items-center">
             <img 
-              src="/lovable-uploads/064c497f-316d-4fbd-9300-f9927b5f4208.png" 
+              src="/lovable-uploads/be153849-29db-4c81-ab42-03ded7f65573.png" 
               alt="iOS App" 
               className="w-32 h-32 mb-4"
             />
@@ -34,7 +34,7 @@ const Download = () => {
           </CardHeader>
           <CardContent className="flex flex-col items-center">
             <img 
-              src="/lovable-uploads/064c497f-316d-4fbd-9300-f9927b5f4208.png" 
+              src="/lovable-uploads/be153849-29db-4c81-ab42-03ded7f65573.png" 
               alt="Android App" 
               className="w-32 h-32 mb-4"
             />
