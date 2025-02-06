@@ -1,3 +1,4 @@
+
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { Calendar } from "@/components/ui/calendar";
@@ -13,8 +14,8 @@ import { Card, CardContent } from "@/components/ui/card";
 import { MapPin, Users, Search, Building } from "lucide-react";
 
 const airports = [
-  "Suvarnabhumi Airport",
-  "Don Mueang Airport",
+  "Suvarnabhumi Airport (BKK)",
+  "Don Mueang International Airport (BKK)",
 ];
 
 const destinations = [
@@ -62,7 +63,7 @@ const SearchForm = () => {
             <div className="space-y-2">
               <label className="text-sm font-medium">Pick-up Location</label>
               <Select onValueChange={setPickupLocation} value={pickupLocation}>
-                <SelectTrigger className="h-12">
+                <SelectTrigger className="h-12 bg-white">
                   <SelectValue>
                     {pickupLocation ? (
                       <div className="flex items-center">
@@ -72,12 +73,12 @@ const SearchForm = () => {
                     ) : (
                       <div className="flex items-center">
                         <MapPin className="w-4 h-4 mr-2" />
-                        <span>Select airport</span>
+                        <span>Pick-up Location</span>
                       </div>
                     )}
                   </SelectValue>
                 </SelectTrigger>
-                <SelectContent>
+                <SelectContent className="bg-white">
                   {airports.map((airport) => (
                     <SelectItem key={airport} value={airport}>
                       {airport}
