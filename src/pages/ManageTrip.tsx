@@ -1,4 +1,3 @@
-
 import { useState } from "react";
 import { useForm } from "react-hook-form";
 import { Link } from "react-router-dom";
@@ -20,7 +19,7 @@ const ManageTrip = () => {
 
   const LoginForm = () => (
     <div 
-      className="min-h-screen bg-cover bg-center bg-no-repeat pt-24"
+      className="min-h-[600px] bg-cover bg-center bg-no-repeat pt-16"
       style={{ 
         backgroundImage: 'url("/lovable-uploads/b3b48e94-e287-44ba-807a-e228a1df866a.png")',
         backgroundColor: 'rgba(0, 0, 0, 0.5)',
