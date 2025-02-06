@@ -30,7 +30,7 @@ const mockCampsites = [
   },
   {
     id: "3",
-    name: "Beach Paradise Camp",
+    name: "Mountain Mist Luxury Campsite",
     description: "Beachfront camping with stunning sunset views and water activities.",
     location: "Phuket, Thailand",
     amenities: ["WiFi", "Parking"],
