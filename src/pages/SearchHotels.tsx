@@ -67,6 +67,17 @@ const SearchHotels = () => {
   const motorhomePrice = searchParams?.selectedMotorhome?.price || 0;
   const motorhome = searchParams?.selectedMotorhome;
 
+  // Format the dates from the search params
+  const formatDate = (date: string | Date | undefined) => {
+    if (!date) return "";
+    const dateObj = typeof date === "string" ? new Date(date) : date;
+    return dateObj.toLocaleDateString('th-TH', {
+      year: 'numeric',
+      month: 'long',
+      day: 'numeric'
+    });
+  };
+
   const handleBookHotel = (hotel: typeof hotels[0]) => {
     if (!searchParams?.selectedMotorhome) {
       toast({
@@ -119,7 +130,7 @@ const SearchHotels = () => {
                       <div>
                         <p className="font-medium">Check-in</p>
                         <p className="text-sm text-muted-foreground">
-                          {searchParams?.departureDate}
+                          {formatDate(searchParams?.departureDate)}
                         </p>
                       </div>
                     </div>
@@ -129,7 +140,7 @@ const SearchHotels = () => {
                       <div>
                         <p className="font-medium">Check-out</p>
                         <p className="text-sm text-muted-foreground">
-                          {searchParams?.returnDate}
+                          {formatDate(searchParams?.returnDate)}
                         </p>
                       </div>
                     </div>
@@ -234,3 +245,4 @@ const SearchHotels = () => {
 };
 
 export default SearchHotels;
+
