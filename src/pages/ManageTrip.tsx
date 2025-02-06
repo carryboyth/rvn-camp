@@ -1,3 +1,4 @@
+
 import { useState } from "react";
 import { useForm } from "react-hook-form";
 import { Link } from "react-router-dom";
@@ -92,16 +93,16 @@ const ManageTrip = () => {
             title: "Campervan",
             image: "/lovable-uploads/3e1b13b0-4b5b-4eec-85e7-d9d8ff30e668.png",
             link: "/rent-campervan",
-            description: "perfect campervan for your journey!",
+            description: "Perfect campervan for your journey!",
           },
           {
-            title: "CampSite",
+            title: "Campsite",
             image: "/lovable-uploads/e0b94fa6-244f-45da-a2ec-cadf28c5ce17.png",
             link: "/book-campsite",
             description: "Find the perfect spot to park and camp",
           },
           {
-            title: "Campervan and CampSite",
+            title: "Campervan and Campsite",
             image: "/lovable-uploads/63ef8743-4447-423d-9522-4c57fe057b48.png",
             link: "/book-motorhome",
             description: "Plan your ultimate road trip with ease",
@@ -116,7 +117,7 @@ const ManageTrip = () => {
                   className="h-full w-full object-cover transition-transform duration-300 group-hover:scale-105 cursor-pointer"
                 />
               </div>
-              <CardContent className="p-4">
+              <CardContent className="p-4 text-center">
                 <h3 className="mb-2 text-xl font-semibold">{item.title}</h3>
                 <p className="mb-4 text-muted-foreground">{item.description}</p>
                 <Button className="w-full">Book Now</Button>
