@@ -133,7 +133,7 @@ const RentCampervan = () => {
         className="mb-4 flex items-center gap-2"
         onClick={() => navigate(-1)}
       >
-        <ArrowLeft className="h-4 w-4" /> ย้อนกลับ
+        <ArrowLeft className="h-4 w-4" /> Previous Steps
       </Button>
       <form onSubmit={handleSubmit(onSearch)} className="space-y-6">
         <div className="grid gap-6 md:grid-cols-2">
@@ -241,7 +241,7 @@ const RentCampervan = () => {
         className="mb-4 flex items-center gap-2"
         onClick={() => setBookingState("search")}
       >
-        <ArrowLeft className="h-4 w-4" /> ย้อนกลับ
+        <ArrowLeft className="h-4 w-4" /> Previous Steps
       </Button>
       <div className="grid gap-6 md:grid-cols-3">
         {campervans.map((van) => (
@@ -293,7 +293,7 @@ const RentCampervan = () => {
         className="mb-4 flex items-center gap-2"
         onClick={() => setBookingState("results")}
       >
-        <ArrowLeft className="h-4 w-4" /> ย้อนกลับ
+        <ArrowLeft className="h-4 w-4" /> Previous Steps
       </Button>
       <Card className="mx-auto max-w-2xl">
         <CardHeader>
