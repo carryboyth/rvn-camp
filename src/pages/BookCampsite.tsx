@@ -1,4 +1,3 @@
-
 import React from "react";
 import { Button } from "@/components/ui/button";
 import { Calendar } from "@/components/ui/calendar";
@@ -37,6 +36,13 @@ const BookCampsite = () => {
     "Pattaya",
   ];
 
+  // Set first option as default value on component mount
+  React.useEffect(() => {
+    if (!selectedProvince && provinces.length > 0) {
+      setSelectedProvince(provinces[0]);
+    }
+  }, []);
+
   const handleSearch = () => {
     navigate("/search-results");
   };
@@ -72,20 +78,13 @@ const BookCampsite = () => {
                 {/* Location Selector */}
                 <div className="space-y-2">
                   <label className="text-sm font-medium">Location</label>
-                  <Select value={selectedProvince} onValueChange={setSelectedProvince}>
+                  <Select value={selectedProvince || provinces[0]} onValueChange={setSelectedProvince}>
                     <SelectTrigger className="w-full bg-white border-gray-300">
                       <SelectValue>
-                        {selectedProvince ? (
-                          <div className="flex items-center gap-2">
-                            <MapPin className="h-4 w-4" />
-                            {selectedProvince}
-                          </div>
-                        ) : (
-                          <div className="flex items-center gap-2">
-                            <MapPin className="h-4 w-4" />
-                            <span>Select location</span>
-                          </div>
-                        )}
+                        <div className="flex items-center gap-2">
+                          <MapPin className="h-4 w-4" />
+                          {selectedProvince || provinces[0]}
+                        </div>
                       </SelectValue>
                     </SelectTrigger>
                     <SelectContent className="bg-white z-50 border shadow-lg">
@@ -185,4 +184,3 @@ const BookCampsite = () => {
 };
 
 export default BookCampsite;
-
