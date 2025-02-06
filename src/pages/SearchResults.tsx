@@ -1,7 +1,11 @@
+
 import React from "react";
 import CampsiteList from "@/components/CampsiteList";
 import Header from "@/components/Header";
 import Footer from "@/components/Footer";
+import { Button } from "@/components/ui/button";
+import { ArrowLeft } from "lucide-react";
+import { useNavigate } from "react-router-dom";
 
 const mockCampsites = [
   {
@@ -37,15 +41,29 @@ const mockCampsites = [
 ];
 
 const SearchResults = () => {
+  const navigate = useNavigate();
+
   return (
     <div className="min-h-screen flex flex-col">
       <Header />
       <main className="flex-1">
         <div className="container mx-auto px-4 py-8">
-          <h1 className="text-3xl font-bold mb-2">Available Campsites</h1>
-          <p className="text-muted-foreground mb-8">
-            Showing {mockCampsites.length} results for your search
-          </p>
+          <div className="flex items-center gap-4 mb-6">
+            <Button
+              variant="outline"
+              size="icon"
+              onClick={() => navigate('/book-campsite')}
+              className="h-10 w-10"
+            >
+              <ArrowLeft className="h-4 w-4" />
+            </Button>
+            <div>
+              <h1 className="text-3xl font-bold mb-2">Available Campsites</h1>
+              <p className="text-muted-foreground">
+                Showing {mockCampsites.length} results for your search
+              </p>
+            </div>
+          </div>
           <CampsiteList campsites={mockCampsites} />
         </div>
       </main>

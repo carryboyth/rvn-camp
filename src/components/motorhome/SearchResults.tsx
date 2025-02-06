@@ -2,7 +2,7 @@
 import { useLocation, useNavigate } from "react-router-dom";
 import { Card } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
-import { Car, Users, Coffee, Bed, MapPin } from "lucide-react";
+import { Car, Users, Coffee, Bed, MapPin, ArrowLeft } from "lucide-react";
 import { useState } from "react";
 import { useToast } from "@/components/ui/use-toast";
 
@@ -122,6 +122,18 @@ const SearchResults = ({ filters }: SearchResultsProps) => {
 
   return (
     <div className="space-y-6">
+      <div className="flex items-center gap-4 mb-6">
+        <Button
+          variant="outline"
+          size="icon"
+          onClick={() => navigate(-1)}
+          className="h-10 w-10"
+        >
+          <ArrowLeft className="h-4 w-4" />
+        </Button>
+        <h2 className="text-2xl font-semibold">Available Motorhomes</h2>
+      </div>
+
       {filteredMotorhomes.map((motorhome) => (
         <Card 
           key={motorhome.id} 
