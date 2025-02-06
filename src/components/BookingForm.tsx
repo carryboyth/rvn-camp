@@ -151,15 +151,6 @@ const BookingForm = ({
               </Button>
               <Button
                 type="button"
-                variant="secondary"
-                onClick={onSave}
-                className="gap-2"
-              >
-                <Save className="h-4 w-4" />
-                Save Plan
-              </Button>
-              <Button
-                type="button"
                 variant="outline"
                 onClick={onCancel}
                 className="gap-2"
