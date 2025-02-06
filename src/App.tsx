@@ -16,6 +16,7 @@ import BookingSummary from "@/pages/BookingSummary";
 import CustomerDetails from "@/pages/CustomerDetails";
 import Login from "@/pages/Login";
 import Profile from "@/pages/Profile";
+import Download from "@/pages/Download";
 
 function App() {
   return (
@@ -37,6 +38,7 @@ function App() {
         <Route path="/customer-details" element={<CustomerDetails />} />
         <Route path="/login" element={<Login />} />
         <Route path="/profile" element={<Profile />} />
+        <Route path="/download" element={<Download />} />
         <Route path="*" element={<NotFound />} />
       </Routes>
     </Router>
