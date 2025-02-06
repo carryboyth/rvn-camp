@@ -14,6 +14,7 @@ import { MapPin, Users, Coffee, Bed, UtensilsCrossed } from "lucide-react";
 import Header from "@/components/Header";
 import Footer from "@/components/Footer";
 import { useNavigate } from "react-router-dom";
+import LocationSelector from "@/components/motorhome/form/LocationSelector";
 
 type BookingState = "search" | "results" | "summary";
 
@@ -153,47 +154,22 @@ const RentCampervan = () => {
       </div>
 
       <div className="grid gap-6 md:grid-cols-2">
-        <div className="space-y-2">
-          <label className="text-sm font-medium">Pick-up Location</label>
-          <Select
-            onValueChange={(value) =>
-              setBookingDetails({ ...bookingDetails, pickupLocation: value })
-            }
-          >
-            <SelectTrigger className="h-12">
-              <SelectValue placeholder="Pick-up Location" />
-            </SelectTrigger>
-            <SelectContent className="bg-white border shadow-lg">
-              {airports.map((location) => (
-                <SelectItem key={location} value={location}>
-                  <div className="flex items-center gap-2">
-                    <MapPin className="h-4 w-4" />
-                    {location}
-                  </div>
-                </SelectItem>
-              ))}
-            </SelectContent>
-          </Select>
-        </div>
-        <div className="space-y-2">
-          <label className="text-sm font-medium">Drop-off Location</label>
-          <Select
-            onValueChange={(value) =>
-              setBookingDetails({ ...bookingDetails, dropoffLocation: value })
-            }
-          >
-            <SelectTrigger>
-              <SelectValue placeholder="Select location" />
-            </SelectTrigger>
-            <SelectContent className="bg-white border shadow-lg">
-              {locations.map((location) => (
-                <SelectItem key={location} value={location}>
-                  {location}
-                </SelectItem>
-              ))}
-            </SelectContent>
-          </Select>
-        </div>
+        <LocationSelector
+          type="pickup"
+          value={bookingDetails.pickupLocation}
+          onValueChange={(value) =>
+            setBookingDetails({ ...bookingDetails, pickupLocation: value })
+          }
+          options={airports}
+        />
+        <LocationSelector
+          type="destination"
+          value={bookingDetails.dropoffLocation}
+          onValueChange={(value) =>
+            setBookingDetails({ ...bookingDetails, dropoffLocation: value })
+          }
+          options={locations}
+        />
       </div>
 
       <div className="grid gap-6 md:grid-cols-2">
