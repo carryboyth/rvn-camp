@@ -103,8 +103,8 @@ const SearchResults = ({ filters }: SearchResultsProps) => {
     const totalPrice = calculateTotalPrice(motorhome.price);
 
     toast({
-      title: "รถบ้านที่เลือก",
-      description: `คุณได้เลือก ${motorhome.name} กำลังนำคุณไปยังหน้าค้นหาที่พัก...`,
+      title: "Selected Motorhome",
+      description: `You've selected ${motorhome.name}. Taking you to accommodation search...`,
     });
     
     navigate("/search-hotels", {
@@ -145,11 +145,11 @@ const SearchResults = ({ filters }: SearchResultsProps) => {
               <div className="space-y-3">
                 <div className="flex items-center gap-2 text-muted-foreground">
                   <Users className="w-5 h-5" />
-                  <span className="text-foreground">{motorhome.seats} ที่นั่ง</span>
+                  <span className="text-foreground">{motorhome.seats} Seats</span>
                 </div>
                 <div className="flex items-center gap-2 text-muted-foreground">
                   <Bed className="w-5 h-5" />
-                  <span className="text-foreground">เตียง {motorhome.bedSize}</span>
+                  <span className="text-foreground">{motorhome.bedSize} Bed</span>
                 </div>
                 <div className="flex items-center gap-2 text-muted-foreground">
                   <Coffee className="w-5 h-5" />
@@ -158,8 +158,8 @@ const SearchResults = ({ filters }: SearchResultsProps) => {
                 <div className="flex items-center gap-2 text-muted-foreground pt-2">
                   <MapPin className="w-5 h-5 flex-shrink-0" />
                   <div className="flex flex-col">
-                    <span className="text-foreground">รับรถ: {motorhome.pickupLocation}</span>
-                    <span className="text-foreground">คืนรถ: {motorhome.dropoffLocation}</span>
+                    <span className="text-foreground">Pick-up: {motorhome.pickupLocation}</span>
+                    <span className="text-foreground">Drop-off: {motorhome.dropoffLocation}</span>
                   </div>
                 </div>
               </div>
@@ -171,16 +171,16 @@ const SearchResults = ({ filters }: SearchResultsProps) => {
                   <p className="text-3xl font-bold text-primary-foreground">
                     ฿{motorhome.price.toLocaleString()}
                   </p>
-                  <p className="text-sm text-muted-foreground">ต่อวัน</p>
+                  <p className="text-sm text-muted-foreground">per day</p>
                 </div>
                 
                 {calculateTotalDays() > 0 && (
                   <div className="bg-secondary/10 p-4 rounded-lg">
                     <p className="text-xl font-semibold text-secondary-foreground">
-                      ราคารวม: ฿{calculateTotalPrice(motorhome.price).toLocaleString()}
+                      Total: ฿{calculateTotalPrice(motorhome.price).toLocaleString()}
                     </p>
                     <p className="text-sm text-muted-foreground">
-                      สำหรับ {calculateTotalDays()} วัน
+                      for {calculateTotalDays()} days
                     </p>
                   </div>
                 )}
@@ -192,7 +192,7 @@ const SearchResults = ({ filters }: SearchResultsProps) => {
                 size="lg"
               >
                 <Car className="w-5 h-5 mr-2" />
-                เลือกรถบ้าน
+                Select Motorhome
               </Button>
             </div>
           </div>
