@@ -10,7 +10,7 @@ import {
 } from "@/components/ui/select";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
-import { MapPin, Users, Coffee, Bed, UtensilsCrossed } from "lucide-react";
+import { MapPin, Users, Coffee, Bed, UtensilsCrossed, ArrowLeft } from "lucide-react";
 import Header from "@/components/Header";
 import Footer from "@/components/Footer";
 import { useNavigate } from "react-router-dom";
@@ -127,221 +127,248 @@ const RentCampervan = () => {
   ];
 
   const BookingForm = () => (
-    <form onSubmit={handleSubmit(onSearch)} className="space-y-6">
-      <div className="grid gap-6 md:grid-cols-2">
-        <div className="space-y-2">
-          <label className="text-sm font-medium">Pick-up Date</label>
-          <Calendar
-            mode="single"
-            selected={bookingDetails.pickupDate}
-            onSelect={(date) =>
-              setBookingDetails({ ...bookingDetails, pickupDate: date })
-            }
-            className="rounded-md border"
-          />
-        </div>
-        <div className="space-y-2">
-          <label className="text-sm font-medium">Drop-off Date</label>
-          <Calendar
-            mode="single"
-            selected={bookingDetails.dropoffDate}
-            onSelect={(date) =>
-              setBookingDetails({ ...bookingDetails, dropoffDate: date })
-            }
-            className="rounded-md border"
-          />
-        </div>
-      </div>
-
-      <div className="grid gap-6 md:grid-cols-2">
-        <LocationSelector
-          type="pickup"
-          value={bookingDetails.pickupLocation}
-          onValueChange={(value) =>
-            setBookingDetails({ ...bookingDetails, pickupLocation: value })
-          }
-          options={airports}
-        />
-        <LocationSelector
-          type="destination"
-          value={bookingDetails.dropoffLocation}
-          onValueChange={(value) =>
-            setBookingDetails({ ...bookingDetails, dropoffLocation: value })
-          }
-          options={locations}
-        />
-      </div>
-
-      <div className="grid gap-6 md:grid-cols-2">
-        <div className="space-y-2">
-          <label className="text-sm font-medium">Pick-up Time</label>
-          <Select
-            value={bookingDetails.pickupTime}
-            onValueChange={(value) =>
-              setBookingDetails({ ...bookingDetails, pickupTime: value })
-            }
-          >
-            <SelectTrigger className="h-12 bg-white">
-              <SelectValue>
-                <span>{bookingDetails.pickupTime}</span>
-              </SelectValue>
-            </SelectTrigger>
-            <SelectContent className="bg-white border shadow-lg">
-              {timeSlots.map((time) => (
-                <SelectItem key={time} value={time}>
-                  {time}
-                </SelectItem>
-              ))}
-            </SelectContent>
-          </Select>
-        </div>
-        <div className="space-y-2">
-          <label className="text-sm font-medium">Drop-off Time</label>
-          <Select
-            value={bookingDetails.dropoffTime}
-            onValueChange={(value) =>
-              setBookingDetails({ ...bookingDetails, dropoffTime: value })
-            }
-          >
-            <SelectTrigger className="h-12 bg-white">
-              <SelectValue>
-                <span>{bookingDetails.dropoffTime}</span>
-              </SelectValue>
-            </SelectTrigger>
-            <SelectContent className="bg-white border shadow-lg">
-              {timeSlots.map((time) => (
-                <SelectItem key={time} value={time}>
-                  {time}
-                </SelectItem>
-              ))}
-            </SelectContent>
-          </Select>
-        </div>
-      </div>
-
-      <Button type="submit" className="w-full">
-        Search Available Campervans
+    <>
+      <Button
+        variant="ghost"
+        className="mb-4 flex items-center gap-2"
+        onClick={() => navigate(-1)}
+      >
+        <ArrowLeft className="h-4 w-4" /> ย้อนกลับ
       </Button>
-    </form>
+      <form onSubmit={handleSubmit(onSearch)} className="space-y-6">
+        <div className="grid gap-6 md:grid-cols-2">
+          <div className="space-y-2">
+            <label className="text-sm font-medium">Pick-up Date</label>
+            <Calendar
+              mode="single"
+              selected={bookingDetails.pickupDate}
+              onSelect={(date) =>
+                setBookingDetails({ ...bookingDetails, pickupDate: date })
+              }
+              className="rounded-md border"
+            />
+          </div>
+          <div className="space-y-2">
+            <label className="text-sm font-medium">Drop-off Date</label>
+            <Calendar
+              mode="single"
+              selected={bookingDetails.dropoffDate}
+              onSelect={(date) =>
+                setBookingDetails({ ...bookingDetails, dropoffDate: date })
+              }
+              className="rounded-md border"
+            />
+          </div>
+        </div>
+
+        <div className="grid gap-6 md:grid-cols-2">
+          <LocationSelector
+            type="pickup"
+            value={bookingDetails.pickupLocation}
+            onValueChange={(value) =>
+              setBookingDetails({ ...bookingDetails, pickupLocation: value })
+            }
+            options={airports}
+          />
+          <LocationSelector
+            type="destination"
+            value={bookingDetails.dropoffLocation}
+            onValueChange={(value) =>
+              setBookingDetails({ ...bookingDetails, dropoffLocation: value })
+            }
+            options={locations}
+          />
+        </div>
+
+        <div className="grid gap-6 md:grid-cols-2">
+          <div className="space-y-2">
+            <label className="text-sm font-medium">Pick-up Time</label>
+            <Select
+              value={bookingDetails.pickupTime}
+              onValueChange={(value) =>
+                setBookingDetails({ ...bookingDetails, pickupTime: value })
+              }
+            >
+              <SelectTrigger className="h-12 bg-white">
+                <SelectValue>
+                  <span>{bookingDetails.pickupTime}</span>
+                </SelectValue>
+              </SelectTrigger>
+              <SelectContent className="bg-white border shadow-lg">
+                {timeSlots.map((time) => (
+                  <SelectItem key={time} value={time}>
+                    {time}
+                  </SelectItem>
+                ))}
+              </SelectContent>
+            </Select>
+          </div>
+          <div className="space-y-2">
+            <label className="text-sm font-medium">Drop-off Time</label>
+            <Select
+              value={bookingDetails.dropoffTime}
+              onValueChange={(value) =>
+                setBookingDetails({ ...bookingDetails, dropoffTime: value })
+              }
+            >
+              <SelectTrigger className="h-12 bg-white">
+                <SelectValue>
+                  <span>{bookingDetails.dropoffTime}</span>
+                </SelectValue>
+              </SelectTrigger>
+              <SelectContent className="bg-white border shadow-lg">
+                {timeSlots.map((time) => (
+                  <SelectItem key={time} value={time}>
+                    {time}
+                  </SelectItem>
+                ))}
+              </SelectContent>
+            </Select>
+          </div>
+        </div>
+
+        <Button type="submit" className="w-full">
+          Search Available Campervans
+        </Button>
+      </form>
+    </>
   );
 
   const CampervanResults = () => (
-    <div className="grid gap-6 md:grid-cols-3">
-      {campervans.map((van) => (
-        <Card key={van.id} className="overflow-hidden">
-          <img
-            src={van.image}
-            alt={van.name}
-            className="h-48 w-full object-cover"
-          />
-          <CardHeader>
-            <CardTitle className="flex items-center justify-between">
-              <span>{van.name}</span>
-              <span className="text-lg font-normal text-muted-foreground">
-                ${van.price}/day
-              </span>
-            </CardTitle>
-          </CardHeader>
-          <CardContent className="space-y-4">
-            <div className="flex items-center gap-2">
-              <Users className="h-4 w-4" />
-              <span>{van.seats} seats</span>
-            </div>
-            <div className="flex items-center gap-2">
-              <Bed className="h-4 w-4" />
-              <span>{van.bedSize} bed</span>
-            </div>
-            <div className="flex items-center gap-2">
-              <UtensilsCrossed className="h-4 w-4" />
-              <span>{van.amenities.join(", ")}</span>
-            </div>
-            <Button
-              onClick={() => onSelectVan(van)}
-              className="w-full"
-              variant="secondary"
-            >
-              Select This Campervan
-            </Button>
-          </CardContent>
-        </Card>
-      ))}
-    </div>
+    <>
+      <Button
+        variant="ghost"
+        className="mb-4 flex items-center gap-2"
+        onClick={() => setBookingState("search")}
+      >
+        <ArrowLeft className="h-4 w-4" /> ย้อนกลับ
+      </Button>
+      <div className="grid gap-6 md:grid-cols-3">
+        {campervans.map((van) => (
+          <Card key={van.id} className="overflow-hidden">
+            <img
+              src={van.image}
+              alt={van.name}
+              className="h-48 w-full object-cover"
+            />
+            <CardHeader>
+              <CardTitle className="flex items-center justify-between">
+                <span>{van.name}</span>
+                <span className="text-lg font-normal text-muted-foreground">
+                  ${van.price}/day
+                </span>
+              </CardTitle>
+            </CardHeader>
+            <CardContent className="space-y-4">
+              <div className="flex items-center gap-2">
+                <Users className="h-4 w-4" />
+                <span>{van.seats} seats</span>
+              </div>
+              <div className="flex items-center gap-2">
+                <Bed className="h-4 w-4" />
+                <span>{van.bedSize} bed</span>
+              </div>
+              <div className="flex items-center gap-2">
+                <UtensilsCrossed className="h-4 w-4" />
+                <span>{van.amenities.join(", ")}</span>
+              </div>
+              <Button
+                onClick={() => onSelectVan(van)}
+                className="w-full"
+                variant="secondary"
+              >
+                Select This Campervan
+              </Button>
+            </CardContent>
+          </Card>
+        ))}
+      </div>
+    </>
   );
 
   const BookingSummary = () => (
-    <Card className="mx-auto max-w-2xl">
-      <CardHeader>
-        <CardTitle>Booking Summary</CardTitle>
-      </CardHeader>
-      <CardContent className="space-y-6">
-        <div className="grid gap-4 md:grid-cols-2">
-          <div>
-            <h3 className="font-medium">Pick-up Details</h3>
-            <p className="text-muted-foreground">
-              {bookingDetails.pickupDate?.toLocaleDateString()}
-            </p>
-            <p className="text-muted-foreground">{bookingDetails.pickupTime}</p>
-            <p className="flex items-center gap-2">
-              <MapPin className="h-4 w-4" />
-              {bookingDetails.pickupLocation}
-            </p>
-          </div>
-          <div>
-            <h3 className="font-medium">Drop-off Details</h3>
-            <p className="text-muted-foreground">
-              {bookingDetails.dropoffDate?.toLocaleDateString()}
-            </p>
-            <p className="text-muted-foreground">{bookingDetails.dropoffTime}</p>
-            <p className="flex items-center gap-2">
-              <MapPin className="h-4 w-4" />
-              {bookingDetails.dropoffLocation}
-            </p>
-          </div>
-        </div>
-
-        <div className="space-y-2">
-          <h3 className="font-medium">Selected Campervan</h3>
-          <div className="flex items-center gap-4">
-            <img
-              src={selectedVan?.image}
-              alt={selectedVan?.name}
-              className="h-24 w-24 rounded-md object-cover"
-            />
+    <>
+      <Button
+        variant="ghost"
+        className="mb-4 flex items-center gap-2"
+        onClick={() => setBookingState("results")}
+      >
+        <ArrowLeft className="h-4 w-4" /> ย้อนกลับ
+      </Button>
+      <Card className="mx-auto max-w-2xl">
+        <CardHeader>
+          <CardTitle>Booking Summary</CardTitle>
+        </CardHeader>
+        <CardContent className="space-y-6">
+          <div className="grid gap-4 md:grid-cols-2">
             <div>
-              <p className="font-medium">{selectedVan?.name}</p>
-              <p className="text-muted-foreground">{selectedVan?.brand}</p>
+              <h3 className="font-medium">Pick-up Details</h3>
+              <p className="text-muted-foreground">
+                {bookingDetails.pickupDate?.toLocaleDateString()}
+              </p>
+              <p className="text-muted-foreground">{bookingDetails.pickupTime}</p>
+              <p className="flex items-center gap-2">
+                <MapPin className="h-4 w-4" />
+                {bookingDetails.pickupLocation}
+              </p>
+            </div>
+            <div>
+              <h3 className="font-medium">Drop-off Details</h3>
+              <p className="text-muted-foreground">
+                {bookingDetails.dropoffDate?.toLocaleDateString()}
+              </p>
+              <p className="text-muted-foreground">{bookingDetails.dropoffTime}</p>
+              <p className="flex items-center gap-2">
+                <MapPin className="h-4 w-4" />
+                {bookingDetails.dropoffLocation}
+              </p>
             </div>
           </div>
-        </div>
 
-        <div className="space-y-2">
-          <div className="flex justify-between">
-            <span>Total Days</span>
-            <span>{calculateTotalDays()} days</span>
+          <div className="space-y-2">
+            <h3 className="font-medium">Selected Campervan</h3>
+            <div className="flex items-center gap-4">
+              <img
+                src={selectedVan?.image}
+                alt={selectedVan?.name}
+                className="h-24 w-24 rounded-md object-cover"
+              />
+              <div>
+                <p className="font-medium">{selectedVan?.name}</p>
+                <p className="text-muted-foreground">{selectedVan?.brand}</p>
+              </div>
+            </div>
           </div>
-          <div className="flex justify-between text-lg font-medium">
-            <span>Total Price</span>
-            <span>${calculateTotalPrice()}</span>
-          </div>
-        </div>
 
-        <div className="flex gap-4">
-          <Button
-            onClick={() => navigate("/campervan-summary")}
-            className="w-full"
-          >
-            Proceed to Checkout
-          </Button>
-          <Button
-            onClick={() => setBookingState("search")}
-            variant="outline"
-            className="w-full"
-          >
-            Cancel
-          </Button>
-        </div>
-      </CardContent>
-    </Card>
+          <div className="space-y-2">
+            <div className="flex justify-between">
+              <span>Total Days</span>
+              <span>{calculateTotalDays()} days</span>
+            </div>
+            <div className="flex justify-between text-lg font-medium">
+              <span>Total Price</span>
+              <span>${calculateTotalPrice()}</span>
+            </div>
+          </div>
+
+          <div className="flex gap-4">
+            <Button
+              onClick={() => navigate("/campervan-summary")}
+              className="w-full"
+            >
+              Proceed to Checkout
+            </Button>
+            <Button
+              onClick={() => setBookingState("search")}
+              variant="outline"
+              className="w-full"
+            >
+              Cancel
+            </Button>
+          </div>
+        </CardContent>
+      </Card>
+    </>
   );
 
   return (
