@@ -1,3 +1,4 @@
+
 import React from "react";
 import { useNavigate } from "react-router-dom";
 import { Button } from "@/components/ui/button";
@@ -9,6 +10,7 @@ import {
   Droplets,
   Power,
   AlertCircle,
+  ArrowLeft,
 } from "lucide-react";
 
 interface CampsiteDetailsProps {
@@ -34,6 +36,16 @@ const CampsiteDetails = ({ campsite }: CampsiteDetailsProps) => {
 
   return (
     <div className="max-w-7xl mx-auto px-4 py-8">
+      {/* Back Button */}
+      <Button
+        variant="ghost"
+        onClick={() => navigate(-1)}
+        className="mb-6 flex items-center gap-2"
+      >
+        <ArrowLeft className="h-4 w-4" />
+        Back to Search
+      </Button>
+
       {/* Image Gallery */}
       <div className="grid grid-cols-2 md:grid-cols-3 gap-4 mb-8">
         {campsite.images.map((image, index) => (
