@@ -1,4 +1,3 @@
-
 import { Search } from "lucide-react";
 
 const Hero = () => {
@@ -7,7 +6,7 @@ const Hero = () => {
       <div
         className="absolute inset-0 bg-cover bg-center"
         style={{
-          backgroundImage: "url('/lovable-uploads/1ccbacf1-0792-48f0-a936-e5e0d269cc64.png')",
+          backgroundImage: "url('/lovable-uploads/36e1489f-0a29-4aa0-9fa0-178c0b50d209.png')",
         }}
       >
         <div className="absolute inset-0 bg-black/40" />
