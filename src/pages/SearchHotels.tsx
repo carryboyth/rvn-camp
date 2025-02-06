@@ -1,4 +1,3 @@
-
 import { useLocation, useNavigate } from "react-router-dom";
 import Header from "@/components/Header";
 import Footer from "@/components/Footer";
@@ -67,11 +66,10 @@ const SearchHotels = () => {
   const motorhomePrice = searchParams?.selectedMotorhome?.price || 0;
   const motorhome = searchParams?.selectedMotorhome;
 
-  // Format the dates from the search params
   const formatDate = (date: string | Date | undefined) => {
     if (!date) return "";
     const dateObj = typeof date === "string" ? new Date(date) : date;
-    return dateObj.toLocaleDateString('th-TH', {
+    return dateObj.toLocaleDateString('en-US', {
       year: 'numeric',
       month: 'long',
       day: 'numeric'
@@ -150,7 +148,7 @@ const SearchHotels = () => {
                       <div>
                         <p className="font-medium">Total Price</p>
                         <p className="text-sm text-muted-foreground">
-                          ฿{motorhomePrice.toLocaleString()}
+                          ${motorhomePrice.toLocaleString()}
                         </p>
                       </div>
                     </div>
@@ -199,13 +197,13 @@ const SearchHotels = () => {
                     <div className="p-6 md:p-0 flex flex-col justify-center items-end">
                       <div className="text-right mb-4">
                         <p className="text-2xl font-bold">
-                          ฿{hotel.pricePerNight.toLocaleString()}
+                          ${hotel.pricePerNight.toLocaleString()}
                         </p>
                         <p className="text-muted-foreground">per night</p>
                         {totalDays > 0 && (
                           <div className="mt-2 p-2 bg-secondary/10 rounded-lg">
                             <p className="font-semibold">
-                              Total: ฿{(hotel.pricePerNight * totalDays).toLocaleString()}
+                              Total: ${(hotel.pricePerNight * totalDays).toLocaleString()}
                             </p>
                             <p className="text-sm text-muted-foreground">
                               for {totalDays} days
@@ -217,7 +215,7 @@ const SearchHotels = () => {
                         onClick={() => handleBookHotel(hotel)}
                         className="w-full md:w-auto"
                       >
-                        Book Hotel
+                        Book Now
                       </Button>
                     </div>
                   </div>
@@ -245,4 +243,3 @@ const SearchHotels = () => {
 };
 
 export default SearchHotels;
-
