@@ -34,7 +34,7 @@ const PassengersRoomsSelector = ({
               </div>
             </SelectValue>
           </SelectTrigger>
-          <SelectContent>
+          <SelectContent className="bg-white z-50">
             {[1, 2, 3, 4, 5, 6].map((num) => (
               <SelectItem key={num} value={num.toString()}>
                 {num} Passengers
@@ -52,7 +52,7 @@ const PassengersRoomsSelector = ({
               </div>
             </SelectValue>
           </SelectTrigger>
-          <SelectContent>
+          <SelectContent className="bg-white z-50">
             {[1, 2, 3, 4].map((num) => (
               <SelectItem key={num} value={num.toString()}>
                 {num} Room(s)

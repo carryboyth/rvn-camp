@@ -45,7 +45,7 @@ const LocationSelector = ({
             )}
           </SelectValue>
         </SelectTrigger>
-        <SelectContent className="bg-white">
+        <SelectContent className="bg-white z-50">
           {options.map((option) => (
             <SelectItem key={option} value={option}>
               {option}
