@@ -20,13 +20,13 @@ const mockCampsites = [
   },
   {
     id: "2",
-    name: "Riverside Retreat",
+    name: "Seaside Resort Campsite",
     description: "Peaceful camping spot along the river with excellent fishing opportunities.",
     location: "Kanchanaburi, Thailand",
     amenities: ["Parking", "Pet Friendly"],
     rating: 4.2,
     price: 1200,
-    image: "https://images.unsplash.com/photo-1537905569824-f89f14cceb68?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1447&q=80"
+    image: "/lovable-uploads/151cc02e-01af-45b1-81cf-f52357614380.png"
   },
   {
     id: "3",
@@ -73,3 +73,4 @@ const SearchResults = () => {
 };
 
 export default SearchResults;
+
