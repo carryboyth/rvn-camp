@@ -1,4 +1,3 @@
-
 import { useState } from "react";
 import { useForm } from "react-hook-form";
 import { Link } from "react-router-dom";
@@ -109,20 +108,20 @@ const ManageTrip = () => {
           },
         ].map((item, index) => (
           <Card key={index} className="group overflow-hidden">
-            <div className="aspect-video overflow-hidden">
-              <img
-                src={item.image}
-                alt={item.title}
-                className="h-full w-full object-cover transition-transform duration-300 group-hover:scale-105"
-              />
-            </div>
-            <CardContent className="p-4">
-              <h3 className="mb-2 text-xl font-semibold">{item.title}</h3>
-              <p className="mb-4 text-muted-foreground">{item.description}</p>
-              <Link to={item.link}>
+            <Link to={item.link} className="block">
+              <div className="aspect-video overflow-hidden">
+                <img
+                  src={item.image}
+                  alt={item.title}
+                  className="h-full w-full object-cover transition-transform duration-300 group-hover:scale-105 cursor-pointer"
+                />
+              </div>
+              <CardContent className="p-4">
+                <h3 className="mb-2 text-xl font-semibold">{item.title}</h3>
+                <p className="mb-4 text-muted-foreground">{item.description}</p>
                 <Button className="w-full">Book Now</Button>
-              </Link>
-            </CardContent>
+              </CardContent>
+            </Link>
           </Card>
         ))}
       </div>
@@ -141,4 +140,3 @@ const ManageTrip = () => {
 };
 
 export default ManageTrip;
-
