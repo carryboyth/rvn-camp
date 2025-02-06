@@ -77,11 +77,10 @@ const Contact = () => {
               <div className="flex items-start space-x-4">
                 <MapPin className="w-6 h-6 text-primary mt-1" />
                 <div>
-                  <h3 className="font-semibold">RVnCamp</h3>
+                  <h3 className="font-semibold">T.k.d. Fiber Co., Ltd.</h3>
                   <p className="text-muted-foreground">
-                    26/12 Village No. 7, Bangna-Trad Road,<br />
-                    Bang Kaeo Subdistrict, Bang Phli District,<br />
-                    Samut Prakan Province, Thailand 10540
+                    888,Luangphaeng rd.<br />
+                    Bangkok,10520 Thailand
                   </p>
                 </div>
               </div>
