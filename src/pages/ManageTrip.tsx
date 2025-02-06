@@ -93,7 +93,7 @@ const ManageTrip = () => {
             title: "Rent a Campervan",
             image: "/lovable-uploads/3e1b13b0-4b5b-4eec-85e7-d9d8ff30e668.png",
             link: "/rent-campervan",
-            description: "Hit the road with the perfect campervan for your journey!",
+            description: "perfect campervan for your journey!",
           },
           {
             title: "Book a Campsite",
