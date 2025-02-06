@@ -1,3 +1,4 @@
+
 import { useState } from "react";
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
@@ -87,21 +88,30 @@ const Contact = () => {
               
               <div className="flex items-center space-x-4">
                 <Mail className="w-6 h-6 text-primary" />
-                <a href="mailto:sales@rvncamp.com" className="hover:text-primary">
-                  sales@rvncamp.com
+                <a href="mailto:rvncamp@carryboy.com" className="hover:text-primary">
+                  rvncamp@carryboy.com
                 </a>
               </div>
               
               <div className="flex items-center space-x-4">
                 <Phone className="w-6 h-6 text-primary" />
-                <a href="tel:+66027528585" className="hover:text-primary">
-                  +66 02 752 8585
+                <a href="tel:0638916161" className="hover:text-primary">
+                  063 891 6161
                 </a>
               </div>
               
               <div className="flex items-center space-x-4">
                 <Clock className="w-6 h-6 text-primary" />
                 <p>Monday - Friday: 9:00 AM - 6:00 PM (GMT+7)</p>
+              </div>
+
+              <div className="flex items-center space-x-4">
+                <div className="w-6 h-6 flex items-center justify-center">
+                  <span className="text-primary text-xl">🌐</span>
+                </div>
+                <a href="https://www.rvncamp.com" target="_blank" rel="noopener noreferrer" className="hover:text-primary">
+                  www.rvncamp.com
+                </a>
               </div>
             </div>
           </div>
