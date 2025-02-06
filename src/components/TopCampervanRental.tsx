@@ -36,7 +36,7 @@ const campervans = [
 
 const TopCampervanRental = () => {
   return (
-    <section className="py-20 bg-white">
+    <section className="py-20 bg-muted">
       <div className="container mx-auto px-4">
         <h2 className="text-3xl font-bold text-center mb-2">Top Campervan Rental</h2>
         <p className="text-muted-foreground text-center mb-12">รถบ้านให้เช่ายอดนิยม</p>

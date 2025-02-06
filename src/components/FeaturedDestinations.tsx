@@ -1,3 +1,4 @@
+
 import { ArrowRight } from "lucide-react";
 
 const destinations = [
@@ -23,7 +24,7 @@ const destinations = [
 
 const FeaturedDestinations = () => {
   return (
-    <section className="py-20 bg-muted">
+    <section className="py-20 bg-white">
       <div className="container mx-auto px-4">
         <h2 className="text-3xl font-bold text-center mb-12">Popular Destinations</h2>
         
