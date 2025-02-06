@@ -73,7 +73,7 @@ const BookCampsite = () => {
                 <div className="space-y-2">
                   <label className="text-sm font-medium">Location</label>
                   <Select value={selectedProvince} onValueChange={setSelectedProvince}>
-                    <SelectTrigger className="w-full">
+                    <SelectTrigger className="w-full bg-white border-gray-300">
                       <SelectValue placeholder="Select location">
                         <div className="flex items-center gap-2">
                           <MapPin className="h-4 w-4" />
@@ -81,7 +81,7 @@ const BookCampsite = () => {
                         </div>
                       </SelectValue>
                     </SelectTrigger>
-                    <SelectContent>
+                    <SelectContent className="bg-white z-50 border shadow-lg">
                       {provinces.map((province) => (
                         <SelectItem key={province} value={province}>
                           <div className="flex items-center gap-2">
@@ -102,7 +102,7 @@ const BookCampsite = () => {
                       <Button
                         variant="outline"
                         className={cn(
-                          "w-full justify-start text-left font-normal",
+                          "w-full justify-start text-left font-normal bg-white border-gray-300",
                           !date && "text-muted-foreground"
                         )}
                       >
@@ -121,7 +121,7 @@ const BookCampsite = () => {
                         )}
                       </Button>
                     </PopoverTrigger>
-                    <PopoverContent className="w-auto p-0" align="start">
+                    <PopoverContent className="w-auto p-0 bg-white z-50 border shadow-lg" align="start">
                       <Calendar
                         initialFocus
                         mode="range"
@@ -138,7 +138,7 @@ const BookCampsite = () => {
                 <div className="space-y-2">
                   <label className="text-sm font-medium">Guests</label>
                   <Select value={guests} onValueChange={setGuests}>
-                    <SelectTrigger>
+                    <SelectTrigger className="bg-white border-gray-300">
                       <SelectValue>
                         <div className="flex items-center gap-2">
                           <Users className="h-4 w-4" />
@@ -146,7 +146,7 @@ const BookCampsite = () => {
                         </div>
                       </SelectValue>
                     </SelectTrigger>
-                    <SelectContent>
+                    <SelectContent className="bg-white z-50 border shadow-lg">
                       {[1, 2, 3, 4, 5, 6].map((num) => (
                         <SelectItem key={num} value={num.toString()}>
                           <div className="flex items-center gap-2">
@@ -178,3 +178,4 @@ const BookCampsite = () => {
 };
 
 export default BookCampsite;
+
