@@ -1,3 +1,4 @@
+
 import React from "react";
 import { useParams } from "react-router-dom";
 import Header from "@/components/Header";
@@ -8,9 +9,9 @@ import CampsiteDetailsComponent from "@/components/CampsiteDetails";
 const mockCampsite = {
   name: "Mountain View Campsite",
   images: [
-    "/placeholder.svg",
-    "/placeholder.svg",
-    "/placeholder.svg",
+    "/lovable-uploads/491cfd8c-5bc4-4d54-afb5-cc0adc56e139.png",
+    "/lovable-uploads/ffbe678e-abe3-4ee8-8950-91cb622e5fde.png",
+    "/lovable-uploads/31648e34-1e0e-418b-a716-4edcc750815c.png"
   ],
   price: 1500,
   description: "A beautiful campsite with mountain views, perfect for RV camping and outdoor adventures.",
@@ -33,8 +34,6 @@ const mockCampsite = {
 const CampsiteDetails = () => {
   const { id } = useParams();
 
-  // In a real app, you would fetch the campsite data based on the ID
-  // For now, we'll use the mock data
   return (
     <div className="min-h-screen flex flex-col">
       <Header />
