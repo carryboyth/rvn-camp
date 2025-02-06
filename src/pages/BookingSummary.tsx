@@ -98,11 +98,23 @@ const BookingSummary = () => {
             <TripDetails {...bookingDetails} />
             
             {bookingDetails?.selectedMotorhome && (
-              <SelectedMotorhome motorhome={bookingDetails.selectedMotorhome} />
+              <SelectedMotorhome 
+                motorhome={bookingDetails.selectedMotorhome}
+                startDate={bookingDetails.departureDate}
+                endDate={bookingDetails.returnDate}
+                totalDays={calculateTotalDays()}
+                totalPrice={bookingDetails.selectedMotorhome.price * calculateTotalDays()}
+              />
             )}
 
             {bookingDetails?.selectedHotel && (
-              <SelectedHotel hotel={bookingDetails.selectedHotel} />
+              <SelectedHotel 
+                hotel={bookingDetails.selectedHotel}
+                checkIn={bookingDetails.departureDate}
+                checkOut={bookingDetails.returnDate}
+                totalDays={calculateTotalDays()}
+                totalPrice={bookingDetails.selectedHotel.pricePerNight * calculateTotalDays()}
+              />
             )}
           </div>
 
