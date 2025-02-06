@@ -1,3 +1,4 @@
+
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { Button } from "@/components/ui/button";
@@ -22,7 +23,7 @@ const Login = () => {
   return (
     <div className="min-h-screen flex flex-col">
       <Header />
-      <main className="flex-1 flex items-center justify-center p-4">
+      <main className="flex-1 flex items-center justify-center p-4 bg-gradient-to-b from-purple-50 to-white">
         <Card className="w-full max-w-md">
           <CardHeader className="space-y-1">
             <CardTitle className="text-2xl text-center">Welcome Back</CardTitle>
@@ -62,15 +63,19 @@ const Login = () => {
                 Sign In
               </Button>
               <div className="text-center text-sm">
-                <a href="#" className="text-primary hover:underline">
+                <Button variant="link" className="p-0 text-primary hover:underline">
                   Forgot password?
-                </a>
+                </Button>
               </div>
               <div className="text-center text-sm">
                 Don't have an account?{" "}
-                <a href="#" className="text-primary hover:underline">
+                <Button
+                  variant="link"
+                  className="p-0 text-primary hover:underline"
+                  onClick={() => navigate("/signup")}
+                >
                   Sign up
-                </a>
+                </Button>
               </div>
             </form>
           </CardContent>

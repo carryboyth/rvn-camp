@@ -1,3 +1,4 @@
+
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 import Index from "@/pages/Index";
 import ManageTrip from "@/pages/ManageTrip";
@@ -15,6 +16,7 @@ import SearchHotels from "@/pages/SearchHotels";
 import BookingSummary from "@/pages/BookingSummary";
 import CustomerDetails from "@/pages/CustomerDetails";
 import Login from "@/pages/Login";
+import SignUp from "@/pages/SignUp";
 import Profile from "@/pages/Profile";
 import Download from "@/pages/Download";
 
@@ -37,6 +39,7 @@ function App() {
         <Route path="/booking-summary" element={<BookingSummary />} />
         <Route path="/customer-details" element={<CustomerDetails />} />
         <Route path="/login" element={<Login />} />
+        <Route path="/signup" element={<SignUp />} />
         <Route path="/profile" element={<Profile />} />
         <Route path="/download" element={<Download />} />
         <Route path="*" element={<NotFound />} />
