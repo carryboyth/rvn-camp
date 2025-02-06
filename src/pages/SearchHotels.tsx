@@ -6,13 +6,12 @@ import { Button } from "@/components/ui/button";
 import { Card } from "@/components/ui/card";
 import { MapPin, Star, Users, Calendar, ArrowLeft, Car, Clock, Wallet } from "lucide-react";
 import { useToast } from "@/components/ui/use-toast";
-import {
-  Sidebar,
-  SidebarContent,
-  SidebarGroup,
-  SidebarGroupContent,
-  SidebarGroupLabel,
-} from "@/components/ui/sidebar";
+import { Popover, PopoverContent, PopoverTrigger } from "@/components/ui/popover";
+import { Calendar as CalendarComponent } from "@/components/ui/calendar";
+import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
+import { Input } from "@/components/ui/input";
+import { useState } from "react";
+import { format } from "date-fns";
 
 const hotels = [
   {
@@ -67,6 +66,12 @@ const SearchHotels = () => {
   const motorhomePrice = searchParams?.selectedMotorhome?.price || 0;
   const motorhome = searchParams?.selectedMotorhome;
 
+  // New state for search form
+  const [searchLocation, setSearchLocation] = useState("");
+  const [checkIn, setCheckIn] = useState<Date>();
+  const [checkOut, setCheckOut] = useState<Date>();
+  const [guests, setGuests] = useState("1");
+
   const formatDate = (date: string | Date | undefined) => {
     if (!date) return "";
     const dateObj = typeof date === "string" ? new Date(date) : date;
@@ -95,9 +100,104 @@ const SearchHotels = () => {
     });
   };
 
+  const handleSearch = () => {
+    console.log("Searching with params:", { searchLocation, checkIn, checkOut, guests });
+    // Add search logic here
+  };
+
   return (
     <div className="min-h-screen flex flex-col">
       <Header />
+      
+      {/* Search Form */}
+      <div className="border-b bg-background/95 backdrop-blur supports-[backdrop-filter]:bg-background/60">
+        <div className="container mx-auto py-4">
+          <div className="flex flex-col md:flex-row gap-4 items-end">
+            <div className="flex-1">
+              <label className="text-sm font-medium mb-2 block">Location</label>
+              <Input 
+                placeholder="Where are you going?"
+                value={searchLocation}
+                onChange={(e) => setSearchLocation(e.target.value)}
+                className="h-12"
+                icon={<MapPin className="h-4 w-4" />}
+              />
+            </div>
+            
+            <div className="flex-1">
+              <label className="text-sm font-medium mb-2 block">Check-in</label>
+              <Popover>
+                <PopoverTrigger asChild>
+                  <Button
+                    variant="outline"
+                    className="h-12 w-full justify-start text-left font-normal"
+                  >
+                    <Calendar className="mr-2 h-4 w-4" />
+                    {checkIn ? format(checkIn, "PPP") : <span>Pick a date</span>}
+                  </Button>
+                </PopoverTrigger>
+                <PopoverContent className="w-auto p-0" align="start">
+                  <CalendarComponent
+                    mode="single"
+                    selected={checkIn}
+                    onSelect={setCheckIn}
+                    initialFocus
+                  />
+                </PopoverContent>
+              </Popover>
+            </div>
+            
+            <div className="flex-1">
+              <label className="text-sm font-medium mb-2 block">Check-out</label>
+              <Popover>
+                <PopoverTrigger asChild>
+                  <Button
+                    variant="outline"
+                    className="h-12 w-full justify-start text-left font-normal"
+                  >
+                    <Calendar className="mr-2 h-4 w-4" />
+                    {checkOut ? format(checkOut, "PPP") : <span>Pick a date</span>}
+                  </Button>
+                </PopoverTrigger>
+                <PopoverContent className="w-auto p-0" align="start">
+                  <CalendarComponent
+                    mode="single"
+                    selected={checkOut}
+                    onSelect={setCheckOut}
+                    initialFocus
+                  />
+                </PopoverContent>
+              </Popover>
+            </div>
+            
+            <div className="w-32">
+              <label className="text-sm font-medium mb-2 block">Guests</label>
+              <Select value={guests} onValueChange={setGuests}>
+                <SelectTrigger className="h-12">
+                  <SelectValue placeholder="Select guests">
+                    <div className="flex items-center">
+                      <Users className="mr-2 h-4 w-4" />
+                      {guests} {parseInt(guests) === 1 ? 'Guest' : 'Guests'}
+                    </div>
+                  </SelectValue>
+                </SelectTrigger>
+                <SelectContent>
+                  {[1, 2, 3, 4, 5, 6].map((num) => (
+                    <SelectItem key={num} value={num.toString()}>
+                      {num} {num === 1 ? 'Guest' : 'Guests'}
+                    </SelectItem>
+                  ))}
+                </SelectContent>
+              </Select>
+            </div>
+            
+            <Button onClick={handleSearch} className="h-12 px-8">
+              Search
+            </Button>
+          </div>
+        </div>
+      </div>
+
       <main className="flex-1 container mx-auto px-4 py-8">
         <div className="grid grid-cols-1 md:grid-cols-4 gap-6">
           {/* Sidebar */}
