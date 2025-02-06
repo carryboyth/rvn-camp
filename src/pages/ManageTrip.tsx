@@ -120,7 +120,7 @@ const ManageTrip = () => {
               <h3 className="mb-2 text-xl font-semibold">{item.title}</h3>
               <p className="mb-4 text-muted-foreground">{item.description}</p>
               <Link to={item.link}>
-                <Button className="w-full">Learn More</Button>
+                <Button className="w-full">Book Now</Button>
               </Link>
             </CardContent>
           </Card>
@@ -141,3 +141,4 @@ const ManageTrip = () => {
 };
 
 export default ManageTrip;
+
