@@ -7,6 +7,35 @@ import CampsiteDetailsComponent from "@/components/CampsiteDetails";
 
 // Mock data with different content based on ID
 const getCampsiteData = (id: string) => {
+  if (id === "3") {
+    return {
+      name: "Mountain Mist Luxury Campsite",
+      images: [
+        "/lovable-uploads/57b37350-81fd-4c1a-af07-400f654b5c47.png",
+        "/lovable-uploads/71ca327b-2638-4ef8-8596-5784d0446c53.png",
+        "/lovable-uploads/d8ae79a0-6073-4419-8cad-67eba89223b4.png"
+      ],
+      price: 3500,
+      description: "Experience luxury camping with breathtaking mountain views, infinity pools, and private balconies overlooking misty valleys. Perfect for a romantic getaway or peaceful retreat.",
+      facilities: [
+        "Infinity Pool",
+        "Private Balcony",
+        "Mountain Views",
+        "Luxury Amenities",
+        "Free WiFi",
+        "Room Service"
+      ],
+      checkIn: "2:00 PM",
+      checkOut: "12:00 PM",
+      rules: [
+        "No loud music after 10 PM",
+        "No smoking in rooms",
+        "Keep balcony doors closed when not in use",
+        "Respect quiet hours from 10 PM to 6 AM"
+      ],
+      tyreRoom: true
+    };
+  }
   if (id === "2") {
     return {
       name: "Seaside Resort Campsite",
