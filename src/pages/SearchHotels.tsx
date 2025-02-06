@@ -1,9 +1,10 @@
+
 import { useLocation, useNavigate } from "react-router-dom";
 import Header from "@/components/Header";
 import Footer from "@/components/Footer";
 import { Button } from "@/components/ui/button";
 import { Card } from "@/components/ui/card";
-import { MapPin, Star, Users } from "lucide-react";
+import { MapPin, Star, Users, Calendar } from "lucide-react";
 import { useToast } from "@/components/ui/use-toast";
 
 const hotels = [
@@ -55,6 +56,9 @@ const SearchHotels = () => {
   const { toast } = useToast();
   const searchParams = location.state;
 
+  const totalDays = searchParams?.totalDays || 0;
+  const motorhomePrice = searchParams?.selectedMotorhome?.price || 0;
+
   const handleBookHotel = (hotel: typeof hotels[0]) => {
     if (!searchParams?.selectedMotorhome) {
       toast({
@@ -77,7 +81,22 @@ const SearchHotels = () => {
     <div className="min-h-screen flex flex-col">
       <Header />
       <main className="flex-1 container mx-auto px-4 py-8">
-        <h1 className="text-3xl font-bold mb-8">Available Hotels</h1>
+        <h1 className="text-3xl font-bold mb-4">Available Hotels</h1>
+        
+        {/* Summary Card */}
+        <Card className="p-6 mb-8 bg-muted/10">
+          <div className="flex items-center gap-4">
+            <Calendar className="w-5 h-5 text-muted-foreground" />
+            <div>
+              <span className="font-medium">Duration: </span>
+              <span>{totalDays} days</span>
+            </div>
+            <div className="ml-auto">
+              <span className="font-medium">Motorhome Total: </span>
+              <span>฿{motorhomePrice.toLocaleString()}</span>
+            </div>
+          </div>
+        </Card>
         
         <div className="grid gap-6">
           {hotels.map((hotel) => (
@@ -115,6 +134,16 @@ const SearchHotels = () => {
                       ฿{hotel.pricePerNight.toLocaleString()}
                     </p>
                     <p className="text-muted-foreground">per night</p>
+                    {totalDays > 0 && (
+                      <div className="mt-2 p-2 bg-secondary/10 rounded-lg">
+                        <p className="font-semibold">
+                          Total: ฿{(hotel.pricePerNight * totalDays).toLocaleString()}
+                        </p>
+                        <p className="text-sm text-muted-foreground">
+                          for {totalDays} days
+                        </p>
+                      </div>
+                    )}
                   </div>
                   <Button
                     onClick={() => handleBookHotel(hotel)}
