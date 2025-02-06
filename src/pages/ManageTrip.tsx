@@ -97,7 +97,7 @@ const ManageTrip = () => {
           },
           {
             title: "CampSite",
-            image: "/lovable-uploads/e4ce7067-7522-45d6-82c0-56a7fb4d8543.png",
+            image: "/lovable-uploads/e0b94fa6-244f-45da-a2ec-cadf28c5ce17.png",
             link: "/book-campsite",
             description: "Find the perfect spot to park and camp",
           },
