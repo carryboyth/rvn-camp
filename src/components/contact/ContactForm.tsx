@@ -61,8 +61,9 @@ const ContactForm = () => {
       window.location.href = mailtoLink;
 
       toast({
-        title: "Message Ready to Send!",
+        title: "The form was sent successfully!",
         description: "Your email client has been opened with the message.",
+        className: "bg-green-500 text-white border-none",
       });
 
       // Reset form after sending
