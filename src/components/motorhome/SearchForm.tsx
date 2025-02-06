@@ -119,7 +119,10 @@ const SearchForm = () => {
 
           {/* Second Row - Travel Dates */}
           <div className="space-y-2">
-            <label className="text-sm font-medium">Travel Dates</label>
+            <div className="flex justify-between">
+              <label className="text-sm font-medium">Travel Dates</label>
+              <label className="text-sm font-medium">Drop off date</label>
+            </div>
             <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
               <div className="space-y-2">
                 <Calendar
@@ -133,7 +136,6 @@ const SearchForm = () => {
                 />
               </div>
               <div className="space-y-2">
-                <label className="text-sm font-medium">Drop off date</label>
                 <Calendar
                   mode="single"
                   selected={returnDate}
@@ -204,4 +206,3 @@ const SearchForm = () => {
 };
 
 export default SearchForm;
-
