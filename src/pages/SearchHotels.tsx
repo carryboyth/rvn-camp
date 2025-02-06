@@ -1,3 +1,4 @@
+
 import { useLocation, useNavigate } from "react-router-dom";
 import Header from "@/components/Header";
 import Footer from "@/components/Footer";
@@ -17,7 +18,7 @@ const hotels = [
   {
     id: 1,
     name: "Luxury Resort & Spa",
-    image: "https://images.unsplash.com/photo-1496307653780-42ee777d4833",
+    image: "/lovable-uploads/f13e329f-d1e7-49bf-9c1b-9c22e6b8f9de.png",
     location: "Bangkok, Thailand",
     description: "Experience luxury living with stunning city views and world-class amenities.",
     pricePerNight: 4500,
@@ -27,7 +28,7 @@ const hotels = [
   {
     id: 2,
     name: "Urban Boutique Hotel",
-    image: "https://images.unsplash.com/photo-1524230572899-a752b3835840",
+    image: "/lovable-uploads/e24bf5fc-b70c-4b89-a2af-4325db96ce1d.png",
     location: "Chiang Mai, Thailand",
     description: "Modern boutique hotel in the heart of the old city.",
     pricePerNight: 2800,
@@ -37,7 +38,7 @@ const hotels = [
   {
     id: 3,
     name: "Beachfront Paradise",
-    image: "https://images.unsplash.com/photo-1473177104440-ffee2f376098",
+    image: "/lovable-uploads/4bcc8b26-96b5-40e3-b140-b6fc6e673ad2.png",
     location: "Phuket, Thailand",
     description: "Direct beach access with private balconies and ocean views.",
     pricePerNight: 5200,
@@ -47,7 +48,7 @@ const hotels = [
   {
     id: 4,
     name: "Heritage Hotel",
-    image: "https://images.unsplash.com/photo-1431576901776-e539bd916ba2",
+    image: "/lovable-uploads/da1ee2d7-9a0b-44ca-a085-8ddad30fd28f.png",
     location: "Ayutthaya, Thailand",
     description: "Historic hotel with traditional architecture and modern comforts.",
     pricePerNight: 3500,
