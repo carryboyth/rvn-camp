@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { ChevronDown, Globe, Menu } from "lucide-react";
 import { Button } from "./ui/button";
 import {
@@ -19,6 +19,7 @@ import {
 const Header = () => {
   const [currency, setCurrency] = useState("USD");
   const [totalAmount] = useState(1234.56);
+  const navigate = useNavigate();
 
   return (
     <header className="sticky top-0 z-50 w-full border-b bg-background/95 backdrop-blur supports-[backdrop-filter]:bg-background/60">
@@ -82,9 +83,11 @@ const Header = () => {
                 </DropdownMenuContent>
               </DropdownMenu>
             </div>
-            <Button variant="default" size="sm">
-              Login
-            </Button>
+            <Link to="/login">
+              <Button variant="default" size="sm">
+                Login
+              </Button>
+            </Link>
           </div>
         </nav>
 
@@ -156,9 +159,11 @@ const Header = () => {
                       </DropdownMenuContent>
                     </DropdownMenu>
                   </div>
-                  <Button variant="default" size="sm" className="w-full">
-                    Login
-                  </Button>
+                  <Link to="/login">
+                    <Button variant="default" size="sm" className="w-full">
+                      Login
+                    </Button>
+                  </Link>
                 </div>
               </nav>
             </SheetContent>
