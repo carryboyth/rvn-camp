@@ -7,6 +7,7 @@ import {
   SelectValue,
 } from "@/components/ui/select";
 import { MapPin, Building } from "lucide-react";
+import { useEffect } from "react";
 
 interface LocationSelectorProps {
   type: "pickup" | "destination";
@@ -26,10 +27,17 @@ const LocationSelector = ({
   const label = isPickup ? "Pick-up Location" : "Destination";
   const placeholder = isPickup ? "Pick-up Location" : "Select destination";
 
+  // Set first option as default value on component mount
+  useEffect(() => {
+    if (!value && options.length > 0) {
+      onValueChange(options[0]);
+    }
+  }, [options, value, onValueChange]);
+
   return (
     <div className="space-y-2">
       <label className="text-sm font-medium">{label}</label>
-      <Select onValueChange={onValueChange} value={value}>
+      <Select onValueChange={onValueChange} value={value || options[0]}>
         <SelectTrigger className="h-12">
           <SelectValue>
             {value ? (
@@ -58,3 +66,4 @@ const LocationSelector = ({
 };
 
 export default LocationSelector;
+
