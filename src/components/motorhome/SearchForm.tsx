@@ -1,4 +1,3 @@
-
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { Calendar } from "@/components/ui/calendar";
@@ -71,7 +70,7 @@ const SearchForm = () => {
                         <span>{pickupLocation}</span>
                       </div>
                     ) : (
-                      <div className="flex items-center">
+                      <div className="flex items-center text-black">
                         <MapPin className="w-4 h-4 mr-2" />
                         <span>Pick-up Location</span>
                       </div>
