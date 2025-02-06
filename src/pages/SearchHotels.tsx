@@ -127,7 +127,7 @@ const SearchHotels = () => {
                     </div>
                   </SelectValue>
                 </SelectTrigger>
-                <SelectContent>
+                <SelectContent className="bg-[#222222] border-0">
                   {locations.map((location) => (
                     <SelectItem key={location} value={location}>
                       <div className="flex items-center">
@@ -152,7 +152,7 @@ const SearchHotels = () => {
                     {checkIn ? format(checkIn, "PPP") : <span>Pick a date</span>}
                   </Button>
                 </PopoverTrigger>
-                <PopoverContent className="w-auto p-0" align="start">
+                <PopoverContent className="w-auto p-0 bg-[#222222] border-0" align="start">
                   <CalendarComponent
                     mode="single"
                     selected={checkIn}
@@ -175,7 +175,7 @@ const SearchHotels = () => {
                     {checkOut ? format(checkOut, "PPP") : <span>Pick a date</span>}
                   </Button>
                 </PopoverTrigger>
-                <PopoverContent className="w-auto p-0" align="start">
+                <PopoverContent className="w-auto p-0 bg-[#222222] border-0" align="start">
                   <CalendarComponent
                     mode="single"
                     selected={checkOut}
@@ -197,7 +197,7 @@ const SearchHotels = () => {
                     </div>
                   </SelectValue>
                 </SelectTrigger>
-                <SelectContent>
+                <SelectContent className="bg-[#222222] border-0">
                   {[1, 2, 3, 4, 5, 6].map((num) => (
                     <SelectItem key={num} value={num.toString()}>
                       {num} {num === 1 ? 'Guest' : 'Guests'}
