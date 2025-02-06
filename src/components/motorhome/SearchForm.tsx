@@ -1,3 +1,4 @@
+
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { Calendar } from "@/components/ui/calendar";
@@ -120,24 +121,29 @@ const SearchForm = () => {
           <div className="space-y-2">
             <label className="text-sm font-medium">Travel Dates</label>
             <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-              <Calendar
-                mode="single"
-                selected={departureDate}
-                onSelect={setDepartureDate}
-                className="rounded-md border bg-white"
-                disabled={(date) =>
-                  date < new Date() || (returnDate && date > returnDate)
-                }
-              />
-              <Calendar
-                mode="single"
-                selected={returnDate}
-                onSelect={setReturnDate}
-                className="rounded-md border bg-white"
-                disabled={(date) =>
-                  date < new Date() || (departureDate && date < departureDate)
-                }
-              />
+              <div className="space-y-2">
+                <Calendar
+                  mode="single"
+                  selected={departureDate}
+                  onSelect={setDepartureDate}
+                  className="rounded-md border bg-white"
+                  disabled={(date) =>
+                    date < new Date() || (returnDate && date > returnDate)
+                  }
+                />
+              </div>
+              <div className="space-y-2">
+                <label className="text-sm font-medium">Drop off date</label>
+                <Calendar
+                  mode="single"
+                  selected={returnDate}
+                  onSelect={setReturnDate}
+                  className="rounded-md border bg-white"
+                  disabled={(date) =>
+                    date < new Date() || (departureDate && date < departureDate)
+                  }
+                />
+              </div>
             </div>
           </div>
 
@@ -198,3 +204,4 @@ const SearchForm = () => {
 };
 
 export default SearchForm;
+
