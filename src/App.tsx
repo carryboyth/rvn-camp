@@ -1,4 +1,3 @@
-
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 import Index from "@/pages/Index";
 import ManageTrip from "@/pages/ManageTrip";
@@ -15,6 +14,8 @@ import MotorhomeResults from "@/pages/MotorhomeResults";
 import SearchHotels from "@/pages/SearchHotels";
 import BookingSummary from "@/pages/BookingSummary";
 import CustomerDetails from "@/pages/CustomerDetails";
+import Login from "@/pages/Login";
+import Profile from "@/pages/Profile";
 
 function App() {
   return (
@@ -34,6 +35,8 @@ function App() {
         <Route path="/search-hotels" element={<SearchHotels />} />
         <Route path="/booking-summary" element={<BookingSummary />} />
         <Route path="/customer-details" element={<CustomerDetails />} />
+        <Route path="/login" element={<Login />} />
+        <Route path="/profile" element={<Profile />} />
         <Route path="*" element={<NotFound />} />
       </Routes>
     </Router>
