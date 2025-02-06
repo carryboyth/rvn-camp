@@ -62,7 +62,7 @@ const SearchForm = () => {
             <div className="space-y-2">
               <label className="text-sm font-medium">Pick-up Location</label>
               <Select onValueChange={setPickupLocation} value={pickupLocation}>
-                <SelectTrigger className="h-12 bg-white">
+                <SelectTrigger className="h-12">
                   <SelectValue>
                     {pickupLocation ? (
                       <div className="flex items-center">
