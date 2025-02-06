@@ -1,3 +1,4 @@
+
 import { useState } from "react";
 import { useForm } from "react-hook-form";
 import { Calendar } from "@/components/ui/calendar";
@@ -376,7 +377,7 @@ const RentCampervan = () => {
       <Header />
       <main className="flex-1 container mx-auto px-4 py-8">
         <h1 className="mb-8 text-3xl font-bold text-center">
-          Rent Your Perfect Campervan
+          Campervan
         </h1>
         {bookingState === "search" && <BookingForm />}
         {bookingState === "results" && <CampervanResults />}
@@ -388,3 +389,4 @@ const RentCampervan = () => {
 };
 
 export default RentCampervan;
+
