@@ -45,12 +45,12 @@ const HotelsCalculator = () => {
         <main className="flex-1 container mx-auto px-4 py-8">
           <Card className="max-w-2xl mx-auto">
             <CardHeader>
-              <CardTitle className="text-center">ไม่พบข้อมูลที่พัก</CardTitle>
+              <CardTitle className="text-center">No Hotel Found</CardTitle>
             </CardHeader>
             <CardContent className="text-center">
-              <p className="text-muted-foreground">กรุณาเลือกที่พักจากหน้ารายการ</p>
+              <p className="text-muted-foreground">Please select a hotel from the listing page</p>
               <Button className="mt-4" onClick={() => window.history.back()}>
-                กลับไปหน้าที่แล้ว
+                Go Back
               </Button>
             </CardContent>
           </Card>
@@ -64,12 +64,12 @@ const HotelsCalculator = () => {
     <div className="min-h-screen flex flex-col">
       <Header />
       <main className="flex-1 container mx-auto px-4 py-8">
-        <h1 className="text-3xl font-bold text-center mb-8">รายละเอียดการจองที่พัก</h1>
+        <h1 className="text-3xl font-bold text-center mb-8">Hotel Booking Details</h1>
         
         <div className="max-w-4xl mx-auto">
           <Card>
             <CardHeader>
-              <CardTitle className="text-2xl">สรุปรายการ</CardTitle>
+              <CardTitle className="text-2xl">Summary</CardTitle>
             </CardHeader>
             <CardContent className="space-y-6">
               <div className="grid md:grid-cols-2 gap-6">
@@ -90,7 +90,7 @@ const HotelsCalculator = () => {
                   </div>
                   <div className="flex items-center gap-2">
                     <Users className="w-4 h-4" />
-                    <span>รองรับผู้เข้าพักสูงสุด {hotel.guests} ท่าน</span>
+                    <span>Maximum {hotel.guests} guests</span>
                   </div>
                   <p className="text-muted-foreground">{hotel.description}</p>
                 </div>
@@ -99,31 +99,31 @@ const HotelsCalculator = () => {
               <div className="border-t pt-6">
                 <div className="grid md:grid-cols-2 gap-6">
                   <div>
-                    <h4 className="font-medium mb-2">รายละเอียดการเข้าพัก</h4>
+                    <h4 className="font-medium mb-2">Stay Details</h4>
                     <div className="space-y-2">
                       <div className="flex items-center gap-2">
                         <Calendar className="h-5 w-5 text-muted-foreground" />
-                        <p>เช็คอิน: {checkIn ? new Date(checkIn).toLocaleDateString() : 'ไม่ระบุ'}</p>
+                        <p>Check-in: {checkIn ? new Date(checkIn).toLocaleDateString() : 'Not specified'}</p>
                       </div>
                       <div className="flex items-center gap-2">
                         <Calendar className="h-5 w-5 text-muted-foreground" />
-                        <p>เช็คเอาท์: {checkOut ? new Date(checkOut).toLocaleDateString() : 'ไม่ระบุ'}</p>
+                        <p>Check-out: {checkOut ? new Date(checkOut).toLocaleDateString() : 'Not specified'}</p>
                       </div>
                     </div>
                   </div>
                   <div className="space-y-2">
                     <div className="flex items-center gap-2">
                       <Calendar className="h-5 w-5 text-muted-foreground" />
-                      <p>ระยะเวลาเข้าพัก: {totalDays} คืน</p>
+                      <p>Duration: {totalDays} nights</p>
                     </div>
                     <div className="bg-muted p-4 rounded-lg space-y-2">
                       <p className="flex justify-between">
-                        <span>ราคาต่อคืน:</span>
-                        <span>฿{hotel.pricePerNight.toLocaleString()}</span>
+                        <span>Price per night:</span>
+                        <span>${hotel.pricePerNight.toLocaleString()}</span>
                       </p>
                       <p className="flex justify-between text-lg font-semibold">
-                        <span>ราคารวมทั้งหมด:</span>
-                        <span>฿{totalPrice.toLocaleString()}</span>
+                        <span>Total Price:</span>
+                        <span>${totalPrice.toLocaleString()}</span>
                       </p>
                     </div>
                   </div>
@@ -135,10 +135,10 @@ const HotelsCalculator = () => {
                   variant="outline"
                   onClick={() => window.history.back()}
                 >
-                  กลับไปหน้าที่แล้ว
+                  Go Back
                 </Button>
                 <Button onClick={handleContinue}>
-                  ดำเนินการต่อ
+                  Continue
                 </Button>
               </div>
             </CardContent>
