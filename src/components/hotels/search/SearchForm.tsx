@@ -32,101 +32,110 @@ const SearchForm = ({
   locations,
 }: SearchFormProps) => {
   return (
-    <div className="flex flex-col md:flex-row gap-4 items-end">
-      <div className="flex-1">
-        <label className="text-sm font-medium mb-2 block">Location</label>
-        <Select value={searchLocation} onValueChange={setSearchLocation}>
-          <SelectTrigger className="h-12">
-            <SelectValue>
-              <div className="flex items-center">
-                <MapPin className="mr-2 h-4 w-4" />
-                {searchLocation}
-              </div>
-            </SelectValue>
-          </SelectTrigger>
-          <SelectContent className="bg-white border shadow-lg">
-            {locations.map((location) => (
-              <SelectItem key={location} value={location}>
+    <div className="bg-white/95 backdrop-blur-sm rounded-lg p-4 shadow-lg">
+      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4">
+        <div className="space-y-2">
+          <label className="text-sm font-medium text-gray-700">Location</label>
+          <Select value={searchLocation} onValueChange={setSearchLocation}>
+            <SelectTrigger className="h-12 bg-white border-gray-200">
+              <SelectValue>
                 <div className="flex items-center">
-                  <MapPin className="mr-2 h-4 w-4" />
-                  {location}
+                  <MapPin className="mr-2 h-4 w-4 text-gray-500" />
+                  {searchLocation}
                 </div>
-              </SelectItem>
-            ))}
-          </SelectContent>
-        </Select>
+              </SelectValue>
+            </SelectTrigger>
+            <SelectContent className="bg-white border shadow-lg">
+              {locations.map((location) => (
+                <SelectItem key={location} value={location}>
+                  <div className="flex items-center">
+                    <MapPin className="mr-2 h-4 w-4 text-gray-500" />
+                    {location}
+                  </div>
+                </SelectItem>
+              ))}
+            </SelectContent>
+          </Select>
+        </div>
+        
+        <div className="space-y-2">
+          <label className="text-sm font-medium text-gray-700">Check-in</label>
+          <Popover>
+            <PopoverTrigger asChild>
+              <Button
+                variant="outline"
+                className="h-12 w-full justify-start text-left font-normal bg-white border-gray-200"
+              >
+                <Calendar className="mr-2 h-4 w-4 text-gray-500" />
+                {checkIn ? format(checkIn, "PPP") : <span className="text-gray-500">Pick a date</span>}
+              </Button>
+            </PopoverTrigger>
+            <PopoverContent className="w-auto p-0 bg-white border shadow-lg" align="start">
+              <CalendarComponent
+                mode="single"
+                selected={checkIn}
+                onSelect={setCheckIn}
+                initialFocus
+                className="rounded-md border"
+              />
+            </PopoverContent>
+          </Popover>
+        </div>
+        
+        <div className="space-y-2">
+          <label className="text-sm font-medium text-gray-700">Check-out</label>
+          <Popover>
+            <PopoverTrigger asChild>
+              <Button
+                variant="outline"
+                className="h-12 w-full justify-start text-left font-normal bg-white border-gray-200"
+              >
+                <Calendar className="mr-2 h-4 w-4 text-gray-500" />
+                {checkOut ? format(checkOut, "PPP") : <span className="text-gray-500">Pick a date</span>}
+              </Button>
+            </PopoverTrigger>
+            <PopoverContent className="w-auto p-0 bg-white border shadow-lg" align="start">
+              <CalendarComponent
+                mode="single"
+                selected={checkOut}
+                onSelect={setCheckOut}
+                initialFocus
+                className="rounded-md border"
+              />
+            </PopoverContent>
+          </Popover>
+        </div>
+        
+        <div className="space-y-2">
+          <label className="text-sm font-medium text-gray-700">Guests</label>
+          <Select value={guests} onValueChange={setGuests}>
+            <SelectTrigger className="h-12 bg-white border-gray-200">
+              <SelectValue>
+                <div className="flex items-center">
+                  <Users className="mr-2 h-4 w-4 text-gray-500" />
+                  {guests} {parseInt(guests) === 1 ? 'Guest' : 'Guests'}
+                </div>
+              </SelectValue>
+            </SelectTrigger>
+            <SelectContent className="bg-white border shadow-lg">
+              {[1, 2, 3, 4, 5, 6].map((num) => (
+                <SelectItem key={num} value={num.toString()}>
+                  {num} {num === 1 ? 'Guest' : 'Guests'}
+                </SelectItem>
+              ))}
+            </SelectContent>
+          </Select>
+        </div>
       </div>
       
-      <div className="flex-1">
-        <label className="text-sm font-medium mb-2 block">Check-in</label>
-        <Popover>
-          <PopoverTrigger asChild>
-            <Button
-              variant="outline"
-              className="h-12 w-full justify-start text-left font-normal"
-            >
-              <Calendar className="mr-2 h-4 w-4" />
-              {checkIn ? format(checkIn, "PPP") : <span>Pick a date</span>}
-            </Button>
-          </PopoverTrigger>
-          <PopoverContent className="w-auto p-0 bg-white border shadow-lg" align="start">
-            <CalendarComponent
-              mode="single"
-              selected={checkIn}
-              onSelect={setCheckIn}
-              initialFocus
-            />
-          </PopoverContent>
-        </Popover>
+      <div className="mt-6">
+        <Button 
+          onClick={onSearch} 
+          className="w-full md:w-auto h-12 px-8 bg-primary hover:bg-primary/90"
+        >
+          Search
+        </Button>
       </div>
-      
-      <div className="flex-1">
-        <label className="text-sm font-medium mb-2 block">Check-out</label>
-        <Popover>
-          <PopoverTrigger asChild>
-            <Button
-              variant="outline"
-              className="h-12 w-full justify-start text-left font-normal"
-            >
-              <Calendar className="mr-2 h-4 w-4" />
-              {checkOut ? format(checkOut, "PPP") : <span>Pick a date</span>}
-            </Button>
-          </PopoverTrigger>
-          <PopoverContent className="w-auto p-0 bg-white border shadow-lg" align="start">
-            <CalendarComponent
-              mode="single"
-              selected={checkOut}
-              onSelect={setCheckOut}
-              initialFocus
-            />
-          </PopoverContent>
-        </Popover>
-      </div>
-      
-      <div className="w-32">
-        <label className="text-sm font-medium mb-2 block">Guests</label>
-        <Select value={guests} onValueChange={setGuests}>
-          <SelectTrigger className="h-12">
-            <SelectValue>
-              <div className="flex items-center">
-                <Users className="mr-2 h-4 w-4" />
-                {guests} {parseInt(guests) === 1 ? 'Guest' : 'Guests'}
-              </div>
-            </SelectValue>
-          </SelectTrigger>
-          <SelectContent className="bg-white border shadow-lg">
-            {[1, 2, 3, 4, 5, 6].map((num) => (
-              <SelectItem key={num} value={num.toString()}>
-                {num} {num === 1 ? 'Guest' : 'Guests'}
-              </SelectItem>
-            ))}
-          </SelectContent>
-        </Select>
-      </div>
-      
-      <Button onClick={onSearch} className="h-12 px-8">
-        Search
-      </Button>
     </div>
   );
 };
