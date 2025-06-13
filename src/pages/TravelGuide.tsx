@@ -219,9 +219,9 @@ const TravelGuide = () => {
                       <SelectValue placeholder="เลือกงบประมาณ" />
                     </SelectTrigger>
                     <SelectContent>
-                      <SelectItem value="budget">ประหยัด (< 10,000 บาท)</SelectItem>
+                      <SelectItem value="budget">ประหยัด (&lt; 10,000 บาท)</SelectItem>
                       <SelectItem value="moderate">ปานกลาง (10,000-20,000 บาท)</SelectItem>
-                      <SelectItem value="luxury">หรูหรา (> 20,000 บาท)</SelectItem>
+                      <SelectItem value="luxury">หรูหรา (&gt; 20,000 บาท)</SelectItem>
                     </SelectContent>
                   </Select>
                 </div>
