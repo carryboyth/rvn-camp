@@ -1,5 +1,4 @@
-
-import React from "react";
+import React, { useState } from "react";
 import { useLocation, useNavigate } from "react-router-dom";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
@@ -10,6 +9,7 @@ import { useToast } from "@/components/ui/use-toast";
 import TripDetails from "@/components/booking/TripDetails";
 import SelectedMotorhome from "@/components/booking/SelectedMotorhome";
 import SelectedHotel from "@/components/booking/SelectedHotel";
+import LoginPopup from "@/components/auth/LoginPopup";
 
 interface BookingDetails {
   pickupLocation: string;
@@ -39,6 +39,7 @@ const BookingSummary = () => {
   const navigate = useNavigate();
   const { toast } = useToast();
   const bookingDetails = location.state as BookingDetails;
+  const [showLoginPopup, setShowLoginPopup] = useState(false);
 
   const calculateTotalDays = () => {
     if (!bookingDetails?.departureDate || !bookingDetails?.returnDate) return 0;
@@ -79,11 +80,19 @@ const BookingSummary = () => {
   };
 
   const handleSavePlan = () => {
-    toast({
-      title: "Save Travel Plan",
-      description: "Please login to save your travel plan",
+    setShowLoginPopup(true);
+  };
+
+  const handleContinueAsGuest = () => {
+    navigate("/customer-details", { 
+      state: {
+        motorhome: bookingDetails.selectedMotorhome,
+        hotel: bookingDetails.selectedHotel,
+        totalPrice: calculateTotalPrice(),
+        totalDays: calculateTotalDays(),
+        isGuest: true,
+      }
     });
-    navigate("/login");
   };
 
   return (
@@ -186,6 +195,13 @@ const BookingSummary = () => {
         </div>
       </main>
       <Footer />
+
+      <LoginPopup
+        isOpen={showLoginPopup}
+        onClose={() => setShowLoginPopup(false)}
+        onContinueAsGuest={handleContinueAsGuest}
+        redirectAfterLogin="/manage-trip"
+      />
     </div>
   );
 };
