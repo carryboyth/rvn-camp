@@ -8,11 +8,9 @@ import { useToast } from "@/components/ui/use-toast";
 import { Form } from "@/components/ui/form";
 import Header from "@/components/Header";
 import Footer from "@/components/Footer";
-import CustomerInformationForm from "@/components/checkout/CustomerInformationForm";
-import PaymentOptionsForm from "@/components/payment/PaymentOptionsForm";
 import TripSummaryCard from "@/components/payment/TripSummaryCard";
 import PaymentConfirmation from "@/components/payment/PaymentConfirmation";
-import { Download, ArrowLeft, Check } from "lucide-react";
+import { Download, ArrowLeft, Check, Save, X } from "lucide-react";
 
 interface PaymentForm {
   firstName: string;
@@ -44,27 +42,27 @@ const PaymentSummary = () => {
     en: {
       title: "Payment Summary",
       backButton: "Back to Booking",
-      customerInfo: "Customer Information",
-      paymentMethod: "Payment Method",
       tripSummary: "Trip Summary",
       processPayment: "Process Payment",
       paymentSuccess: "Payment Successful!",
       downloadReceipt: "Download Receipt",
       goToTrips: "Go to My Trips",
-      confirmPayment: "Confirm Payment",
+      confirmPayment: "Confirm and Pay",
+      savePlan: "Save Trip Plan",
+      cancel: "Cancel",
       processing: "Processing...",
     },
     th: {
       title: "สรุปการชำระเงิน",
       backButton: "กลับไปที่การจอง",
-      customerInfo: "ข้อมูลลูกค้า",
-      paymentMethod: "วิธีการชำระเงิน",
       tripSummary: "สรุปการเดินทาง",
       processPayment: "ดำเนินการชำระเงิน",
       paymentSuccess: "ชำระเงินสำเร็จ!",
       downloadReceipt: "ดาวน์โหลดใบเสร็จ",
       goToTrips: "ไปที่แผนการเดินทางของฉัน",
-      confirmPayment: "ยืนยันการชำระเงิน",
+      confirmPayment: "ยืนยันและชำระเงิน",
+      savePlan: "บันทึกแผนการเดินทาง",
+      cancel: "ยกเลิก",
       processing: "กำลังดำเนินการ...",
     }
   };
@@ -72,36 +70,17 @@ const PaymentSummary = () => {
   const t = translations[language];
 
   const onSubmit = async (data: PaymentForm) => {
-    if (!data.termsAccepted) {
-      toast({
-        title: "Terms Required",
-        description: "Please accept the terms and conditions",
-        variant: "destructive",
-      });
-      return;
-    }
-
     setIsProcessing(true);
 
     try {
       // Simulate payment processing
       await new Promise(resolve => setTimeout(resolve, 2000));
       
-      if (data.paymentMethod === "credit-card" || data.paymentMethod === "qr-code") {
-        // Auto-confirm for card and QR payments
-        setPaymentComplete(true);
-        toast({
-          title: t.paymentSuccess,
-          description: "Your booking has been confirmed",
-        });
-      } else {
-        // Bank transfer requires manual verification
-        toast({
-          title: "Payment Submitted",
-          description: "We will verify your payment within 24 hours",
-        });
-        navigate("/manage-trip");
-      }
+      setPaymentComplete(true);
+      toast({
+        title: t.paymentSuccess,
+        description: "Your booking has been confirmed",
+      });
     } catch (error) {
       toast({
         title: "Payment Failed",
@@ -118,6 +97,14 @@ const PaymentSummary = () => {
       title: "Receipt Downloaded",
       description: "Your receipt has been downloaded successfully",
     });
+  };
+
+  const handleSavePlan = () => {
+    toast({
+      title: "Save Travel Plan",
+      description: "Please login to save your travel plan",
+    });
+    navigate("/login");
   };
 
   if (paymentComplete) {
@@ -153,7 +140,7 @@ const PaymentSummary = () => {
       <Header />
       <main className="flex-1 container mx-auto px-4 py-8">
         <div className="max-w-6xl mx-auto">
-          {/* Header with language toggle */}
+          {/* Header with Back button and language toggle */}
           <div className="flex justify-between items-center mb-6">
             <Button
               variant="outline"
@@ -186,31 +173,21 @@ const PaymentSummary = () => {
           </h1>
 
           <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
-            {/* Main Form */}
-            <div className="lg:col-span-2 space-y-6">
+            {/* Trip Summary - Now takes full left side */}
+            <div className="lg:col-span-2">
+              <TripSummaryCard
+                motorhome={motorhome}
+                hotel={hotel}
+                totalDays={totalDays}
+                totalPrice={totalPrice}
+                language={language}
+              />
+            </div>
+
+            {/* Action Buttons - Right side */}
+            <div className="lg:col-span-1 space-y-4">
               <Form {...form}>
-                <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-6">
-                  {/* Customer Information */}
-                  <Card className="shadow-lg border-0 bg-white/80 backdrop-blur-sm">
-                    <CardHeader className="bg-gradient-to-r from-green-100 to-blue-100 rounded-t-lg">
-                      <CardTitle className="text-gray-800">{t.customerInfo}</CardTitle>
-                    </CardHeader>
-                    <CardContent className="p-6">
-                      <CustomerInformationForm form={form} />
-                    </CardContent>
-                  </Card>
-
-                  {/* Payment Method */}
-                  <Card className="shadow-lg border-0 bg-white/80 backdrop-blur-sm">
-                    <CardHeader className="bg-gradient-to-r from-green-100 to-blue-100 rounded-t-lg">
-                      <CardTitle className="text-gray-800">{t.paymentMethod}</CardTitle>
-                    </CardHeader>
-                    <CardContent className="p-6">
-                      <PaymentOptionsForm form={form} language={language} />
-                    </CardContent>
-                  </Card>
-
-                  {/* Submit Button */}
+                <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-4">
                   <Button
                     type="submit"
                     className="w-full py-4 text-lg bg-gradient-to-r from-green-500 to-blue-500 hover:from-green-600 hover:to-blue-600 text-white font-semibold rounded-lg shadow-lg"
@@ -230,17 +207,26 @@ const PaymentSummary = () => {
                   </Button>
                 </form>
               </Form>
-            </div>
 
-            {/* Trip Summary Sidebar */}
-            <div className="lg:col-span-1">
-              <TripSummaryCard
-                motorhome={motorhome}
-                hotel={hotel}
-                totalDays={totalDays}
-                totalPrice={totalPrice}
-                language={language}
-              />
+              <Button
+                type="button"
+                variant="secondary"
+                onClick={handleSavePlan}
+                className="w-full gap-2 py-4 text-lg"
+              >
+                <Save className="h-5 w-5" />
+                {t.savePlan}
+              </Button>
+
+              <Button
+                type="button"
+                variant="outline"
+                onClick={() => navigate("/manage-trip")}
+                className="w-full gap-2 py-4 text-lg"
+              >
+                <X className="h-5 w-5" />
+                {t.cancel}
+              </Button>
             </div>
           </div>
         </div>
