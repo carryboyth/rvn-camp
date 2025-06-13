@@ -5,6 +5,7 @@ import { useForm } from "react-hook-form";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { useToast } from "@/components/ui/use-toast";
+import { Form } from "@/components/ui/form";
 import Header from "@/components/Header";
 import Footer from "@/components/Footer";
 import CustomerInformationForm from "@/components/checkout/CustomerInformationForm";
@@ -187,46 +188,48 @@ const PaymentSummary = () => {
           <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
             {/* Main Form */}
             <div className="lg:col-span-2 space-y-6">
-              <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-6">
-                {/* Customer Information */}
-                <Card className="shadow-lg border-0 bg-white/80 backdrop-blur-sm">
-                  <CardHeader className="bg-gradient-to-r from-green-100 to-blue-100 rounded-t-lg">
-                    <CardTitle className="text-gray-800">{t.customerInfo}</CardTitle>
-                  </CardHeader>
-                  <CardContent className="p-6">
-                    <CustomerInformationForm form={form} />
-                  </CardContent>
-                </Card>
+              <Form {...form}>
+                <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-6">
+                  {/* Customer Information */}
+                  <Card className="shadow-lg border-0 bg-white/80 backdrop-blur-sm">
+                    <CardHeader className="bg-gradient-to-r from-green-100 to-blue-100 rounded-t-lg">
+                      <CardTitle className="text-gray-800">{t.customerInfo}</CardTitle>
+                    </CardHeader>
+                    <CardContent className="p-6">
+                      <CustomerInformationForm form={form} />
+                    </CardContent>
+                  </Card>
 
-                {/* Payment Method */}
-                <Card className="shadow-lg border-0 bg-white/80 backdrop-blur-sm">
-                  <CardHeader className="bg-gradient-to-r from-green-100 to-blue-100 rounded-t-lg">
-                    <CardTitle className="text-gray-800">{t.paymentMethod}</CardTitle>
-                  </CardHeader>
-                  <CardContent className="p-6">
-                    <PaymentOptionsForm form={form} language={language} />
-                  </CardContent>
-                </Card>
+                  {/* Payment Method */}
+                  <Card className="shadow-lg border-0 bg-white/80 backdrop-blur-sm">
+                    <CardHeader className="bg-gradient-to-r from-green-100 to-blue-100 rounded-t-lg">
+                      <CardTitle className="text-gray-800">{t.paymentMethod}</CardTitle>
+                    </CardHeader>
+                    <CardContent className="p-6">
+                      <PaymentOptionsForm form={form} language={language} />
+                    </CardContent>
+                  </Card>
 
-                {/* Submit Button */}
-                <Button
-                  type="submit"
-                  className="w-full py-4 text-lg bg-gradient-to-r from-green-500 to-blue-500 hover:from-green-600 hover:to-blue-600 text-white font-semibold rounded-lg shadow-lg"
-                  disabled={isProcessing}
-                >
-                  {isProcessing ? (
-                    <>
-                      <div className="animate-spin rounded-full h-4 w-4 border-b-2 border-white mr-2"></div>
-                      {t.processing}
-                    </>
-                  ) : (
-                    <>
-                      <Check className="mr-2 h-5 w-5" />
-                      {t.confirmPayment}
-                    </>
-                  )}
-                </Button>
-              </form>
+                  {/* Submit Button */}
+                  <Button
+                    type="submit"
+                    className="w-full py-4 text-lg bg-gradient-to-r from-green-500 to-blue-500 hover:from-green-600 hover:to-blue-600 text-white font-semibold rounded-lg shadow-lg"
+                    disabled={isProcessing}
+                  >
+                    {isProcessing ? (
+                      <>
+                        <div className="animate-spin rounded-full h-4 w-4 border-b-2 border-white mr-2"></div>
+                        {t.processing}
+                      </>
+                    ) : (
+                      <>
+                        <Check className="mr-2 h-5 w-5" />
+                        {t.confirmPayment}
+                      </>
+                    )}
+                  </Button>
+                </form>
+              </Form>
             </div>
 
             {/* Trip Summary Sidebar */}
