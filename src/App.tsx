@@ -23,6 +23,8 @@ import MotorhomeCalculator from "@/pages/MotorhomeCalculator";
 import HotelsCalculator from "@/pages/HotelsCalculator";
 import PartnerRegistration from "@/pages/PartnerRegistration";
 import PartnerLogin from "@/pages/PartnerLogin";
+import AdminLogin from "@/pages/AdminLogin";
+import AdminDashboard from "@/pages/AdminDashboard";
 
 function App() {
   return (
@@ -50,6 +52,8 @@ function App() {
         <Route path="/download" element={<Download />} />
         <Route path="/partner-registration" element={<PartnerRegistration />} />
         <Route path="/partner-login" element={<PartnerLogin />} />
+        <Route path="/admin-login" element={<AdminLogin />} />
+        <Route path="/admin-dashboard" element={<AdminDashboard />} />
         <Route path="*" element={<NotFound />} />
       </Routes>
     </Router>

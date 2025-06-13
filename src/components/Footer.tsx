@@ -20,7 +20,7 @@ const Footer = () => {
   };
 
   const handleAdminLogin = () => {
-    window.location.href = "https://preview--camper-van-compass.lovable.app/";
+    navigate("/admin-login");
   };
 
   return (
