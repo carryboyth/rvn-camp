@@ -1,3 +1,4 @@
+
 import { Mail, Facebook, Instagram, Phone, Home, Users, Shield, Info } from "lucide-react";
 import { Button } from "./ui/button";
 import { Input } from "./ui/input";
@@ -30,14 +31,14 @@ const Footer = () => {
           {/* Main Menu */}
           <div className="space-y-4">
             <div className="flex items-center gap-2 mb-6">
-              <Home className="h-5 w-5 text-luxury-silver" />
-              <h3 className="text-lg font-semibold text-luxury-pearl">Main Menu</h3>
+              <Home className="h-4 w-4 text-luxury-silver" />
+              <h3 className="text-base font-medium text-luxury-pearl">Main Menu</h3>
             </div>
             <ul className="space-y-3">
               <li>
                 <a 
                   href="/" 
-                  className="text-luxury-silver hover:text-luxury-pearl transition-colors duration-300 text-sm"
+                  className="text-luxury-silver hover:text-luxury-red transition-colors duration-300 text-sm"
                 >
                   Home
                 </a>
@@ -45,7 +46,7 @@ const Footer = () => {
               <li>
                 <a 
                   href="/rent-campervan" 
-                  className="text-luxury-silver hover:text-luxury-pearl transition-colors duration-300 text-sm"
+                  className="text-luxury-silver hover:text-luxury-red transition-colors duration-300 text-sm"
                 >
                   Campervan Rentals
                 </a>
@@ -53,7 +54,7 @@ const Footer = () => {
               <li>
                 <a 
                   href="/book-campsite" 
-                  className="text-luxury-silver hover:text-luxury-pearl transition-colors duration-300 text-sm"
+                  className="text-luxury-silver hover:text-luxury-red transition-colors duration-300 text-sm"
                 >
                   Campsites
                 </a>
@@ -61,7 +62,7 @@ const Footer = () => {
               <li>
                 <a 
                   href="/manage-trip" 
-                  className="text-luxury-silver hover:text-luxury-pearl transition-colors duration-300 text-sm"
+                  className="text-luxury-silver hover:text-luxury-red transition-colors duration-300 text-sm"
                 >
                   My Trips
                 </a>
@@ -69,34 +70,26 @@ const Footer = () => {
               <li>
                 <a 
                   href="/promotions" 
-                  className="text-luxury-silver hover:text-luxury-pearl transition-colors duration-300 text-sm"
+                  className="text-luxury-silver hover:text-luxury-red transition-colors duration-300 text-sm"
                 >
                   Promotions
-                </a>
-              </li>
-              <li>
-                <a 
-                  href="/contact" 
-                  className="text-luxury-silver hover:text-luxury-pearl transition-colors duration-300 text-sm"
-                >
-                  Contact Us
                 </a>
               </li>
             </ul>
           </div>
 
-          {/* For Partners */}
+          {/* For Partners & Admins */}
           <div className="space-y-4">
             <div className="flex items-center gap-2 mb-6">
-              <Users className="h-5 w-5 text-luxury-silver" />
-              <h3 className="text-lg font-semibold text-luxury-pearl">For Partners</h3>
+              <Users className="h-4 w-4 text-luxury-silver" />
+              <h3 className="text-base font-medium text-luxury-pearl">For Partners</h3>
             </div>
             <ul className="space-y-3">
               <li>
                 <Button
                   onClick={handlePartnerRegistration}
                   variant="ghost"
-                  className="text-luxury-silver hover:text-luxury-pearl transition-colors duration-300 text-sm p-0 h-auto font-normal justify-start"
+                  className="text-luxury-silver hover:text-luxury-red transition-colors duration-300 text-sm p-0 h-auto font-normal justify-start"
                 >
                   Partner Registration
                 </Button>
@@ -105,52 +98,60 @@ const Footer = () => {
                 <Button
                   onClick={handlePartnerLogin}
                   variant="ghost"
-                  className="text-luxury-silver hover:text-luxury-pearl transition-colors duration-300 text-sm p-0 h-auto font-normal justify-start"
+                  className="text-luxury-silver hover:text-luxury-red transition-colors duration-300 text-sm p-0 h-auto font-normal justify-start"
                 >
                   Partner Login
                 </Button>
               </li>
             </ul>
-          </div>
 
-          {/* For Admins */}
-          <div className="space-y-4">
-            <div className="flex items-center gap-2 mb-6">
-              <Shield className="h-5 w-5 text-luxury-silver" />
-              <h3 className="text-lg font-semibold text-luxury-pearl">For Admins</h3>
+            {/* For Admins - moved here */}
+            <div className="pt-6 border-t border-luxury-charcoal">
+              <div className="flex items-center gap-2 mb-4">
+                <Shield className="h-4 w-4 text-luxury-silver" />
+                <h4 className="text-sm font-medium text-luxury-pearl">For Admins</h4>
+              </div>
+              <ul className="space-y-3">
+                <li>
+                  <Button
+                    onClick={handleAdminLogin}
+                    variant="ghost"
+                    className="text-luxury-silver hover:text-luxury-red transition-colors duration-300 text-sm p-0 h-auto font-normal justify-start"
+                  >
+                    Admin Login
+                  </Button>
+                </li>
+              </ul>
             </div>
-            <ul className="space-y-3">
-              <li>
-                <Button
-                  onClick={handleAdminLogin}
-                  variant="ghost"
-                  className="text-luxury-silver hover:text-luxury-pearl transition-colors duration-300 text-sm p-0 h-auto font-normal justify-start"
-                >
-                  Admin Login
-                </Button>
-              </li>
-            </ul>
           </div>
 
           {/* General Info */}
           <div className="space-y-4">
             <div className="flex items-center gap-2 mb-6">
-              <Info className="h-5 w-5 text-luxury-silver" />
-              <h3 className="text-lg font-semibold text-luxury-pearl">General Info</h3>
+              <Info className="h-4 w-4 text-luxury-silver" />
+              <h3 className="text-base font-medium text-luxury-pearl">General Info</h3>
             </div>
             <ul className="space-y-3">
               <li>
                 <a 
                   href="/about" 
-                  className="text-luxury-silver hover:text-luxury-pearl transition-colors duration-300 text-sm"
+                  className="text-luxury-silver hover:text-luxury-red transition-colors duration-300 text-sm"
                 >
                   About Us
                 </a>
               </li>
               <li>
                 <a 
+                  href="/contact" 
+                  className="text-luxury-silver hover:text-luxury-red transition-colors duration-300 text-sm"
+                >
+                  Contact Us
+                </a>
+              </li>
+              <li>
+                <a 
                   href="/privacy" 
-                  className="text-luxury-silver hover:text-luxury-pearl transition-colors duration-300 text-sm"
+                  className="text-luxury-silver hover:text-luxury-red transition-colors duration-300 text-sm"
                 >
                   Privacy Policy
                 </a>
@@ -158,34 +159,40 @@ const Footer = () => {
               <li>
                 <a 
                   href="/terms" 
-                  className="text-luxury-silver hover:text-luxury-pearl transition-colors duration-300 text-sm"
+                  className="text-luxury-silver hover:text-luxury-red transition-colors duration-300 text-sm"
                 >
                   Terms & Conditions
                 </a>
               </li>
             </ul>
+          </div>
 
+          {/* Follow Us & Newsletter */}
+          <div className="space-y-4">
+            <div className="flex items-center gap-2 mb-6">
+              <h3 className="text-base font-medium text-luxury-pearl">Follow Us</h3>
+            </div>
+            
             {/* Social Media Icons */}
-            <div className="pt-6 border-t border-luxury-charcoal">
-              <h4 className="text-sm font-medium text-luxury-pearl mb-4">Follow Us</h4>
+            <div className="space-y-4">
               <div className="flex space-x-4">
                 <a 
                   href="#" 
-                  className="text-luxury-silver hover:text-luxury-pearl transition-colors duration-300"
+                  className="text-luxury-silver hover:text-luxury-red transition-colors duration-300"
                   aria-label="Facebook"
                 >
                   <Facebook className="h-5 w-5" />
                 </a>
                 <a 
                   href="#" 
-                  className="text-luxury-silver hover:text-luxury-pearl transition-colors duration-300"
+                  className="text-luxury-silver hover:text-luxury-red transition-colors duration-300"
                   aria-label="Instagram"
                 >
                   <Instagram className="h-5 w-5" />
                 </a>
                 <a 
                   href="#" 
-                  className="text-luxury-silver hover:text-luxury-pearl transition-colors duration-300"
+                  className="text-luxury-silver hover:text-luxury-red transition-colors duration-300"
                   aria-label="Line Official"
                 >
                   <Phone className="h-5 w-5" />
@@ -194,7 +201,7 @@ const Footer = () => {
             </div>
 
             {/* Newsletter Subscription */}
-            <div className="pt-6">
+            <div className="pt-6 border-t border-luxury-charcoal">
               <h4 className="text-sm font-medium text-luxury-pearl mb-4">Newsletter</h4>
               <p className="text-xs text-luxury-silver mb-4">
                 Subscribe to receive updates about new destinations and special offers.
@@ -211,7 +218,7 @@ const Footer = () => {
                     type="submit" 
                     variant="default" 
                     size="sm"
-                    className="bg-luxury-silver text-luxury-dark hover:bg-luxury-pearl"
+                    className="bg-luxury-red text-white hover:bg-luxury-red-dark"
                   >
                     <Mail className="h-4 w-4" />
                   </Button>
