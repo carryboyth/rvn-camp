@@ -1,3 +1,4 @@
+
 import type { Config } from "tailwindcss";
 
 export default {
@@ -18,6 +19,10 @@ export default {
       },
     },
     extend: {
+      fontFamily: {
+        'kanit': ['Kanit', 'sans-serif'],
+        'sans': ['Kanit', 'system-ui', 'sans-serif'],
+      },
       colors: {
         border: "hsl(var(--border))",
         input: "hsl(var(--input))",
@@ -25,20 +30,32 @@ export default {
         background: "hsl(var(--background))",
         foreground: "hsl(var(--foreground))",
         primary: {
-          DEFAULT: "#FEC6A1",
-          foreground: "#2D3748",
+          DEFAULT: "#6366F1",
+          foreground: "#FFFFFF",
         },
         secondary: {
-          DEFAULT: "#FDE1D3",
-          foreground: "#2D3748",
+          DEFAULT: "#F1F5F9",
+          foreground: "#475569",
         },
         accent: {
-          DEFAULT: "#D6BCFA",
-          foreground: "#2D3748",
+          DEFAULT: "#10B981",
+          foreground: "#FFFFFF",
         },
         muted: {
-          DEFAULT: "#F1F1F1",
-          foreground: "#6B7280",
+          DEFAULT: "#F8FAFC",
+          foreground: "#64748B",
+        },
+        success: {
+          DEFAULT: "#22C55E",
+          foreground: "#FFFFFF",
+        },
+        warning: {
+          DEFAULT: "#F59E0B",
+          foreground: "#FFFFFF",
+        },
+        destructive: {
+          DEFAULT: "#EF4444",
+          foreground: "#FFFFFF",
         },
       },
       keyframes: {
@@ -52,9 +69,20 @@ export default {
             transform: "translateY(0)",
           },
         },
+        "slide-in": {
+          "0%": {
+            opacity: "0",
+            transform: "translateX(-20px)",
+          },
+          "100%": {
+            opacity: "1",
+            transform: "translateX(0)",
+          },
+        },
       },
       animation: {
         "fade-up": "fade-up 0.5s ease-out",
+        "slide-in": "slide-in 0.3s ease-out",
       },
     },
   },
