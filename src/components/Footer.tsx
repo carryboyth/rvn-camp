@@ -1,5 +1,5 @@
 
-import { Mail } from "lucide-react";
+import { Mail, Facebook, Instagram, Phone, Home, Users, Shield, Info } from "lucide-react";
 import { Button } from "./ui/button";
 import { Input } from "./ui/input";
 import { useNavigate } from "react-router-dom";
@@ -16,87 +16,218 @@ const Footer = () => {
     navigate("/partner-registration");
   };
 
-  return (
-    <footer className="border-t bg-muted">
-      <div className="container py-12 md:py-16">
-        <div className="grid grid-cols-1 gap-8 md:grid-cols-3">
-          {/* Contact Information */}
-          <div>
-            <h3 className="text-lg font-semibold mb-4">Contact Us</h3>
-            <address className="not-italic space-y-2">
-              <p>888,Luangphaeng rd.</p>
-              <p>Bangkok,10520 Thailand</p>
-              <p>Phone: 063 891 6161</p>
-              <p>Email: rvncamp@carryboy.com</p>
-            </address>
-          </div>
+  const handlePartnerLogin = () => {
+    window.location.href = "https://preview--camper-van-compass.lovable.app/";
+  };
 
-          {/* Site Map */}
-          <div>
-            <h3 className="text-lg font-semibold mb-4">Site Map</h3>
-            <ul className="space-y-2">
+  const handleAdminLogin = () => {
+    window.location.href = "https://preview--camper-van-compass.lovable.app/";
+  };
+
+  return (
+    <footer className="bg-luxury-dark border-t border-luxury-charcoal">
+      <div className="container py-12 md:py-16">
+        <div className="grid grid-cols-1 gap-8 md:grid-cols-2 lg:grid-cols-4">
+          {/* Main Menu */}
+          <div className="space-y-4">
+            <div className="flex items-center gap-2 mb-6">
+              <Home className="h-5 w-5 text-luxury-silver" />
+              <h3 className="text-lg font-semibold text-luxury-pearl">Main Menu</h3>
+            </div>
+            <ul className="space-y-3">
               <li>
-                <a href="/" className="hover:text-primary transition-colors">
+                <a 
+                  href="/" 
+                  className="text-luxury-silver hover:text-luxury-pearl transition-colors duration-300 text-sm"
+                >
                   Home
                 </a>
               </li>
               <li>
-                <a
-                  href="/manage-trip"
-                  className="hover:text-primary transition-colors"
+                <a 
+                  href="/rent-campervan" 
+                  className="text-luxury-silver hover:text-luxury-pearl transition-colors duration-300 text-sm"
                 >
-                  Manage Your Trip
+                  Campervan Rentals
                 </a>
               </li>
               <li>
-                <a
-                  href="/contact"
-                  className="hover:text-primary transition-colors"
+                <a 
+                  href="/book-campsite" 
+                  className="text-luxury-silver hover:text-luxury-pearl transition-colors duration-300 text-sm"
+                >
+                  Campsites
+                </a>
+              </li>
+              <li>
+                <a 
+                  href="/manage-trip" 
+                  className="text-luxury-silver hover:text-luxury-pearl transition-colors duration-300 text-sm"
+                >
+                  My Trips
+                </a>
+              </li>
+              <li>
+                <a 
+                  href="/promotions" 
+                  className="text-luxury-silver hover:text-luxury-pearl transition-colors duration-300 text-sm"
+                >
+                  Promotions
+                </a>
+              </li>
+              <li>
+                <a 
+                  href="/contact" 
+                  className="text-luxury-silver hover:text-luxury-pearl transition-colors duration-300 text-sm"
                 >
                   Contact Us
                 </a>
               </li>
-              <li>
-                <a
-                  href="/download"
-                  className="hover:text-primary transition-colors"
-                >
-                  Download
-                </a>
-              </li>
+            </ul>
+          </div>
+
+          {/* For Partners */}
+          <div className="space-y-4">
+            <div className="flex items-center gap-2 mb-6">
+              <Users className="h-5 w-5 text-luxury-silver" />
+              <h3 className="text-lg font-semibold text-luxury-pearl">For Partners</h3>
+            </div>
+            <ul className="space-y-3">
               <li>
                 <Button
                   onClick={handlePartnerRegistration}
-                  variant="outline"
-                  className="w-full justify-start p-0 h-auto bg-transparent border-none hover:bg-transparent hover:text-primary transition-colors text-left font-normal"
+                  variant="ghost"
+                  className="text-luxury-silver hover:text-luxury-pearl transition-colors duration-300 text-sm p-0 h-auto font-normal justify-start"
                 >
                   Partner Registration
+                </Button>
+              </li>
+              <li>
+                <Button
+                  onClick={handlePartnerLogin}
+                  variant="ghost"
+                  className="text-luxury-silver hover:text-luxury-pearl transition-colors duration-300 text-sm p-0 h-auto font-normal justify-start"
+                >
+                  Partner Login
                 </Button>
               </li>
             </ul>
           </div>
 
-          {/* Newsletter Subscription */}
-          <div>
-            <h3 className="text-lg font-semibold mb-4">Newsletter</h3>
-            <p className="text-sm text-muted-foreground mb-4">
-              Subscribe to receive updates about new destinations and special
-              offers.
-            </p>
-            <form onSubmit={handleSubscribe} className="space-y-2">
-              <div className="flex space-x-2">
-                <Input
-                  type="email"
-                  placeholder="Enter your email"
-                  className="flex-1"
-                  required
-                />
-                <Button type="submit" variant="default">
-                  <Mail className="mr-2 h-4 w-4" />
-                  Subscribe
+          {/* For Admins */}
+          <div className="space-y-4">
+            <div className="flex items-center gap-2 mb-6">
+              <Shield className="h-5 w-5 text-luxury-silver" />
+              <h3 className="text-lg font-semibold text-luxury-pearl">For Admins</h3>
+            </div>
+            <ul className="space-y-3">
+              <li>
+                <Button
+                  onClick={handleAdminLogin}
+                  variant="ghost"
+                  className="text-luxury-silver hover:text-luxury-pearl transition-colors duration-300 text-sm p-0 h-auto font-normal justify-start"
+                >
+                  Admin Login
                 </Button>
+              </li>
+            </ul>
+          </div>
+
+          {/* General Info */}
+          <div className="space-y-4">
+            <div className="flex items-center gap-2 mb-6">
+              <Info className="h-5 w-5 text-luxury-silver" />
+              <h3 className="text-lg font-semibold text-luxury-pearl">General Info</h3>
+            </div>
+            <ul className="space-y-3">
+              <li>
+                <a 
+                  href="/about" 
+                  className="text-luxury-silver hover:text-luxury-pearl transition-colors duration-300 text-sm"
+                >
+                  About Us
+                </a>
+              </li>
+              <li>
+                <a 
+                  href="/privacy" 
+                  className="text-luxury-silver hover:text-luxury-pearl transition-colors duration-300 text-sm"
+                >
+                  Privacy Policy
+                </a>
+              </li>
+              <li>
+                <a 
+                  href="/terms" 
+                  className="text-luxury-silver hover:text-luxury-pearl transition-colors duration-300 text-sm"
+                >
+                  Terms & Conditions
+                </a>
+              </li>
+            </ul>
+
+            {/* Social Media Icons */}
+            <div className="pt-6 border-t border-luxury-charcoal">
+              <h4 className="text-sm font-medium text-luxury-pearl mb-4">Follow Us</h4>
+              <div className="flex space-x-4">
+                <a 
+                  href="#" 
+                  className="text-luxury-silver hover:text-luxury-pearl transition-colors duration-300"
+                  aria-label="Facebook"
+                >
+                  <Facebook className="h-5 w-5" />
+                </a>
+                <a 
+                  href="#" 
+                  className="text-luxury-silver hover:text-luxury-pearl transition-colors duration-300"
+                  aria-label="Instagram"
+                >
+                  <Instagram className="h-5 w-5" />
+                </a>
+                <a 
+                  href="#" 
+                  className="text-luxury-silver hover:text-luxury-pearl transition-colors duration-300"
+                  aria-label="Line Official"
+                >
+                  <Phone className="h-5 w-5" />
+                </a>
               </div>
-            </form>
+            </div>
+
+            {/* Newsletter Subscription */}
+            <div className="pt-6">
+              <h4 className="text-sm font-medium text-luxury-pearl mb-4">Newsletter</h4>
+              <p className="text-xs text-luxury-silver mb-4">
+                Subscribe to receive updates about new destinations and special offers.
+              </p>
+              <form onSubmit={handleSubscribe} className="space-y-2">
+                <div className="flex space-x-2">
+                  <Input
+                    type="email"
+                    placeholder="Enter your email"
+                    className="flex-1 bg-luxury-charcoal border-luxury-charcoal text-luxury-pearl placeholder:text-luxury-silver text-sm"
+                    required
+                  />
+                  <Button 
+                    type="submit" 
+                    variant="default" 
+                    size="sm"
+                    className="bg-luxury-silver text-luxury-dark hover:bg-luxury-pearl"
+                  >
+                    <Mail className="h-4 w-4" />
+                  </Button>
+                </div>
+              </form>
+            </div>
+          </div>
+        </div>
+
+        {/* Copyright Notice */}
+        <div className="border-t border-luxury-charcoal mt-12 pt-8">
+          <div className="text-center">
+            <p className="text-sm text-luxury-silver">
+              © 2025 RVnCamp. All rights reserved.
+            </p>
           </div>
         </div>
       </div>
