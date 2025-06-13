@@ -9,6 +9,11 @@ const Footer = () => {
     // Handle newsletter subscription
   };
 
+  const handlePartnerRegistration = () => {
+    // Handle partner registration navigation
+    console.log("Navigate to partner registration");
+  };
+
   return (
     <footer className="border-t bg-muted">
       <div className="container py-12 md:py-16">
@@ -56,6 +61,15 @@ const Footer = () => {
                 >
                   Download
                 </a>
+              </li>
+              <li>
+                <Button
+                  onClick={handlePartnerRegistration}
+                  variant="outline"
+                  className="w-full justify-start p-0 h-auto bg-transparent border-none hover:bg-transparent hover:text-primary transition-colors text-left font-normal"
+                >
+                  Partner Registration
+                </Button>
               </li>
             </ul>
           </div>
