@@ -15,9 +15,9 @@ const Login = () => {
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
-    // TODO: Add actual authentication logic here
     console.log("Login attempt with:", { email, password });
-    navigate("/profile");
+    // Redirect to the specified URL
+    window.location.href = "https://preview--camper-van-compass.lovable.app/";
   };
 
   return (
