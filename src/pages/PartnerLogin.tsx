@@ -17,7 +17,7 @@ const PartnerLogin = () => {
     e.preventDefault();
     console.log("Partner login attempt with:", { email, password });
     // Redirect to the specified URL
-    window.location.href = "https://preview--camper-van-compass.lovable.app/";
+    window.location.href = "https://preview--tent-haven-dashboard.lovable.app/";
   };
 
   return (
