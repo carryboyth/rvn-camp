@@ -18,13 +18,13 @@ import CustomerDetails from "@/pages/CustomerDetails";
 import Login from "@/pages/Login";
 import SignUp from "@/pages/SignUp";
 import Profile from "@/pages/Profile";
-import Download from "@/pages/Download";
 import MotorhomeCalculator from "@/pages/MotorhomeCalculator";
 import HotelsCalculator from "@/pages/HotelsCalculator";
 import PartnerRegistration from "@/pages/PartnerRegistration";
 import PartnerLogin from "@/pages/PartnerLogin";
 import AdminLogin from "@/pages/AdminLogin";
 import AdminDashboard from "@/pages/AdminDashboard";
+import TravelGuide from "@/pages/TravelGuide";
 
 function App() {
   return (
@@ -49,7 +49,7 @@ function App() {
         <Route path="/login" element={<Login />} />
         <Route path="/signup" element={<SignUp />} />
         <Route path="/profile" element={<Profile />} />
-        <Route path="/download" element={<Download />} />
+        <Route path="/travel-guide" element={<TravelGuide />} />
         <Route path="/partner-registration" element={<PartnerRegistration />} />
         <Route path="/partner-login" element={<PartnerLogin />} />
         <Route path="/admin-login" element={<AdminLogin />} />

@@ -57,10 +57,10 @@ const Header = () => {
             Contact Us
           </Link>
           <Link
-            to="/download"
+            to="/travel-guide"
             className="text-sm font-medium transition-colors hover:text-primary"
           >
-            Download
+            Travel Guide
           </Link>
 
           <div className="flex items-center space-x-4">
@@ -130,10 +130,10 @@ const Header = () => {
                   Contact Us
                 </Link>
                 <Link
-                  to="/download"
+                  to="/travel-guide"
                   className="text-lg font-medium transition-colors hover:text-primary"
                 >
-                  Download
+                  Travel Guide
                 </Link>
                 <div className="flex flex-col space-y-4 pt-4 border-t">
                   <DropdownMenu>
@@ -170,4 +170,3 @@ const Header = () => {
 };
 
 export default Header;
-
