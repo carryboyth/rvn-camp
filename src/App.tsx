@@ -15,6 +15,7 @@ import MotorhomeResults from "@/pages/MotorhomeResults";
 import SearchHotels from "@/pages/SearchHotels";
 import BookingSummary from "@/pages/BookingSummary";
 import CustomerDetails from "@/pages/CustomerDetails";
+import PaymentSummary from "@/pages/PaymentSummary";
 import Login from "@/pages/Login";
 import SignUp from "@/pages/SignUp";
 import Profile from "@/pages/Profile";
@@ -46,6 +47,7 @@ function App() {
         <Route path="/search-hotels" element={<SearchHotels />} />
         <Route path="/booking-summary" element={<BookingSummary />} />
         <Route path="/customer-details" element={<CustomerDetails />} />
+        <Route path="/payment-summary" element={<PaymentSummary />} />
         <Route path="/login" element={<Login />} />
         <Route path="/signup" element={<SignUp />} />
         <Route path="/profile" element={<Profile />} />
