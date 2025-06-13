@@ -21,6 +21,7 @@ import Profile from "@/pages/Profile";
 import Download from "@/pages/Download";
 import MotorhomeCalculator from "@/pages/MotorhomeCalculator";
 import HotelsCalculator from "@/pages/HotelsCalculator";
+import PartnerRegistration from "@/pages/PartnerRegistration";
 
 function App() {
   return (
@@ -46,6 +47,7 @@ function App() {
         <Route path="/signup" element={<SignUp />} />
         <Route path="/profile" element={<Profile />} />
         <Route path="/download" element={<Download />} />
+        <Route path="/partner-registration" element={<PartnerRegistration />} />
         <Route path="*" element={<NotFound />} />
       </Routes>
     </Router>

@@ -2,16 +2,18 @@
 import { Mail } from "lucide-react";
 import { Button } from "./ui/button";
 import { Input } from "./ui/input";
+import { useNavigate } from "react-router-dom";
 
 const Footer = () => {
+  const navigate = useNavigate();
+
   const handleSubscribe = (e: React.FormEvent) => {
     e.preventDefault();
     // Handle newsletter subscription
   };
 
   const handlePartnerRegistration = () => {
-    // Handle partner registration navigation
-    console.log("Navigate to partner registration");
+    navigate("/partner-registration");
   };
 
   return (
