@@ -30,25 +30,27 @@ export default {
         background: "hsl(var(--background))",
         foreground: "hsl(var(--foreground))",
         primary: {
-          DEFAULT: "#7dd3fc", // light blue
-          foreground: "#0f172a",
+          DEFAULT: "#1f2937", // เทาเข้ม
+          foreground: "#f9fafb",
         },
         secondary: {
-          DEFAULT: "#bbf7d0", // pale green
-          foreground: "#0f172a",
+          DEFAULT: "#6b7280", // เทากลาง
+          foreground: "#f9fafb",
         },
         accent: {
-          DEFAULT: "#f1f5f9", // light gray-blue
-          foreground: "#0f172a",
+          DEFAULT: "#f3f4f6", // เทาอ่อน
+          foreground: "#1f2937",
         },
         muted: {
-          DEFAULT: "#f8fafc",
-          foreground: "#64748b",
+          DEFAULT: "#f9fafb",
+          foreground: "#6b7280",
         },
-        travel: {
-          blue: "#e0f2fe",
-          green: "#dcfce7",
-          cream: "#fefbf3",
+        luxury: {
+          dark: "#111827", // เทาดำ
+          charcoal: "#374151", // ถ่าน
+          silver: "#9ca3af", // เงิน
+          platinum: "#e5e7eb", // แพลทินัม
+          pearl: "#f9fafb", // ไข่มุก
         },
       },
       keyframes: {
