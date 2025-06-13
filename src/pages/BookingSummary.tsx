@@ -69,7 +69,7 @@ const BookingSummary = () => {
       return;
     }
     
-    navigate("/customer-details", { 
+    navigate("/payment-summary", { 
       state: {
         motorhome: bookingDetails.selectedMotorhome,
         hotel: bookingDetails.selectedHotel,
@@ -84,7 +84,7 @@ const BookingSummary = () => {
   };
 
   const handleContinueAsGuest = () => {
-    navigate("/customer-details", { 
+    navigate("/payment-summary", { 
       state: {
         motorhome: bookingDetails.selectedMotorhome,
         hotel: bookingDetails.selectedHotel,
