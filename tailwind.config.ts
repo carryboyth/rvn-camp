@@ -1,3 +1,4 @@
+
 import type { Config } from "tailwindcss";
 
 export default {
@@ -18,6 +19,10 @@ export default {
       },
     },
     extend: {
+      fontFamily: {
+        'kanit': ['Kanit', 'sans-serif'],
+        'sans': ['Kanit', 'sans-serif'],
+      },
       colors: {
         border: "hsl(var(--border))",
         input: "hsl(var(--input))",
@@ -25,20 +30,25 @@ export default {
         background: "hsl(var(--background))",
         foreground: "hsl(var(--foreground))",
         primary: {
-          DEFAULT: "#FEC6A1",
-          foreground: "#2D3748",
+          DEFAULT: "#7dd3fc", // light blue
+          foreground: "#0f172a",
         },
         secondary: {
-          DEFAULT: "#FDE1D3",
-          foreground: "#2D3748",
+          DEFAULT: "#bbf7d0", // pale green
+          foreground: "#0f172a",
         },
         accent: {
-          DEFAULT: "#D6BCFA",
-          foreground: "#2D3748",
+          DEFAULT: "#f1f5f9", // light gray-blue
+          foreground: "#0f172a",
         },
         muted: {
-          DEFAULT: "#F1F1F1",
-          foreground: "#6B7280",
+          DEFAULT: "#f8fafc",
+          foreground: "#64748b",
+        },
+        travel: {
+          blue: "#e0f2fe",
+          green: "#dcfce7",
+          cream: "#fefbf3",
         },
       },
       keyframes: {
@@ -52,9 +62,20 @@ export default {
             transform: "translateY(0)",
           },
         },
+        "slide-in": {
+          "0%": {
+            opacity: "0",
+            transform: "translateX(-20px)",
+          },
+          "100%": {
+            opacity: "1",
+            transform: "translateX(0)",
+          },
+        },
       },
       animation: {
         "fade-up": "fade-up 0.5s ease-out",
+        "slide-in": "slide-in 0.6s ease-out",
       },
     },
   },

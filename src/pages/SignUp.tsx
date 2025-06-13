@@ -3,11 +3,13 @@ import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
-import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
-import { User, Mail, Lock, Phone } from "lucide-react";
+import { Card, CardContent, CardHeader } from "@/components/ui/card";
+import { Checkbox } from "@/components/ui/checkbox";
+import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
+import { User, Mail, Lock, Phone, Chrome, Facebook } from "lucide-react";
 import Header from "@/components/Header";
 import Footer from "@/components/Footer";
-import { useToast } from "@/components/ui/use-toast";
+import { useToast } from "@/hooks/use-toast";
 
 const SignUp = () => {
   const navigate = useNavigate();
@@ -15,14 +17,31 @@ const SignUp = () => {
   const [formData, setFormData] = useState({
     fullName: "",
     email: "",
+    countryCode: "+66",
     phone: "",
     password: "",
     confirmPassword: "",
+    agreeToTerms: false,
   });
 
+  const countryCodes = [
+    { code: "+66", country: "Thailand" },
+    { code: "+1", country: "United States" },
+    { code: "+44", country: "United Kingdom" },
+    { code: "+81", country: "Japan" },
+    { code: "+86", country: "China" },
+  ];
+
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    const { name, value } = e.target;
-    setFormData(prev => ({ ...prev, [name]: value }));
+    const { name, value, type, checked } = e.target;
+    setFormData(prev => ({ 
+      ...prev, 
+      [name]: type === 'checkbox' ? checked : value 
+    }));
+  };
+
+  const handleCountryCodeChange = (value: string) => {
+    setFormData(prev => ({ ...prev, countryCode: value }));
   };
 
   const handleSubmit = (e: React.FormEvent) => {
@@ -30,121 +49,260 @@ const SignUp = () => {
     
     if (formData.password !== formData.confirmPassword) {
       toast({
-        title: "Error",
-        description: "Passwords do not match",
+        title: "ข้อผิดพลาด",
+        description: "รหัสผ่านไม่ตรงกัน",
         variant: "destructive",
       });
       return;
     }
 
-    // TODO: Add actual registration logic here
+    if (!formData.agreeToTerms) {
+      toast({
+        title: "ข้อผิดพลาด", 
+        description: "กรุณายอมรับข้อกำหนดและเงื่อนไข",
+        variant: "destructive",
+      });
+      return;
+    }
+
     console.log("Registration attempt with:", formData);
     toast({
-      title: "Success",
-      description: "Account created successfully!",
+      title: "สำเร็จ!",
+      description: "สมัครสมาชิกเรียบร้อยแล้ว!",
     });
     navigate("/login");
   };
 
+  const handleSocialSignup = (provider: string) => {
+    console.log(`Social signup with ${provider}`);
+    toast({
+      title: "กำลังดำเนินการ",
+      description: `กำลังเชื่อมต่อกับ ${provider}...`,
+    });
+  };
+
   return (
-    <div className="min-h-screen flex flex-col">
+    <div className="min-h-screen flex flex-col bg-gradient-to-br from-travel-blue via-white to-travel-green">
       <Header />
-      <main className="flex-1 flex items-center justify-center p-4 bg-gradient-to-b from-purple-50 to-white">
-        <Card className="w-full max-w-md">
-          <CardHeader className="space-y-1">
-            <CardTitle className="text-2xl text-center">Create Account</CardTitle>
-            <p className="text-center text-muted-foreground">
-              Enter your details to register
-            </p>
-          </CardHeader>
-          <CardContent>
-            <form onSubmit={handleSubmit} className="space-y-4">
-              <div className="space-y-2">
-                <div className="relative">
-                  <User className="absolute left-3 top-3 h-4 w-4 text-muted-foreground" />
-                  <Input
-                    type="text"
-                    placeholder="Full Name"
-                    name="fullName"
-                    value={formData.fullName}
-                    onChange={handleChange}
-                    className="pl-9"
-                    required
-                  />
+      <main className="flex-1 flex items-center justify-center p-4 py-8">
+        <div className="w-full max-w-6xl grid lg:grid-cols-2 gap-8 items-center">
+          {/* Left side - Illustration for desktop */}
+          <div className="hidden lg:flex flex-col items-center justify-center space-y-6 animate-slide-in">
+            <div className="text-center space-y-4">
+              <h1 className="text-4xl font-bold text-slate-800 font-kanit">
+                เริ่มต้นการผจญภัยของคุณ
+              </h1>
+              <p className="text-lg text-slate-600 font-kanit">
+                สมัครสมาชิกกับ RVnCamp และสำรวจสถานที่ท่องเที่ยวสุดพิเศษ
+              </p>
+            </div>
+            <div className="relative">
+              <img 
+                src="/lovable-uploads/3e1b13b0-4b5b-4eec-85e7-d9d8ff30e668.png" 
+                alt="Campervan Adventure" 
+                className="w-96 h-96 object-cover rounded-2xl shadow-lg"
+              />
+              <div className="absolute -bottom-4 -right-4 bg-white p-3 rounded-xl shadow-lg">
+                <div className="flex items-center space-x-2">
+                  <div className="w-3 h-3 bg-green-500 rounded-full animate-pulse"></div>
+                  <span className="text-sm font-medium text-slate-700 font-kanit">พร้อมให้บริการ</span>
                 </div>
               </div>
-              <div className="space-y-2">
-                <div className="relative">
-                  <Mail className="absolute left-3 top-3 h-4 w-4 text-muted-foreground" />
-                  <Input
-                    type="email"
-                    placeholder="Email"
-                    name="email"
-                    value={formData.email}
-                    onChange={handleChange}
-                    className="pl-9"
-                    required
-                  />
+            </div>
+          </div>
+
+          {/* Right side - Signup form */}
+          <div className="w-full max-w-md mx-auto animate-fade-up">
+            <Card className="shadow-xl border-0 bg-white/80 backdrop-blur-sm">
+              <CardHeader className="space-y-2 text-center pb-4">
+                <div className="mx-auto w-16 h-16 bg-primary/10 rounded-full flex items-center justify-center mb-2">
+                  <User className="w-8 h-8 text-primary" />
                 </div>
-              </div>
-              <div className="space-y-2">
-                <div className="relative">
-                  <Phone className="absolute left-3 top-3 h-4 w-4 text-muted-foreground" />
-                  <Input
-                    type="tel"
-                    placeholder="Phone Number"
-                    name="phone"
-                    value={formData.phone}
-                    onChange={handleChange}
-                    className="pl-9"
-                    required
-                  />
+                <h2 className="text-2xl font-bold text-slate-800 font-kanit">สมัครสมาชิก</h2>
+                <p className="text-slate-600 font-kanit">สร้างบัญชีเพื่อเริ่มจองแคมปิ้งกับเรา</p>
+              </CardHeader>
+              
+              <CardContent className="space-y-4">
+                {/* Social signup buttons */}
+                <div className="grid grid-cols-2 gap-3">
+                  <Button
+                    variant="outline"
+                    onClick={() => handleSocialSignup("Google")}
+                    className="w-full font-kanit border-slate-200 hover:bg-slate-50"
+                  >
+                    <Chrome className="w-4 h-4 mr-2" />
+                    Google
+                  </Button>
+                  <Button
+                    variant="outline"
+                    onClick={() => handleSocialSignup("Facebook")}
+                    className="w-full font-kanit border-slate-200 hover:bg-slate-50"
+                  >
+                    <Facebook className="w-4 h-4 mr-2" />
+                    Facebook
+                  </Button>
                 </div>
-              </div>
-              <div className="space-y-2">
+
                 <div className="relative">
-                  <Lock className="absolute left-3 top-3 h-4 w-4 text-muted-foreground" />
-                  <Input
-                    type="password"
-                    placeholder="Password"
-                    name="password"
-                    value={formData.password}
-                    onChange={handleChange}
-                    className="pl-9"
-                    required
-                  />
+                  <div className="absolute inset-0 flex items-center">
+                    <span className="w-full border-t border-slate-200" />
+                  </div>
+                  <div className="relative flex justify-center text-xs uppercase">
+                    <span className="bg-white px-2 text-slate-500 font-kanit">หรือ</span>
+                  </div>
                 </div>
-              </div>
-              <div className="space-y-2">
-                <div className="relative">
-                  <Lock className="absolute left-3 top-3 h-4 w-4 text-muted-foreground" />
-                  <Input
-                    type="password"
-                    placeholder="Confirm Password"
-                    name="confirmPassword"
-                    value={formData.confirmPassword}
-                    onChange={handleChange}
-                    className="pl-9"
-                    required
-                  />
-                </div>
-              </div>
-              <Button type="submit" className="w-full">
-                Sign Up
-              </Button>
-              <div className="text-center text-sm">
-                Already have an account?{" "}
-                <Button
-                  variant="link"
-                  className="p-0 text-primary hover:underline"
-                  onClick={() => navigate("/login")}
-                >
-                  Sign in
-                </Button>
-              </div>
-            </form>
-          </CardContent>
-        </Card>
+
+                <form onSubmit={handleSubmit} className="space-y-4">
+                  {/* Full Name */}
+                  <div className="space-y-2">
+                    <label className="text-sm font-medium text-slate-700 font-kanit">ชื่อ-นามสกุล</label>
+                    <div className="relative">
+                      <User className="absolute left-3 top-3 h-4 w-4 text-slate-400" />
+                      <Input
+                        type="text"
+                        placeholder="กรอกชื่อและนามสกุล"
+                        name="fullName"
+                        value={formData.fullName}
+                        onChange={handleChange}
+                        className="pl-9 font-kanit border-slate-200 focus:border-primary"
+                        required
+                      />
+                    </div>
+                  </div>
+
+                  {/* Email */}
+                  <div className="space-y-2">
+                    <label className="text-sm font-medium text-slate-700 font-kanit">อีเมล</label>
+                    <div className="relative">
+                      <Mail className="absolute left-3 top-3 h-4 w-4 text-slate-400" />
+                      <Input
+                        type="email"
+                        placeholder="example@email.com"
+                        name="email"
+                        value={formData.email}
+                        onChange={handleChange}
+                        className="pl-9 font-kanit border-slate-200 focus:border-primary"
+                        required
+                      />
+                    </div>
+                  </div>
+
+                  {/* Phone Number */}
+                  <div className="space-y-2">
+                    <label className="text-sm font-medium text-slate-700 font-kanit">หมายเลขโทรศัพท์</label>
+                    <div className="flex space-x-2">
+                      <Select value={formData.countryCode} onValueChange={handleCountryCodeChange}>
+                        <SelectTrigger className="w-24 font-kanit border-slate-200">
+                          <SelectValue />
+                        </SelectTrigger>
+                        <SelectContent>
+                          {countryCodes.map((item) => (
+                            <SelectItem key={item.code} value={item.code} className="font-kanit">
+                              {item.code}
+                            </SelectItem>
+                          ))}
+                        </SelectContent>
+                      </Select>
+                      <div className="relative flex-1">
+                        <Phone className="absolute left-3 top-3 h-4 w-4 text-slate-400" />
+                        <Input
+                          type="tel"
+                          placeholder="081-234-5678"
+                          name="phone"
+                          value={formData.phone}
+                          onChange={handleChange}
+                          className="pl-9 font-kanit border-slate-200 focus:border-primary"
+                          required
+                        />
+                      </div>
+                    </div>
+                  </div>
+
+                  {/* Password */}
+                  <div className="space-y-2">
+                    <label className="text-sm font-medium text-slate-700 font-kanit">รหัสผ่าน</label>
+                    <div className="relative">
+                      <Lock className="absolute left-3 top-3 h-4 w-4 text-slate-400" />
+                      <Input
+                        type="password"
+                        placeholder="สร้างรหัสผ่าน"
+                        name="password"
+                        value={formData.password}
+                        onChange={handleChange}
+                        className="pl-9 font-kanit border-slate-200 focus:border-primary"
+                        required
+                      />
+                    </div>
+                  </div>
+
+                  {/* Confirm Password */}
+                  <div className="space-y-2">
+                    <label className="text-sm font-medium text-slate-700 font-kanit">ยืนยันรหัสผ่าน</label>
+                    <div className="relative">
+                      <Lock className="absolute left-3 top-3 h-4 w-4 text-slate-400" />
+                      <Input
+                        type="password"
+                        placeholder="ยืนยันรหัสผ่านอีกครั้ง"
+                        name="confirmPassword"
+                        value={formData.confirmPassword}
+                        onChange={handleChange}
+                        className="pl-9 font-kanit border-slate-200 focus:border-primary"
+                        required
+                      />
+                    </div>
+                  </div>
+
+                  {/* Terms checkbox */}
+                  <div className="flex items-start space-x-2">
+                    <Checkbox
+                      id="terms"
+                      checked={formData.agreeToTerms}
+                      onCheckedChange={(checked) => 
+                        setFormData(prev => ({ ...prev, agreeToTerms: checked as boolean }))
+                      }
+                      className="mt-1"
+                    />
+                    <label 
+                      htmlFor="terms" 
+                      className="text-sm text-slate-600 font-kanit leading-5 cursor-pointer"
+                    >
+                      ฉันยอมรับ{" "}
+                      <a href="#" className="text-primary hover:underline font-medium">
+                        ข้อกำหนดการใช้งาน
+                      </a>{" "}
+                      และ{" "}
+                      <a href="#" className="text-primary hover:underline font-medium">
+                        นโยบายความเป็นส่วนตัว
+                      </a>
+                    </label>
+                  </div>
+
+                  {/* Submit button */}
+                  <Button 
+                    type="submit" 
+                    className="w-full bg-primary hover:bg-primary/90 text-slate-800 font-kanit font-medium py-3 rounded-lg shadow-md hover:shadow-lg transition-all"
+                  >
+                    สมัครสมาชิก
+                  </Button>
+
+                  {/* Login link */}
+                  <div className="text-center">
+                    <span className="text-sm text-slate-600 font-kanit">
+                      มีบัญชีอยู่แล้ว?{" "}
+                      <Button
+                        variant="link"
+                        className="p-0 text-primary hover:underline font-kanit font-medium"
+                        onClick={() => navigate("/login")}
+                      >
+                        เข้าสู่ระบบ
+                      </Button>
+                    </span>
+                  </div>
+                </form>
+              </CardContent>
+            </Card>
+          </div>
+        </div>
       </main>
       <Footer />
     </div>
