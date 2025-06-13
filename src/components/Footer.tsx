@@ -1,4 +1,3 @@
-
 import { Mail, Facebook, Instagram, Phone, Home, Users, Shield, Info } from "lucide-react";
 import { Button } from "./ui/button";
 import { Input } from "./ui/input";
@@ -17,7 +16,7 @@ const Footer = () => {
   };
 
   const handlePartnerLogin = () => {
-    window.location.href = "https://preview--camper-van-compass.lovable.app/";
+    navigate("/partner-login");
   };
 
   const handleAdminLogin = () => {
