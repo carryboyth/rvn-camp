@@ -47,11 +47,17 @@ const CustomerDetails = () => {
     }
 
     console.log("Form submitted:", data);
-    toast({
-      title: "Booking Confirmed",
-      description: "Your booking has been processed successfully",
+    
+    // Navigate to payment summary with booking data
+    navigate("/payment-summary", {
+      state: {
+        motorhome,
+        hotel,
+        totalPrice,
+        totalDays,
+        customerData: data
+      }
     });
-    navigate("/manage-trip");
   };
 
   const handleSavePlan = () => {
@@ -174,4 +180,3 @@ const CustomerDetails = () => {
 };
 
 export default CustomerDetails;
-
