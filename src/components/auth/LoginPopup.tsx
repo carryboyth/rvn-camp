@@ -80,8 +80,11 @@ const LoginPopup = ({ isOpen, onClose, onContinueAsGuest, redirectAfterLogin }: 
       description: isSignUp ? "Welcome to RVnCamp!" : "Welcome back!",
     });
 
-    if (redirectAfterLogin) {
-      navigate(redirectAfterLogin);
+    if (isSignUp) {
+      navigate("/signup");
+    } else {
+      // Navigate to home page
+      window.location.href = "https://preview--camper-van-compass.lovable.app/";
     }
     onClose();
   };
@@ -91,6 +94,11 @@ const LoginPopup = ({ isOpen, onClose, onContinueAsGuest, redirectAfterLogin }: 
       title: "Feature Coming Soon",
       description: `${provider} login will be available soon!`,
     });
+  };
+
+  const handleSignupClick = () => {
+    navigate("/signup");
+    onClose();
   };
 
   return (
@@ -236,7 +244,7 @@ const LoginPopup = ({ isOpen, onClose, onContinueAsGuest, redirectAfterLogin }: 
             <p className="text-sm text-gray-600" style={{ fontFamily: 'Kanit, sans-serif' }}>
               {isSignUp ? t.haveAccount : t.noAccount}{" "}
               <button
-                onClick={() => setIsSignUp(!isSignUp)}
+                onClick={handleSignupClick}
                 className="text-green-600 hover:text-green-700 font-medium underline"
               >
                 {isSignUp ? t.switchToLogin : t.switchToSignup}
