@@ -1,4 +1,3 @@
-
 import { useNavigate } from "react-router-dom";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent } from "@/components/ui/card";
@@ -11,12 +10,12 @@ const AdminDashboard = () => {
 
   const handleVehicleBookings = () => {
     // Navigate to vehicle bookings management
-    window.location.href = "https://preview--camper-van-compass.lovable.app/";
+    window.location.href = "https://preview--booking-admin-control.lovable.app/";
   };
 
   const handleAdminControl = () => {
     // Navigate to admin control panel
-    console.log("Navigate to admin control panel");
+    window.location.href = "https://preview--rvncamp-admin-thailand-ui.lovable.app/";
   };
 
   const handleLogout = () => {
