@@ -3,7 +3,7 @@ import React from "react";
 import { useLocation, useNavigate } from "react-router-dom";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
-import { ArrowLeft, CreditCard } from "lucide-react";
+import { ArrowLeft, CreditCard, Save } from "lucide-react";
 import Header from "@/components/Header";
 import Footer from "@/components/Footer";
 import { useToast } from "@/components/ui/use-toast";
@@ -76,6 +76,14 @@ const BookingSummary = () => {
         totalDays: calculateTotalDays(),
       }
     });
+  };
+
+  const handleSavePlan = () => {
+    toast({
+      title: "Save Travel Plan",
+      description: "Please login to save your travel plan",
+    });
+    navigate("/login");
   };
 
   return (
@@ -156,12 +164,23 @@ const BookingSummary = () => {
                 </div>
               </div>
 
-              <Button 
-                className="w-full mt-4"
-                onClick={handleProceedToCustomerDetails}
-              >
-                Proceed to Customer Details
-              </Button>
+              <div className="space-y-3">
+                <Button 
+                  className="w-full"
+                  onClick={handleProceedToCustomerDetails}
+                >
+                  Proceed to Customer Details
+                </Button>
+                
+                <Button
+                  variant="outline"
+                  className="w-full"
+                  onClick={handleSavePlan}
+                >
+                  <Save className="mr-2 h-4 w-4" />
+                  Save Plan
+                </Button>
+              </div>
             </CardContent>
           </Card>
         </div>
