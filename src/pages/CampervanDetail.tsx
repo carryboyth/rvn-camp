@@ -1,12 +1,14 @@
-
 import React from "react";
 import { useLocation, useNavigate } from "react-router-dom";
 import Header from "@/components/Header";
 import Footer from "@/components/Footer";
 import { Button } from "@/components/ui/button";
-import { ArrowLeft, Star, MapPin, Users, Bed, Car, Fuel, Calendar, Wifi, Snowflake, Coffee, Droplet, Sun, Zap, Battery, Shield, Wrench } from "lucide-react";
+import { ArrowLeft, Star, MapPin, Users, Bed, Car, Fuel, Calendar } from "lucide-react";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
+import { CampervanImageGallery } from "@/components/campervan/CampervanImageGallery";
+import { CampervanAmenities } from "@/components/campervan/CampervanAmenities";
+import { CampervanDetailBooking } from "@/components/campervan/CampervanDetailBooking";
 
 const CampervanDetail = () => {
   const location = useLocation();
@@ -79,15 +81,6 @@ const CampervanDetail = () => {
 
   const van = campervan || defaultCampervan;
 
-  const handleBooking = () => {
-    navigate("/campervan-summary", {
-      state: {
-        campervan: van,
-        bookingDetails: bookingDetails
-      }
-    });
-  };
-
   return (
     <div className="min-h-screen flex flex-col bg-gray-50">
       <Header />
@@ -159,29 +152,7 @@ const CampervanDetail = () => {
         </div>
 
         {/* แกลเลอรี่ภาพ */}
-        <div className="grid grid-cols-4 gap-3 h-96 rounded-xl overflow-hidden mb-8 border border-gray-200 shadow-sm">
-          {/* รูปใหญ่ด้านซ้าย */}
-          <div className="col-span-2 row-span-2 relative group cursor-pointer">
-            <img
-              src={van.images ? van.images[0] : van.image}
-              alt={van.name}
-              className="w-full h-full object-cover group-hover:brightness-95 transition-all duration-300"
-            />
-            <div className="absolute inset-0 bg-gradient-to-t from-black/50 to-transparent opacity-0 group-hover:opacity-100 transition-all duration-300" />
-          </div>
-
-          {/* รูปย่อย 4 ภาพ (2x2) */}
-          {(van.images || [van.image, van.image, van.image, van.image]).slice(1, 5).map((image, index) => (
-            <div key={index} className="relative group cursor-pointer">
-              <img
-                src={image}
-                alt={`${van.name} ${index + 2}`}
-                className="w-full h-full object-cover group-hover:brightness-95 transition-all duration-300"
-              />
-              <div className="absolute inset-0 bg-gradient-to-t from-black/50 to-transparent opacity-0 group-hover:opacity-100 transition-all duration-300" />
-            </div>
-          ))}
-        </div>
+        <CampervanImageGallery images={van.images} name={van.name} />
 
         {/* เนื้อหาหลัก */}
         <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
@@ -242,142 +213,7 @@ const CampervanDetail = () => {
               </TabsContent>
 
               <TabsContent value="amenities" className="mt-6">
-                <div className="space-y-6">
-                  {/* ห้องน้ำและสุขภัณฑ์ */}
-                  <Card className="border-gray-200 bg-white shadow-sm">
-                    <CardHeader>
-                      <CardTitle className="text-red-600 flex items-center gap-2">
-                        <Droplet className="h-5 w-5" />
-                        ห้องน้ำและสุขภัณฑ์
-                      </CardTitle>
-                    </CardHeader>
-                    <CardContent>
-                      <div className="grid grid-cols-2 gap-3">
-                        {van.amenities?.bathroom?.features?.map((feature, index) => (
-                          <div key={index} className="flex items-center gap-2 p-3 bg-red-50 rounded-lg border border-red-200">
-                            <div className="w-2 h-2 bg-red-500 rounded-full"></div>
-                            <span className="text-red-700 text-sm">{feature}</span>
-                          </div>
-                        ))}
-                      </div>
-                    </CardContent>
-                  </Card>
-
-                  {/* ที่เก็บและจัดเก็บ */}
-                  <Card className="border-gray-200 bg-white shadow-sm">
-                    <CardHeader>
-                      <CardTitle className="text-red-600 flex items-center gap-2">
-                        <Shield className="h-5 w-5" />
-                        ที่เก็บและจัดเก็บ
-                      </CardTitle>
-                    </CardHeader>
-                    <CardContent>
-                      <div className="grid grid-cols-2 gap-3">
-                        {van.amenities?.storage?.map((item, index) => (
-                          <div key={index} className="flex items-center gap-2 p-3 bg-gray-50 rounded-lg border border-gray-200">
-                            <div className="w-2 h-2 bg-red-500 rounded-full"></div>
-                            <span className="text-gray-700 text-sm">{item}</span>
-                          </div>
-                        ))}
-                      </div>
-                    </CardContent>
-                  </Card>
-
-                  {/* ความสะดวกสบาย */}
-                  <Card className="border-gray-200 bg-white shadow-sm">
-                    <CardHeader>
-                      <CardTitle className="text-red-600 flex items-center gap-2">
-                        <Bed className="h-5 w-5" />
-                        ความสะดวกสบาย
-                      </CardTitle>
-                    </CardHeader>
-                    <CardContent>
-                      <div className="grid grid-cols-2 gap-3">
-                        {van.amenities?.comfort?.map((item, index) => (
-                          <div key={index} className="flex items-center gap-2 p-3 bg-gray-50 rounded-lg border border-gray-200">
-                            <div className="w-2 h-2 bg-red-500 rounded-full"></div>
-                            <span className="text-gray-700 text-sm">{item}</span>
-                          </div>
-                        ))}
-                      </div>
-                    </CardContent>
-                  </Card>
-
-                  {/* ห้องครัว */}
-                  <Card className="border-gray-200 bg-white shadow-sm">
-                    <CardHeader>
-                      <CardTitle className="text-red-600 flex items-center gap-2">
-                        <Coffee className="h-5 w-5" />
-                        ห้องครัว
-                      </CardTitle>
-                    </CardHeader>
-                    <CardContent>
-                      <div className="grid grid-cols-2 gap-3">
-                        {van.amenities?.kitchen?.map((item, index) => (
-                          <div key={index} className="flex items-center gap-2 p-3 bg-gray-50 rounded-lg border border-gray-200">
-                            <div className="w-2 h-2 bg-red-500 rounded-full"></div>
-                            <span className="text-gray-700 text-sm">{item}</span>
-                          </div>
-                        ))}
-                      </div>
-                    </CardContent>
-                  </Card>
-
-                  {/* ระบบไฟฟ้าและพลังงาน */}
-                  <Card className="border-gray-200 bg-white shadow-sm">
-                    <CardHeader>
-                      <CardTitle className="text-red-600 flex items-center gap-2">
-                        <Battery className="h-5 w-5" />
-                        ระบบไฟฟ้าและพลังงาน
-                      </CardTitle>
-                    </CardHeader>
-                    <CardContent>
-                      <div className="grid grid-cols-1 md:grid-cols-2 gap-3">
-                        {van.amenities?.power?.map((item, index) => (
-                          <div key={index} className="flex items-center gap-2 p-3 bg-red-50 rounded-lg border border-red-200">
-                            <Zap className="h-4 w-4 text-red-600" />
-                            <span className="text-red-700 text-sm">{item}</span>
-                          </div>
-                        ))}
-                      </div>
-                    </CardContent>
-                  </Card>
-
-                  {/* ระบบน้ำ */}
-                  <Card className="border-gray-200 bg-white shadow-sm">
-                    <CardHeader>
-                      <CardTitle className="text-red-600 flex items-center gap-2">
-                        <Droplet className="h-5 w-5" />
-                        ระบบน้ำ
-                      </CardTitle>
-                    </CardHeader>
-                    <CardContent>
-                      <div className="p-4 bg-blue-50 rounded-lg border border-blue-200">
-                        <p className="text-blue-700 font-medium">{van.amenities?.water}</p>
-                      </div>
-                    </CardContent>
-                  </Card>
-
-                  {/* เทคโนโลยีและระบบควบคุม */}
-                  <Card className="border-gray-200 bg-white shadow-sm">
-                    <CardHeader>
-                      <CardTitle className="text-red-600 flex items-center gap-2">
-                        <Wrench className="h-5 w-5" />
-                        เทคโนโลยีและระบบควบคุม
-                      </CardTitle>
-                    </CardHeader>
-                    <CardContent>
-                      <div className="grid grid-cols-1 md:grid-cols-2 gap-3">
-                        {van.amenities?.technology?.map((item, index) => (
-                          <div key={index} className="flex items-center gap-2 p-3 bg-gray-50 rounded-lg border border-gray-200">
-                            <div className="w-2 h-2 bg-red-500 rounded-full"></div>
-                            <span className="text-gray-700 text-sm">{item}</span>
-                          </div>
-                        ))}
-                      </div>
-                    </CardContent>
-                  </Card>
-                </div>
+                <CampervanAmenities amenities={van.amenities} />
               </TabsContent>
 
               <TabsContent value="location" className="mt-6">
@@ -524,44 +360,7 @@ const CampervanDetail = () => {
 
           {/* คอลัมน์ขวา - ระบบจอง */}
           <div className="lg:col-span-1">
-            <Card className="border-2 border-red-200 bg-white shadow-lg sticky top-32">
-              <CardContent className="p-6">
-                {/* ราคา */}
-                <div className="flex items-center justify-between mb-4">
-                  <div>
-                    <span className="text-3xl font-bold text-red-600">{van.price?.toLocaleString() || van.pricing?.basePrice?.toLocaleString()} บาท</span>
-                    <span className="text-gray-600 ml-1">/ คืน</span>
-                  </div>
-                  <div className="flex items-center gap-1">
-                    <Star className="h-4 w-4 fill-yellow-400 text-yellow-400" />
-                    <span className="font-medium text-gray-900">{van.rating}</span>
-                  </div>
-                </div>
-
-                {/* ข้อมูลการเช่า */}
-                <div className="bg-gray-50 border border-gray-200 rounded-lg p-4 mb-6">
-                  <h3 className="font-medium text-red-600 mb-2">สิ่งที่รวมในราคา</h3>
-                  <div className="space-y-1 text-sm text-gray-700">
-                    <p>• ประกันภัย</p>
-                    <p>• ระยะทางไม่จำกัด</p>
-                    <p>• บริการช่วยเหลือ 24 ชั่วโมง</p>
-                    <p>• การเช่าขั้นต่ำ {van.pricing?.minDays || 3} วัน</p>
-                  </div>
-                </div>
-
-                {/* ปุ่มจอง */}
-                <Button 
-                  onClick={handleBooking}
-                  className="w-full bg-red-600 hover:bg-red-700 text-white py-3 text-lg font-medium rounded-lg shadow-lg hover:shadow-xl transition-all duration-300"
-                >
-                  จองเลย
-                </Button>
-
-                <p className="text-xs text-gray-500 text-center mt-2">
-                  ไม่มีค่าใช้จ่ายจนกว่าจะยืนยัน
-                </p>
-              </CardContent>
-            </Card>
+            <CampervanDetailBooking van={van} bookingDetails={bookingDetails} />
           </div>
         </div>
       </main>
