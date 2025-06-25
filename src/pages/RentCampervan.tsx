@@ -1,4 +1,3 @@
-
 import { useState } from "react";
 import { useForm } from "react-hook-form";
 import { Calendar } from "@/components/ui/calendar";
@@ -103,8 +102,12 @@ const RentCampervan = () => {
   };
 
   const onSelectVan = (van: any) => {
-    setSelectedVan(van);
-    setBookingState("summary");
+    navigate("/campervan-detail", {
+      state: {
+        campervan: van,
+        bookingDetails: bookingDetails
+      }
+    });
   };
 
   const calculateTotalDays = () => {
@@ -389,4 +392,3 @@ const RentCampervan = () => {
 };
 
 export default RentCampervan;
-
