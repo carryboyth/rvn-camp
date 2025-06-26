@@ -13,7 +13,7 @@ const Footer = () => {
   };
 
   const handlePartnerRegistration = () => {
-    navigate("/partner-registration");
+    window.open('https://preview--camp-partner-portal.lovable.app/', '_blank');
   };
 
   const handlePartnerLogin = () => {

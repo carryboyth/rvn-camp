@@ -5,6 +5,10 @@ import { Card, CardContent } from "@/components/ui/card";
 import { Plus, Star, Users, TrendingUp } from "lucide-react";
 
 const PartnerCallToAction = () => {
+  const handlePartnerRegistration = () => {
+    window.open('https://preview--camp-partner-portal.lovable.app/', '_blank');
+  };
+
   return (
     <div className="mt-16 mb-8">
       <Card className="bg-gradient-to-r from-red-600 to-red-700 text-white rounded-2xl border-0 shadow-2xl overflow-hidden">
@@ -49,6 +53,7 @@ const PartnerCallToAction = () => {
               <Button 
                 size="lg" 
                 className="bg-white text-red-600 hover:bg-red-50 font-semibold px-8 py-3 rounded-xl h-auto"
+                onClick={handlePartnerRegistration}
               >
                 <Plus className="w-5 h-5 mr-2" />
                 ลงทะเบียนเป็นพาร์ทเนอร์
