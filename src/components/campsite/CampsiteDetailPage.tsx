@@ -15,7 +15,7 @@ import {
 import { CampsiteHeader } from "./CampsiteHeader";
 import { CampsiteGallery } from "./CampsiteGallery";
 import { CampsiteDetails } from "./CampsiteDetails";
-import { BookingWidget } from "./BookingWidget";
+import BookingWidget from "./BookingWidget";
 import { CampsiteReviews } from "./CampsiteReviews";
 import { CampsiteLocation } from "./CampsiteLocation";
 
