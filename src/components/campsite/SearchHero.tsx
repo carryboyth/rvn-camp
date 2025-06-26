@@ -14,7 +14,7 @@ import {
   PopoverContent,
   PopoverTrigger,
 } from "@/components/ui/popover";
-import { MapPin, Calendar as CalendarIcon, Users, Tent, Car, Home, Search } from "lucide-react";
+import { MapPin, Calendar as CalendarIcon, Users, Tent, Car, Home, Search, Sparkles } from "lucide-react";
 import { format } from "date-fns";
 import { cn } from "@/lib/utils";
 import { DateRange } from "react-day-picker";
@@ -43,9 +43,10 @@ const SearchHero = ({ onSearch }: SearchHeroProps) => {
   ];
 
   const accommodationTypes = [
-    { value: "tent", label: "ที่ตั้งเต็นท์", icon: Tent },
-    { value: "rv", label: "ที่จอดรถบ้าน", icon: Car },
-    { value: "cabin", label: "กระท่อม", icon: Home }
+    { value: "campsites", label: "Campsites", icon: Tent },
+    { value: "caravan", label: "Caravan parks", icon: Car },
+    { value: "glamping", label: "Glamping", icon: Sparkles },
+    { value: "hotel", label: "Hotel", icon: Home }
   ];
 
   React.useEffect(() => {
