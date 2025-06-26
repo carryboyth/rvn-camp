@@ -1,186 +1,256 @@
 
 import React, { useState } from "react";
-import { useNavigate } from "react-router-dom";
 import { Button } from "@/components/ui/button";
-import { Card, CardContent } from "@/components/ui/card";
+import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Calendar } from "@/components/ui/calendar";
 import { Popover, PopoverContent, PopoverTrigger } from "@/components/ui/popover";
-import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
-import { CalendarIcon, Users, Star, MapPin, Shield } from "lucide-react";
-import { format } from "date-fns";
+import { Badge } from "@/components/ui/badge";
+import { CalendarIcon, Users, MapPin, Calendar as CalendarDays } from "lucide-react";
+import { format, differenceInDays } from "date-fns";
+import { cn } from "@/lib/utils";
+import { DateRange } from "react-day-picker";
+import { useNavigate, useSearchParams } from "react-router-dom";
+
+interface StayOption {
+  type: string;
+  description: string;
+  maxGuests: number;
+  price: number;
+}
 
 interface BookingWidgetProps {
   campsite: {
     id: string;
+    name: string;
     price: number;
-    rating: number;
-    reviewCount: number;
-    stayOptions: Array<{
-      type: string;
-      price: number;
-      maxGuests: number;
-    }>;
+    stayOptions: StayOption[];
+    location: {
+      city: string;
+      country: string;
+    };
   };
 }
 
-export const BookingWidget = ({ campsite }: BookingWidgetProps) => {
+const BookingWidget = ({ campsite }: BookingWidgetProps) => {
   const navigate = useNavigate();
-  const [checkIn, setCheckIn] = useState<Date>();
-  const [checkOut, setCheckOut] = useState<Date>();
+  const [searchParams] = useSearchParams();
+  const [selectedOption, setSelectedOption] = useState<StayOption | null>(null);
   const [guests, setGuests] = useState(2);
-  const [stayType, setStayType] = useState(campsite.stayOptions[0]?.type || "");
+  
+  // Get dates from search params if available
+  const checkinParam = searchParams.get('checkin');
+  const checkoutParam = searchParams.get('checkout');
+  
+  const [date, setDate] = useState<DateRange | undefined>(() => {
+    if (checkinParam && checkoutParam) {
+      return {
+        from: new Date(checkinParam),
+        to: new Date(checkoutParam)
+      };
+    }
+    return undefined;
+  });
 
-  const selectedOption = campsite.stayOptions.find(option => option.type === stayType);
-  const totalPrice = selectedOption ? selectedOption.price : campsite.price;
+  const calculateNights = () => {
+    if (!date?.from || !date?.to) return 0;
+    return differenceInDays(date.to, date.from);
+  };
+
+  const calculateTotalPrice = () => {
+    if (!selectedOption || !date?.from || !date?.to) return 0;
+    const nights = calculateNights();
+    return selectedOption.price * nights;
+  };
 
   const handleBooking = () => {
-    navigate(`/booking/${campsite.id}`);
+    if (!selectedOption || !date?.from || !date?.to) {
+      alert('กรุณาเลือกประเภทที่พักและวันที่');
+      return;
+    }
+
+    const bookingData = {
+      campsite: {
+        id: campsite.id,
+        name: campsite.name,
+        image: "/lovable-uploads/491cfd8c-5bc4-4d54-afb5-cc0adc56e139.png",
+        location: `${campsite.location.city}, ${campsite.location.country}`
+      },
+      stayOption: selectedOption,
+      checkIn: format(date.from, 'yyyy-MM-dd'),
+      checkOut: format(date.to, 'yyyy-MM-dd'),
+      nights: calculateNights(),
+      guests: guests,
+      totalPrice: calculateTotalPrice()
+    };
+
+    navigate('/booking-summary', { state: bookingData });
   };
 
   return (
-    <div className="sticky top-32">
-      <Card className="border shadow-lg">
-        <CardContent className="p-6">
-          {/* Price and Rating */}
-          <div className="mb-6">
-            <div className="flex items-baseline gap-2 mb-2">
-              <span className="text-3xl font-bold">${totalPrice}</span>
-              <span className="text-gray-600">per night</span>
-            </div>
-            <div className="flex items-center gap-2">
-              <div className="flex items-center gap-1">
-                <Star className="h-4 w-4 fill-yellow-400 text-yellow-400" />
-                <span className="font-semibold">{campsite.rating}</span>
-              </div>
-              <span className="text-gray-600">({campsite.reviewCount} reviews)</span>
-            </div>
-          </div>
-
-          {/* Genius Discount Badge */}
-          <div className="bg-blue-50 border border-blue-200 rounded-lg p-3 mb-6">
-            <div className="flex items-center gap-2 mb-1">
-              <Shield className="h-4 w-4 text-blue-600" />
-              <span className="text-blue-600 font-semibold text-sm">Genius discount</span>
-            </div>
-            <p className="text-sm text-gray-600">
-              You're getting a reduced rate because you're signed in.
-            </p>
-          </div>
-
-          {/* Booking Form */}
-          <div className="space-y-4 mb-6">
-            {/* Check-in and Check-out */}
-            <div className="grid grid-cols-2 gap-2">
-              <Popover>
-                <PopoverTrigger asChild>
-                  <Button variant="outline" className="justify-start text-left font-normal">
-                    <CalendarIcon className="mr-2 h-4 w-4" />
-                    {checkIn ? format(checkIn, "MMM dd") : "Check-in"}
-                  </Button>
-                </PopoverTrigger>
-                <PopoverContent className="w-auto p-0" align="start">
-                  <Calendar
-                    mode="single"
-                    selected={checkIn}
-                    onSelect={setCheckIn}
-                    initialFocus
-                    className="pointer-events-auto"
-                  />
-                </PopoverContent>
-              </Popover>
-
-              <Popover>
-                <PopoverTrigger asChild>
-                  <Button variant="outline" className="justify-start text-left font-normal">
-                    <CalendarIcon className="mr-2 h-4 w-4" />
-                    {checkOut ? format(checkOut, "MMM dd") : "Check-out"}
-                  </Button>
-                </PopoverTrigger>
-                <PopoverContent className="w-auto p-0" align="start">
-                  <Calendar
-                    mode="single"
-                    selected={checkOut}
-                    onSelect={setCheckOut}
-                    initialFocus
-                    className="pointer-events-auto"
-                  />
-                </PopoverContent>
-              </Popover>
-            </div>
-
-            {/* Guests and Stay Type */}
-            <div className="grid grid-cols-2 gap-2">
-              <Select value={guests.toString()} onValueChange={(value) => setGuests(parseInt(value))}>
-                <SelectTrigger>
-                  <div className="flex items-center gap-2">
-                    <Users className="h-4 w-4" />
-                    <SelectValue />
+    <Card className="sticky top-20">
+      <CardHeader>
+        <CardTitle className="flex items-center justify-between">
+          <span>จองที่พัก</span>
+          <Badge variant="secondary" className="bg-red-100 text-red-700">
+            ราคาเริ่มต้น ฿{campsite.price}/คืน
+          </Badge>
+        </CardTitle>
+      </CardHeader>
+      <CardContent className="space-y-6">
+        {/* Stay Options */}
+        <div>
+          <h4 className="font-medium mb-3">เลือกประเภทที่พัก</h4>
+          <div className="space-y-2">
+            {campsite.stayOptions.map((option, index) => (
+              <div
+                key={index}
+                className={cn(
+                  "p-3 border rounded-lg cursor-pointer transition-colors",
+                  selectedOption?.type === option.type
+                    ? "border-red-500 bg-red-50"
+                    : "border-gray-200 hover:border-gray-300"
+                )}
+                onClick={() => setSelectedOption(option)}
+              >
+                <div className="flex justify-between items-start">
+                  <div className="flex-1">
+                    <h5 className="font-medium">{option.type}</h5>
+                    <p className="text-sm text-gray-600 mt-1">{option.description}</p>
+                    <div className="flex items-center gap-1 mt-2 text-sm text-gray-500">
+                      <Users className="h-3 w-3" />
+                      <span>สูงสุด {option.maxGuests} คน</span>
+                    </div>
                   </div>
-                </SelectTrigger>
-                <SelectContent>
-                  {[1, 2, 3, 4, 5, 6].map((num) => (
-                    <SelectItem key={num} value={num.toString()}>
-                      {num} guest{num > 1 ? 's' : ''}
-                    </SelectItem>
-                  ))}
-                </SelectContent>
-              </Select>
-
-              <Select value={stayType} onValueChange={setStayType}>
-                <SelectTrigger>
-                  <SelectValue placeholder="Stay type" />
-                </SelectTrigger>
-                <SelectContent>
-                  {campsite.stayOptions.map((option) => (
-                    <SelectItem key={option.type} value={option.type}>
-                      {option.type}
-                    </SelectItem>
-                  ))}
-                </SelectContent>
-              </Select>
-            </div>
+                  <div className="text-right">
+                    <p className="font-semibold text-red-600">฿{option.price.toLocaleString()}</p>
+                    <p className="text-xs text-gray-500">ต่อคืน</p>
+                  </div>
+                </div>
+              </div>
+            ))}
           </div>
+        </div>
 
-          {/* Book Now Button */}
-          <Button 
-            className="w-full h-12 text-base font-semibold bg-blue-600 hover:bg-blue-700 mb-4"
-            onClick={handleBooking}
+        {/* Date Selection */}
+        <div className="grid grid-cols-2 gap-3">
+          <Popover>
+            <PopoverTrigger asChild>
+              <Button
+                variant="outline" 
+                className={cn(
+                  "justify-start text-left font-normal",
+                  !date && "text-muted-foreground"
+                )}
+              >
+                <CalendarIcon className="mr-2 h-4 w-4" />
+                {date?.from ? (
+                  format(date.from, "dd/MM")
+                ) : (
+                  "เช็คอิน"
+                )}
+              </Button>
+            </PopoverTrigger>
+            <PopoverContent className="w-auto p-0" align="start">
+              <Calendar
+                initialFocus
+                mode="range"
+                defaultMonth={date?.from}
+                selected={date}
+                onSelect={setDate}
+                numberOfMonths={2}
+              />
+            </PopoverContent>
+          </Popover>
+
+          <Button
+            variant="outline"
+            className="justify-start text-left font-normal"
+            disabled
           >
-            Reserve
+            <CalendarIcon className="mr-2 h-4 w-4" />
+            {date?.to ? (
+              format(date.to, "dd/MM")
+            ) : (
+              "เช็คเอาท์"
+            )}
           </Button>
+        </div>
 
-          <p className="text-center text-sm text-gray-500 mb-4">
-            You won't be charged yet
-          </p>
+        {/* Guests */}
+        <div>
+          <label className="block text-sm font-medium mb-2">จำนวนผู้เข้าพัก</label>
+          <div className="flex items-center gap-3">
+            <Button
+              variant="outline"
+              size="sm"
+              onClick={() => setGuests(Math.max(1, guests - 1))}
+              className="h-8 w-8 rounded-full p-0"
+            >
+              -
+            </Button>
+            <span className="w-8 text-center">{guests}</span>
+            <Button
+              variant="outline"
+              size="sm"
+              onClick={() => setGuests(guests + 1)}
+              className="h-8 w-8 rounded-full p-0"
+            >
+              +
+            </Button>
+            <span className="text-sm text-gray-500 ml-2">คน</span>
+          </div>
+        </div>
 
-          {/* Price Breakdown */}
-          <div className="border-t pt-4 space-y-2 text-sm">
-            <div className="flex justify-between">
-              <span>${totalPrice} × 1 night</span>
-              <span>${totalPrice}</span>
-            </div>
-            <div className="flex justify-between">
-              <span>Service fee</span>
-              <span>$0</span>
-            </div>
-            <div className="flex justify-between font-semibold border-t pt-2">
-              <span>Total</span>
-              <span>${totalPrice}</span>
+        {/* Booking Summary */}
+        {selectedOption && date?.from && date?.to && (
+          <div className="border-t pt-4 space-y-3">
+            <h4 className="font-medium">สรุปการจอง</h4>
+            <div className="space-y-2 text-sm">
+              <div className="flex justify-between">
+                <span>ประเภทที่พัก:</span>
+                <span>{selectedOption.type}</span>
+              </div>
+              <div className="flex justify-between">
+                <span>วันที่เข้าพัก:</span>
+                <span>{format(date.from, 'dd/MM/yyyy')}</span>
+              </div>
+              <div className="flex justify-between">
+                <span>วันที่ออก:</span>
+                <span>{format(date.to, 'dd/MM/yyyy')}</span>
+              </div>
+              <div className="flex justify-between">
+                <span>จำนวนคืน:</span>
+                <span>{calculateNights()} คืน</span>
+              </div>
+              <div className="flex justify-between">
+                <span>ผู้เข้าพัก:</span>
+                <span>{guests} คน</span>
+              </div>
+              <div className="flex justify-between font-medium text-lg border-t pt-2">
+                <span>ราคารวม:</span>
+                <span className="text-red-600">฿{calculateTotalPrice().toLocaleString()}</span>
+              </div>
             </div>
           </div>
+        )}
 
-          {/* Mini Map */}
-          <div className="mt-6 p-4 bg-gray-100 rounded-lg">
-            <div className="flex items-center gap-2 mb-2">
-              <MapPin className="h-4 w-4 text-gray-600" />
-              <span className="text-sm font-medium">Great location</span>
-            </div>
-            <div className="h-32 bg-gray-200 rounded-lg flex items-center justify-center">
-              <span className="text-gray-500 text-sm">Interactive map preview</span>
-            </div>
-          </div>
-        </CardContent>
-      </Card>
-    </div>
+        {/* Booking Button */}
+        <Button 
+          onClick={handleBooking}
+          className="w-full bg-red-600 hover:bg-red-700 text-white py-3"
+          size="lg"
+          disabled={!selectedOption || !date?.from || !date?.to}
+        >
+          <CalendarDays className="mr-2 h-4 w-4" />
+          จองเลย
+        </Button>
+
+        <div className="text-xs text-gray-500 text-center">
+          คุณจะไม่ถูกเรียกเก็บเงินในขั้นตอนนี้
+        </div>
+      </CardContent>
+    </Card>
   );
 };
+
+export default BookingWidget;
