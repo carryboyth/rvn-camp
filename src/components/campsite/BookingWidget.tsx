@@ -4,8 +4,9 @@ import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Calendar } from "@/components/ui/calendar";
 import { Popover, PopoverContent, PopoverTrigger } from "@/components/ui/popover";
+import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
 import { Badge } from "@/components/ui/badge";
-import { CalendarIcon, Users, MapPin, Calendar as CalendarDays } from "lucide-react";
+import { CalendarIcon, Users, MapPin, Calendar as CalendarDays, ChevronDown } from "lucide-react";
 import { format, differenceInDays } from "date-fns";
 import { cn } from "@/lib/utils";
 import { DateRange } from "react-day-picker";
@@ -16,6 +17,7 @@ interface StayOption {
   description: string;
   maxGuests: number;
   price: number;
+  image?: string;
 }
 
 interface BookingWidgetProps {
@@ -36,6 +38,7 @@ const BookingWidget = ({ campsite }: BookingWidgetProps) => {
   const [searchParams] = useSearchParams();
   const [selectedOption, setSelectedOption] = useState<StayOption | null>(null);
   const [guests, setGuests] = useState(2);
+  const [showVehicleDetails, setShowVehicleDetails] = useState(false);
   
   // Get dates from search params if available
   const checkinParam = searchParams.get('checkin');
@@ -50,6 +53,20 @@ const BookingWidget = ({ campsite }: BookingWidgetProps) => {
     }
     return undefined;
   });
+
+  // Add images for each stay option type
+  const getStayOptionImage = (type: string) => {
+    switch (type.toLowerCase()) {
+      case 'tent pitch':
+        return 'https://images.unsplash.com/photo-1472396961693-142e6e269027?w=400&h=300&fit=crop';
+      case 'rv spot':
+        return 'https://images.unsplash.com/photo-1506744038136-46273834b3fb?w=400&h=300&fit=crop';
+      case 'glamping cabin':
+        return 'https://images.unsplash.com/photo-1721322800607-8c38375eef04?w=400&h=300&fit=crop';
+      default:
+        return 'https://images.unsplash.com/photo-1472396961693-142e6e269027?w=400&h=300&fit=crop';
+    }
+  };
 
   const calculateNights = () => {
     if (!date?.from || !date?.to) return 0;
@@ -97,39 +114,112 @@ const BookingWidget = ({ campsite }: BookingWidgetProps) => {
         </CardTitle>
       </CardHeader>
       <CardContent className="space-y-6">
-        {/* Stay Options */}
+        {/* Stay Options Dropdown */}
         <div>
           <h4 className="font-medium mb-3">เลือกประเภทที่พัก</h4>
-          <div className="space-y-2">
-            {campsite.stayOptions.map((option, index) => (
-              <div
-                key={index}
-                className={cn(
-                  "p-3 border rounded-lg cursor-pointer transition-colors",
-                  selectedOption?.type === option.type
-                    ? "border-red-500 bg-red-50"
-                    : "border-gray-200 hover:border-gray-300"
-                )}
-                onClick={() => setSelectedOption(option)}
-              >
-                <div className="flex justify-between items-start">
-                  <div className="flex-1">
-                    <h5 className="font-medium">{option.type}</h5>
-                    <p className="text-sm text-gray-600 mt-1">{option.description}</p>
-                    <div className="flex items-center gap-1 mt-2 text-sm text-gray-500">
-                      <Users className="h-3 w-3" />
-                      <span>สูงสุด {option.maxGuests} คน</span>
+          <Select 
+            value={selectedOption?.type || ""} 
+            onValueChange={(value) => {
+              const option = campsite.stayOptions.find(opt => opt.type === value);
+              setSelectedOption(option || null);
+              setShowVehicleDetails(!!option);
+            }}
+          >
+            <SelectTrigger className="w-full">
+              <SelectValue placeholder="เลือกประเภทที่พัก" />
+            </SelectTrigger>
+            <SelectContent className="bg-white">
+              {campsite.stayOptions.map((option, index) => (
+                <SelectItem key={index} value={option.type}>
+                  <div className="flex items-center gap-3 w-full">
+                    <img 
+                      src={getStayOptionImage(option.type)}
+                      alt={option.type}
+                      className="w-12 h-8 object-cover rounded"
+                    />
+                    <div className="flex-1">
+                      <div className="font-medium">{option.type}</div>
+                      <div className="text-sm text-gray-600">฿{option.price.toLocaleString()}/คืน</div>
                     </div>
                   </div>
-                  <div className="text-right">
-                    <p className="font-semibold text-red-600">฿{option.price.toLocaleString()}</p>
-                    <p className="text-xs text-gray-500">ต่อคืน</p>
-                  </div>
+                </SelectItem>
+              ))}
+            </SelectContent>
+          </Select>
+        </div>
+
+        {/* Selected Stay Option Details */}
+        {selectedOption && (
+          <div className="p-4 bg-red-50 rounded-lg border border-red-200">
+            <div className="flex items-start gap-4">
+              <img 
+                src={getStayOptionImage(selectedOption.type)}
+                alt={selectedOption.type}
+                className="w-20 h-16 object-cover rounded-lg"
+              />
+              <div className="flex-1">
+                <h5 className="font-medium text-red-800">{selectedOption.type}</h5>
+                <p className="text-sm text-gray-600 mt-1">{selectedOption.description}</p>
+                <div className="flex items-center gap-1 mt-2 text-sm text-gray-500">
+                  <Users className="h-3 w-3" />
+                  <span>สูงสุด {selectedOption.maxGuests} คน</span>
+                </div>
+                <div className="text-right mt-2">
+                  <p className="font-semibold text-red-600">฿{selectedOption.price.toLocaleString()}</p>
+                  <p className="text-xs text-gray-500">ต่อคืน</p>
                 </div>
               </div>
-            ))}
+            </div>
           </div>
-        </div>
+        )}
+
+        {/* Vehicle Details Dropdown */}
+        {showVehicleDetails && (
+          <div className="border rounded-lg">
+            <button
+              onClick={() => setShowVehicleDetails(!showVehicleDetails)}
+              className="w-full p-4 flex items-center justify-between hover:bg-gray-50"
+            >
+              <h4 className="font-medium">รายละเอียดพาหนะที่รองรับ</h4>
+              <ChevronDown className="h-4 w-4" />
+            </button>
+            <div className="px-4 pb-4 space-y-3 text-sm">
+              <div>
+                <h5 className="font-medium text-green-700 mb-2">🚐 รองรับ:</h5>
+                <ul className="space-y-1 text-gray-600 ml-4">
+                  <li>• Campervans</li>
+                  <li>• Ute with Slide-on</li>
+                  <li>• Tents</li>
+                </ul>
+              </div>
+              
+              <div>
+                <h5 className="font-medium text-red-700 mb-2">❌ ไม่รองรับ:</h5>
+                <ul className="space-y-1 text-gray-600 ml-4">
+                  <li>• Caravans</li>
+                  <li>• Fifth Wheels</li>
+                  <li>• Motorhomes</li>
+                </ul>
+              </div>
+
+              <div className="border-t pt-3 space-y-2">
+                <p><span className="font-medium">📏 ความยาวรถ:</span> ไม่เกิน 18 เมตร</p>
+                <p><span className="font-medium">🅿️ พื้นที่จอด:</span> Back-in site, Concrete pad, Flat surface</p>
+                <p><span className="font-medium">↔️ Drive-through:</span> จำกัด (First-come, first-serve)</p>
+                <p><span className="font-medium">🧯 Slide-out:</span> รองรับ</p>
+              </div>
+
+              <div className="border-t pt-3 space-y-2">
+                <h5 className="font-medium mb-2">สิ่งอำนวยความสะดวก:</h5>
+                <p><span className="font-medium">🔌 ไฟฟ้า:</span> มี (ต่ำกว่า 30 Amps)</p>
+                <p><span className="font-medium">💧 น้ำประปา:</span> มี</p>
+                <p><span className="font-medium">🚿 ท่อน้ำเสีย:</span> มี (gray water dump)</p>
+                <p><span className="font-medium">📺 TV hookup:</span> ไม่มี</p>
+                <p><span className="font-medium">🔇 เครื่องปั่นไฟ:</span> ห้ามใช้</p>
+              </div>
+            </div>
+          </div>
+        )}
 
         {/* Date Selection */}
         <div className="grid grid-cols-2 gap-3">
@@ -150,7 +240,7 @@ const BookingWidget = ({ campsite }: BookingWidgetProps) => {
                 )}
               </Button>
             </PopoverTrigger>
-            <PopoverContent className="w-auto p-0" align="start">
+            <PopoverContent className="w-auto p-0 bg-white" align="start">
               <Calendar
                 initialFocus
                 mode="range"
@@ -158,6 +248,7 @@ const BookingWidget = ({ campsite }: BookingWidgetProps) => {
                 selected={date}
                 onSelect={setDate}
                 numberOfMonths={2}
+                className="bg-white"
               />
             </PopoverContent>
           </Popover>
