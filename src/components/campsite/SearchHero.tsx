@@ -60,7 +60,7 @@ const SearchHero = ({ onSearch }: SearchHeroProps) => {
       <div
         className="absolute inset-0 bg-cover bg-center"
         style={{
-          backgroundImage: "url('/lovable-uploads/1c68e1b4-9fe2-4968-a384-030737e07ca5.png')",
+          backgroundImage: "url('/lovable-uploads/2f8bf321-c66e-434a-8d25-4059c7f22a47.png')",
         }}
       >
         <div className="absolute inset-0 bg-black/40" />
