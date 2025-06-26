@@ -1,4 +1,3 @@
-
 import React from "react";
 import { Button } from "@/components/ui/button";
 import { Calendar } from "@/components/ui/calendar";
@@ -44,7 +43,7 @@ const BookCampsite = () => {
   }, []);
 
   const handleSearch = () => {
-    navigate("/search-results");
+    navigate("/search");
   };
 
   return (
@@ -184,4 +183,3 @@ const BookCampsite = () => {
 };
 
 export default BookCampsite;
-
