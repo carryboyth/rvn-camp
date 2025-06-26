@@ -1,4 +1,3 @@
-
 import React from "react";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent } from "@/components/ui/card";
@@ -17,7 +16,7 @@ const FeaturedCampsites = ({ showMap }: FeaturedCampsitesProps) => {
       id: 1,
       name: "แคมป์ปิ้งดอยสุเทพ",
       location: "เชียงใหม่",
-      image: "/lovable-uploads/1c68e1b4-9fe2-4968-a384-030737e07ca5.png",
+      image: "/lovable-uploads/c3dce4ea-3346-4ae0-afbe-d3b37bbba087.png",
       price: 1200,
       rating: 4.8,
       reviews: 156,
@@ -65,7 +64,7 @@ const FeaturedCampsites = ({ showMap }: FeaturedCampsitesProps) => {
       id: 5,
       name: "ภูเขาหมอกแคมป์",
       location: "เพชรบูรณ์",
-      image: "/lovable-uploads/1c68e1b4-9fe2-4968-a384-030737e07ca5.png",
+      image: "/lovable-uploads/2c784695-d7a8-483a-b355-df458ac593ab.png",
       price: 1800,
       rating: 4.8,
       reviews: 78,
