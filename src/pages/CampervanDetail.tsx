@@ -1,30 +1,28 @@
+
 import React from "react";
 import { useLocation, useNavigate } from "react-router-dom";
 import Header from "@/components/Header";
 import Footer from "@/components/Footer";
 import { Button } from "@/components/ui/button";
-import { ArrowLeft, Star, MapPin, Users, Bed, Car, Fuel, Calendar } from "lucide-react";
+import { ArrowLeft, Star, MapPin, Users, Bed, Car, Fuel, Calendar, Wifi, Snowflake, Coffee, Droplet, Sun, Zap } from "lucide-react";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
-import { CampervanImageGallery } from "@/components/campervan/CampervanImageGallery";
-import { CampervanAmenities } from "@/components/campervan/CampervanAmenities";
-import { CampervanDetailBooking } from "@/components/campervan/CampervanDetailBooking";
 
 const CampervanDetail = () => {
   const location = useLocation();
   const navigate = useNavigate();
   const { campervan, bookingDetails } = location.state || {};
 
-  // ข้อมูลตัวอย่างสำหรับ Toyota Hilux Revo
+  // ข้อมูลตัวอย่างสำหรับกรณีที่ไม่มีข้อมูลส่งมา
   const defaultCampervan = {
     id: 1,
-    name: "Toyota Hilux Revo Campervan",
+    name: "Toyota HiAce Campervan",
     brand: "Toyota",
-    model: "Hilux Revo",
+    model: "HiAce",
     year: 2023,
-    seats: 6,
-    sleeps: 4,
-    price: 3200,
+    seats: 4,
+    sleeps: 2,
+    price: 2800,
     image: "/lovable-uploads/c1762e4a-0c04-42c9-bb90-72efea7f0c35.png",
     images: [
       "/lovable-uploads/c1762e4a-0c04-42c9-bb90-72efea7f0c35.png",
@@ -33,45 +31,22 @@ const CampervanDetail = () => {
       "/lovable-uploads/e4ce7067-7522-45d6-82c0-56a7fb4d8543.png",
       "/lovable-uploads/b3b48e94-e287-44ba-807a-e228a1df866a.png"
     ],
-    rating: 4.9,
-    reviewCount: 156,
+    rating: 4.8,
+    reviewCount: 127,
     transmission: "Automatic",
     fuel: "Diesel",
     amenities: {
-      passenger: "รองรับผู้โดยสาร 6 คน",
-      bathroom: {
-        available: true,
-        features: ["ห้องน้ำ/ห้องอาบน้ำ", "เครื่องทำน้ำอุ่น", "ชักโครก", "อ่างล้างหน้า"]
-      },
-      storage: [
-        "ตู้เก็บรองเท้า",
-        "ตู้เก็บของ",
-        "ช่องเก็บสัมภาระ",
-        "กล่องสัมภาระท้ายรถ"
-      ],
-      comfort: [
-        "ที่นอน",
-        "โซฟาปรับนอนได้",
-        "เครื่องปรับอากาศ",
-        "กันสาด กางเก็บได้"
-      ],
-      kitchen: [
-        "ตู้เย็น 80 ลิตร"
-      ],
-      power: [
-        "แบตเตอรี่ 9,600 Wh",
-        "แผงโซลาร์เซลล์",
-        "เครื่องปั่นไฟ",
-        "แผงดูสถานะไฟและน้ำ"
-      ],
-      water: "ถังน้ำสะอาด 120 ลิตร",
-      technology: [
-        "ระบบควบคุม RV Smart",
-        "Wi-Fi"
-      ]
+      bed: "เตียงคู่แปลงได้จากโซฟา",
+      kitchen: ["เตาแก๊ส 2 หัว", "อ่างล้างจาน", "ตู้เย็น 80L", "ไมโครเวฟ", "เครื่องชงกาแฟ"],
+      bathroom: true,
+      aircon: true,
+      powerOutlets: 4,
+      waterTank: "น้ำสะอาด 100L + น้ำเสีย 90L",
+      solarPanel: true,
+      wifi: true
     },
     pricing: {
-      basePrice: 3200,
+      basePrice: 2800,
       minDays: 3,
       insurance: true,
       unlimitedMileage: true,
@@ -80,6 +55,15 @@ const CampervanDetail = () => {
   };
 
   const van = campervan || defaultCampervan;
+
+  const handleBooking = () => {
+    navigate("/campervan-summary", {
+      state: {
+        campervan: van,
+        bookingDetails: bookingDetails
+      }
+    });
+  };
 
   return (
     <div className="min-h-screen flex flex-col bg-gray-50">
@@ -152,7 +136,29 @@ const CampervanDetail = () => {
         </div>
 
         {/* แกลเลอรี่ภาพ */}
-        <CampervanImageGallery images={van.images} name={van.name} />
+        <div className="grid grid-cols-4 gap-3 h-96 rounded-xl overflow-hidden mb-8 border border-gray-200 shadow-sm">
+          {/* รูปใหญ่ด้านซ้าย */}
+          <div className="col-span-2 row-span-2 relative group cursor-pointer">
+            <img
+              src={van.images ? van.images[0] : van.image}
+              alt={van.name}
+              className="w-full h-full object-cover group-hover:brightness-95 transition-all duration-300"
+            />
+            <div className="absolute inset-0 bg-gradient-to-t from-black/50 to-transparent opacity-0 group-hover:opacity-100 transition-all duration-300" />
+          </div>
+
+          {/* รูปย่อย 4 ภาพ (2x2) */}
+          {(van.images || [van.image, van.image, van.image, van.image]).slice(1, 5).map((image, index) => (
+            <div key={index} className="relative group cursor-pointer">
+              <img
+                src={image}
+                alt={`${van.name} ${index + 2}`}
+                className="w-full h-full object-cover group-hover:brightness-95 transition-all duration-300"
+              />
+              <div className="absolute inset-0 bg-gradient-to-t from-black/50 to-transparent opacity-0 group-hover:opacity-100 transition-all duration-300" />
+            </div>
+          ))}
+        </div>
 
         {/* เนื้อหาหลัก */}
         <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
@@ -199,21 +205,111 @@ const CampervanDetail = () => {
                         <span className="font-medium text-gray-900">{van.seats}/{van.sleeps} คน</span>
                       </div>
                     </div>
-                    
-                    {/* ความจุผู้โดยสาร */}
-                    <div className="mt-6 p-4 bg-red-50 rounded-lg border border-red-200">
-                      <div className="flex items-center gap-2 mb-2">
-                        <Users className="h-5 w-5 text-red-600" />
-                        <span className="font-medium text-red-700">ความจุผู้โดยสาร</span>
-                      </div>
-                      <p className="text-red-700">{van.amenities?.passenger}</p>
-                    </div>
                   </CardContent>
                 </Card>
               </TabsContent>
 
               <TabsContent value="amenities" className="mt-6">
-                <CampervanAmenities amenities={van.amenities} />
+                <Card className="border-gray-200 bg-white shadow-sm">
+                  <CardHeader>
+                    <CardTitle className="text-red-600">อุปกรณ์ในรถ</CardTitle>
+                  </CardHeader>
+                  <CardContent className="space-y-6">
+                    {/* เตียงนอน */}
+                    <div>
+                      <h3 className="font-medium mb-3 text-red-600 flex items-center gap-2">
+                        <Bed className="h-5 w-5" />
+                        เตียงนอน
+                      </h3>
+                      <p className="text-gray-700 bg-gray-50 p-3 rounded-lg border border-gray-200">
+                        {van.amenities?.bed}
+                      </p>
+                    </div>
+
+                    {/* ห้องครัว */}
+                    <div>
+                      <h3 className="font-medium mb-3 text-red-600 flex items-center gap-2">
+                        <Coffee className="h-5 w-5" />
+                        ห้องครัว
+                      </h3>
+                      <div className="grid grid-cols-2 gap-3">
+                        {van.amenities?.kitchen?.map((item, index) => (
+                          <div key={index} className="flex items-center gap-2 p-2 bg-gray-50 rounded-lg border border-gray-200">
+                            <div className="w-2 h-2 bg-red-500 rounded-full"></div>
+                            <span className="text-gray-700 text-sm">{item}</span>
+                          </div>
+                        ))}
+                      </div>
+                    </div>
+
+                    {/* สิ่งอำนวยความสะดวกอื่นๆ */}
+                    <div className="grid grid-cols-2 gap-4">
+                      <div className={`p-4 rounded-lg border-2 ${van.amenities?.bathroom ? 'border-red-200 bg-red-50' : 'border-gray-200 bg-gray-50'}`}>
+                        <div className="flex items-center gap-2 mb-2">
+                          <Droplet className={`h-5 w-5 ${van.amenities?.bathroom ? 'text-red-600' : 'text-gray-400'}`} />
+                          <span className={`font-medium ${van.amenities?.bathroom ? 'text-red-700' : 'text-gray-600'}`}>
+                            ห้องน้ำ/ฝักบัว
+                          </span>
+                        </div>
+                        <span className={`text-sm ${van.amenities?.bathroom ? 'text-red-600' : 'text-gray-500'}`}>
+                          {van.amenities?.bathroom ? 'มี' : 'ไม่มี'}
+                        </span>
+                      </div>
+
+                      <div className={`p-4 rounded-lg border-2 ${van.amenities?.aircon ? 'border-red-200 bg-red-50' : 'border-gray-200 bg-gray-50'}`}>
+                        <div className="flex items-center gap-2 mb-2">
+                          <Snowflake className={`h-5 w-5 ${van.amenities?.aircon ? 'text-red-600' : 'text-gray-400'}`} />
+                          <span className={`font-medium ${van.amenities?.aircon ? 'text-red-700' : 'text-gray-600'}`}>
+                            เครื่องปรับอากาศ
+                          </span>
+                        </div>
+                        <span className={`text-sm ${van.amenities?.aircon ? 'text-red-600' : 'text-gray-500'}`}>
+                          {van.amenities?.aircon ? 'มี' : 'ไม่มี'}
+                        </span>
+                      </div>
+
+                      <div className="p-4 rounded-lg border-2 border-red-200 bg-red-50">
+                        <div className="flex items-center gap-2 mb-2">
+                          <Zap className="h-5 w-5 text-red-600" />
+                          <span className="font-medium text-red-700">ปลั๊กไฟ</span>
+                        </div>
+                        <span className="text-sm text-red-600">
+                          {van.amenities?.powerOutlets} ตัว
+                        </span>
+                      </div>
+
+                      <div className={`p-4 rounded-lg border-2 ${van.amenities?.solarPanel ? 'border-red-200 bg-red-50' : 'border-gray-200 bg-gray-50'}`}>
+                        <div className="flex items-center gap-2 mb-2">
+                          <Sun className={`h-5 w-5 ${van.amenities?.solarPanel ? 'text-red-600' : 'text-gray-400'}`} />
+                          <span className={`font-medium ${van.amenities?.solarPanel ? 'text-red-700' : 'text-gray-600'}`}>
+                            แผงโซล่าเซลล์
+                          </span>
+                        </div>
+                        <span className={`text-sm ${van.amenities?.solarPanel ? 'text-red-600' : 'text-gray-500'}`}>
+                          {van.amenities?.solarPanel ? 'มี' : 'ไม่มี'}
+                        </span>
+                      </div>
+                    </div>
+
+                    {/* ถังน้ำ & WiFi */}
+                    <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                      <div className="p-4 rounded-lg border-2 border-red-200 bg-red-50">
+                        <h4 className="font-medium text-red-700 mb-2">ถังน้ำ</h4>
+                        <p className="text-red-600">{van.amenities?.waterTank}</p>
+                      </div>
+                      
+                      {van.amenities?.wifi && (
+                        <div className="p-4 rounded-lg border-2 border-red-200 bg-red-50">
+                          <div className="flex items-center gap-2 mb-2">
+                            <Wifi className="h-5 w-5 text-red-600" />
+                            <h4 className="font-medium text-red-700">WiFi</h4>
+                          </div>
+                          <p className="text-red-600 text-sm">อินเทอร์เน็ตระหว่างเดินทาง</p>
+                        </div>
+                      )}
+                    </div>
+                  </CardContent>
+                </Card>
               </TabsContent>
 
               <TabsContent value="location" className="mt-6">
@@ -284,38 +380,26 @@ const CampervanDetail = () => {
                     <div className="space-y-4">
                       <div className="border-b border-gray-200 pb-4">
                         <div className="flex items-center gap-2 mb-2">
-                          <span className="font-medium text-red-600">คุณสมชาย</span>
+                          <span className="font-medium text-red-600">สมชาย ใจดี</span>
                           <div className="flex">
                             {[1,2,3,4,5].map((star) => (
                               <Star key={star} className="h-4 w-4 fill-yellow-400 text-yellow-400" />
                             ))}
                           </div>
                         </div>
-                        <p className="text-gray-700">รถใหม่มาก อุปกรณ์ครบครัน ห้องน้ำสะอาด ระบบ RV Smart ใช้งานง่าย แนะนำเลยครับ!</p>
+                        <p className="text-gray-700">รถสะอาด อุปกรณ์ครบ เจ้าของใจดี แนะนำเลยครับ!</p>
                       </div>
 
                       <div className="border-b border-gray-200 pb-4">
                         <div className="flex items-center gap-2 mb-2">
-                          <span className="font-medium text-red-600">คุณนิดา</span>
+                          <span className="font-medium text-red-600">น้องแนน</span>
                           <div className="flex">
                             {[1,2,3,4,5].map((star) => (
                               <Star key={star} className="h-4 w-4 fill-yellow-400 text-yellow-400" />
                             ))}
                           </div>
                         </div>
-                        <p className="text-gray-700">รถกว้างขวาง เหมาะกับครอบครัวใหญ่ แบตเตอรี่อึ่นทั้งวัน แผงโซลาร์ช่วยประหยัดพลังงาน</p>
-                      </div>
-
-                      <div className="border-b border-gray-200 pb-4">
-                        <div className="flex items-center gap-2 mb-2">
-                          <span className="font-medium text-red-600">คุณพล</span>
-                          <div className="flex">
-                            {[1,2,3,4,5].map((star) => (
-                              <Star key={star} className="h-4 w-4 fill-yellow-400 text-yellow-400" />
-                            ))}
-                          </div>
-                        </div>
-                        <p className="text-gray-700">ตู้เย็นใหญ่ ถังน้ำเยอะ กันสาดกางง่าย เหมาะกับการไปแคมป์ปิ้งหลายวัน</p>
+                        <p className="text-gray-700">ขับง่าย ประหยัดน้ำมัน เหมาะกับครอบครัวมาก</p>
                       </div>
                     </div>
                   </CardContent>
@@ -344,14 +428,6 @@ const CampervanDetail = () => {
                       <h4 className="font-medium mb-2 text-red-600">ขับข้ามจังหวัดได้ไหม?</h4>
                       <p className="text-sm text-gray-700">ได้ ภายในประเทศไทย</p>
                     </div>
-                    <div>
-                      <h4 className="font-medium mb-2 text-red-600">ระบบ RV Smart คืออะไร?</h4>
-                      <p className="text-sm text-gray-700">ระบบควบคุมอัจฉริยะสำหรับจัดการไฟฟ้า น้ำ และอุปกรณ์ต่างๆ ในรถ</p>
-                    </div>
-                    <div>
-                      <h4 className="font-medium mb-2 text-red-600">แบตเตอรี่ใช้ได้นานแค่ไหน?</h4>
-                      <p className="text-sm text-gray-700">แบตเตอรี่ 9,600 Wh ใช้ได้ประมาณ 2-3 วัน โดยมีแผงโซลาร์เซลล์ช่วยชาร์จ</p>
-                    </div>
                   </CardContent>
                 </Card>
               </TabsContent>
@@ -360,7 +436,44 @@ const CampervanDetail = () => {
 
           {/* คอลัมน์ขวา - ระบบจอง */}
           <div className="lg:col-span-1">
-            <CampervanDetailBooking van={van} bookingDetails={bookingDetails} />
+            <Card className="border-2 border-red-200 bg-white shadow-lg sticky top-32">
+              <CardContent className="p-6">
+                {/* ราคา */}
+                <div className="flex items-center justify-between mb-4">
+                  <div>
+                    <span className="text-3xl font-bold text-red-600">{van.price?.toLocaleString() || van.pricing?.basePrice?.toLocaleString()} บาท</span>
+                    <span className="text-gray-600 ml-1">/ คืน</span>
+                  </div>
+                  <div className="flex items-center gap-1">
+                    <Star className="h-4 w-4 fill-yellow-400 text-yellow-400" />
+                    <span className="font-medium text-gray-900">{van.rating}</span>
+                  </div>
+                </div>
+
+                {/* ข้อมูลการเช่า */}
+                <div className="bg-gray-50 border border-gray-200 rounded-lg p-4 mb-6">
+                  <h3 className="font-medium text-red-600 mb-2">สิ่งที่รวมในราคา</h3>
+                  <div className="space-y-1 text-sm text-gray-700">
+                    <p>• ประกันภัย</p>
+                    <p>• ระยะทางไม่จำกัด</p>
+                    <p>• บริการช่วยเหลือ 24 ชั่วโมง</p>
+                    <p>• การเช่าขั้นต่ำ {van.pricing?.minDays || 3} วัน</p>
+                  </div>
+                </div>
+
+                {/* ปุ่มจอง */}
+                <Button 
+                  onClick={handleBooking}
+                  className="w-full bg-red-600 hover:bg-red-700 text-white py-3 text-lg font-medium rounded-lg shadow-lg hover:shadow-xl transition-all duration-300"
+                >
+                  จองเลย
+                </Button>
+
+                <p className="text-xs text-gray-500 text-center mt-2">
+                  ไม่มีค่าใช้จ่ายจนกว่าจะยืนยัน
+                </p>
+              </CardContent>
+            </Card>
           </div>
         </div>
       </main>
