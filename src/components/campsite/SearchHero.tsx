@@ -2,6 +2,7 @@
 import React from "react";
 import { Button } from "@/components/ui/button";
 import { Calendar } from "@/components/ui/calendar";
+import { Checkbox } from "@/components/ui/checkbox";
 import {
   Select,
   SelectContent,
@@ -27,7 +28,7 @@ const SearchHero = ({ onSearch }: SearchHeroProps) => {
   const [date, setDate] = React.useState<DateRange | undefined>();
   const [selectedProvince, setSelectedProvince] = React.useState("");
   const [guests, setGuests] = React.useState({ adults: 2, children: 0 });
-  const [accommodationType, setAccommodationType] = React.useState("");
+  const [accommodationTypes, setAccommodationTypes] = React.useState<string[]>([]);
 
   const provinces = [
     "กรุงเทพมหานคร",
@@ -42,12 +43,23 @@ const SearchHero = ({ onSearch }: SearchHeroProps) => {
     "อุทยานแห่งชาติเขาใหญ่"
   ];
 
-  const accommodationTypes = [
-    { value: "campsites", label: "Campsites", icon: Tent },
-    { value: "caravan", label: "Caravan parks", icon: Car },
+  const accommodationOptions = [
+    { value: "tent-area", label: "ลานกางเต็นท์", icon: Tent },
+    { value: "caravan-parking", label: "จุดจอดรถบ้าน / คาราวาน", icon: Car },
+    { value: "house", label: "บ้านพัก", icon: Home },
     { value: "glamping", label: "Glamping", icon: Sparkles },
-    { value: "hotel", label: "Hotel", icon: Home }
+    { value: "tent-rental", label: "เต็นท์ให้เช่า", icon: Tent },
+    { value: "dome-tent", label: "เต็นท์กระโจม", icon: Tent },
+    { value: "car-camping", label: "จุดจอดนอนในรถ", icon: Car }
   ];
+
+  const handleAccommodationChange = (value: string, checked: boolean) => {
+    if (checked) {
+      setAccommodationTypes(prev => [...prev, value]);
+    } else {
+      setAccommodationTypes(prev => prev.filter(type => type !== value));
+    }
+  };
 
   React.useEffect(() => {
     if (!selectedProvince && provinces.length > 0) {
@@ -220,32 +232,44 @@ const SearchHero = ({ onSearch }: SearchHeroProps) => {
             {/* Accommodation Type */}
             <div className="space-y-2">
               <label className="text-sm font-medium text-gray-700">ประเภทที่พัก</label>
-              <Select value={accommodationType} onValueChange={setAccommodationType}>
-                <SelectTrigger className="h-12 bg-white border-gray-200 rounded-xl">
-                  <SelectValue placeholder="เลือกประเภทที่พัก">
-                    {accommodationType && (
-                      <div className="flex items-center gap-2">
-                        {(() => {
-                          const type = accommodationTypes.find(t => t.value === accommodationType);
-                          const Icon = type?.icon;
-                          return Icon ? <Icon className="h-4 w-4 text-green-600" /> : null;
-                        })()}
-                        {accommodationTypes.find(t => t.value === accommodationType)?.label}
+              <Popover>
+                <PopoverTrigger asChild>
+                  <Button
+                    variant="outline"
+                    className="h-12 w-full justify-start text-left font-normal bg-white border-gray-200 rounded-xl"
+                  >
+                    <Tent className="mr-2 h-4 w-4 text-green-600" />
+                    <span>
+                      {accommodationTypes.length > 0 
+                        ? `เลือกแล้ว ${accommodationTypes.length} ประเภท`
+                        : "เลือกประเภทที่พัก"
+                      }
+                    </span>
+                  </Button>
+                </PopoverTrigger>
+                <PopoverContent className="w-80 bg-white z-50 border shadow-lg rounded-xl" align="start">
+                  <div className="space-y-3 p-4">
+                    {accommodationOptions.map((option) => (
+                      <div key={option.value} className="flex items-center space-x-3">
+                        <Checkbox
+                          id={option.value}
+                          checked={accommodationTypes.includes(option.value)}
+                          onCheckedChange={(checked) => 
+                            handleAccommodationChange(option.value, checked as boolean)
+                          }
+                        />
+                        <label
+                          htmlFor={option.value}
+                          className="flex items-center gap-2 text-sm font-medium leading-none peer-disabled:cursor-not-allowed peer-disabled:opacity-70 cursor-pointer"
+                        >
+                          <option.icon className="h-4 w-4 text-green-600" />
+                          {option.label}
+                        </label>
                       </div>
-                    )}
-                  </SelectValue>
-                </SelectTrigger>
-                <SelectContent className="bg-white z-50 border shadow-lg rounded-xl">
-                  {accommodationTypes.map((type) => (
-                    <SelectItem key={type.value} value={type.value}>
-                      <div className="flex items-center gap-2">
-                        <type.icon className="h-4 w-4 text-green-600" />
-                        {type.label}
-                      </div>
-                    </SelectItem>
-                  ))}
-                </SelectContent>
-              </Select>
+                    ))}
+                  </div>
+                </PopoverContent>
+              </Popover>
             </div>
           </div>
 
