@@ -96,7 +96,7 @@ const SearchFilters = ({ filters, onFiltersChange, showMobile, onCloseMobile }: 
           variant="ghost" 
           size="sm" 
           onClick={clearFilters}
-          className="text-green-600 hover:text-green-700"
+          className="text-red-600 hover:text-red-700"
         >
           ล้างทั้งหมด
         </Button>
@@ -199,7 +199,7 @@ const SearchFilters = ({ filters, onFiltersChange, showMobile, onCloseMobile }: 
   return (
     <>
       {/* Desktop Sidebar */}
-      <div className="hidden lg:block fixed left-4 top-32 w-80 h-[calc(100vh-140px)] overflow-y-auto z-20 bg-white rounded-xl shadow-lg p-6">
+      <div className="bg-white rounded-xl shadow-lg p-6">
         <FilterContent />
       </div>
 

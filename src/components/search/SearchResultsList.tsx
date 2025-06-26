@@ -78,7 +78,7 @@ const SearchResultsList = ({ campsites, onCampsiteHover, onCampsiteLeave }: Sear
                   </Badge>
                 )}
                 {campsite.originalPrice && campsite.originalPrice > campsite.price && (
-                  <Badge className="absolute top-3 right-3 bg-green-600 hover:bg-green-700">
+                  <Badge className="absolute top-3 right-3 bg-red-600 hover:bg-red-700">
                     ลด {Math.round(((campsite.originalPrice - campsite.price) / campsite.originalPrice) * 100)}%
                   </Badge>
                 )}
@@ -162,7 +162,7 @@ const SearchResultsList = ({ campsites, onCampsiteHover, onCampsiteLeave }: Sear
                           e.stopPropagation();
                           navigate(`/campsite/${campsite.id}?action=book`);
                         }}
-                        className="bg-green-600 hover:bg-green-700 flex items-center gap-1"
+                        className="bg-red-600 hover:bg-red-700 flex items-center gap-1"
                       >
                         <Calendar className="h-4 w-4" />
                         จองเลย

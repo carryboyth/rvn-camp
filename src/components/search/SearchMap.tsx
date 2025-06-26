@@ -33,7 +33,7 @@ const SearchMap = ({ campsites, hoveredCampsite, onCampsiteClick }: SearchMapPro
 
   // Mock map implementation - in a real app, you'd use Google Maps, Mapbox, etc.
   return (
-    <div className="relative w-full h-96 lg:h-[600px] bg-gray-100 rounded-xl overflow-hidden">
+    <div className="relative w-full h-96 lg:h-full bg-gray-100 rounded-xl overflow-hidden">
       {/* Map Background */}
       <div 
         className="w-full h-full bg-cover bg-center relative"
@@ -41,7 +41,7 @@ const SearchMap = ({ campsites, hoveredCampsite, onCampsiteClick }: SearchMapPro
           backgroundImage: "url('https://images.unsplash.com/photo-1526778548025-fa2f459cd5c1?ixlib=rb-4.0.3&auto=format&fit=crop&w=1200&q=80')"
         }}
       >
-        <div className="absolute inset-0 bg-green-900/20" />
+        <div className="absolute inset-0 bg-red-900/20" />
         
         {/* Map Controls */}
         <div className="absolute top-4 left-4 right-4 z-10">
@@ -86,8 +86,8 @@ const SearchMap = ({ campsites, hoveredCampsite, onCampsiteClick }: SearchMapPro
           >
             {/* Price Marker */}
             <div className={`
-              bg-white border-2 border-green-600 rounded-full px-3 py-1 shadow-lg
-              ${hoveredCampsite === campsite.id || selectedCampsite === campsite.id ? 'bg-green-600 text-white' : 'text-green-600'}
+              bg-white border-2 border-red-600 rounded-full px-3 py-1 shadow-lg
+              ${hoveredCampsite === campsite.id || selectedCampsite === campsite.id ? 'bg-red-600 text-white' : 'text-red-600'}
               transition-colors duration-200
             `}>
               <span className="font-semibold text-sm">
@@ -128,7 +128,7 @@ const SearchMap = ({ campsites, hoveredCampsite, onCampsiteClick }: SearchMapPro
                         <span className="font-bold text-sm">฿{campsite.price.toLocaleString()}</span>
                         <span className="text-xs text-gray-600">/คืน</span>
                       </div>
-                      <Button size="sm" className="text-xs px-2 py-1 h-auto bg-green-600 hover:bg-green-700">
+                      <Button size="sm" className="text-xs px-2 py-1 h-auto bg-red-600 hover:bg-red-700">
                         ดูรายละเอียด
                       </Button>
                     </div>

@@ -72,6 +72,7 @@ const SearchResults = () => {
   const navigate = useNavigate();
   const [view, setView] = useState<'list' | 'map'>('list');
   const [showFilters, setShowFilters] = useState(false);
+  const [showMapInSidebar, setShowMapInSidebar] = useState(true);
   const [filters, setFilters] = useState<SearchFilters>({
     priceRange: [0, 5000],
     accommodationTypes: [],
@@ -130,14 +131,6 @@ const SearchResults = () => {
             </Button>
           </div>
 
-          {/* Desktop Filter Sidebar + Mobile Filter Modal */}
-          <SearchFilters 
-            filters={filters}
-            onFiltersChange={setFilters}
-            showMobile={showFilters}
-            onCloseMobile={() => setShowFilters(false)}
-          />
-
           {/* Results Header */}
           <div className="mb-6">
             <h1 className="text-2xl font-bold text-gray-900 mb-2">
@@ -150,8 +143,45 @@ const SearchResults = () => {
 
           {/* Split Layout */}
           <div className="flex flex-col lg:flex-row gap-6">
-            {/* Left Column - Results List */}
-            <div className={`${view === 'list' || window.innerWidth >= 1024 ? 'block' : 'hidden'} lg:block lg:w-1/2`}>
+            {/* Left Sidebar - Filters and Map */}
+            <div className="lg:w-80 xl:w-96">
+              {/* Desktop Filter Sidebar + Mobile Filter Modal */}
+              <SearchFilters 
+                filters={filters}
+                onFiltersChange={setFilters}
+                showMobile={showFilters}
+                onCloseMobile={() => setShowFilters(false)}
+              />
+              
+              {/* Map in Sidebar - Desktop only */}
+              <div className="hidden lg:block mt-6">
+                <div className="bg-white rounded-xl shadow-lg p-4">
+                  <div className="flex items-center justify-between mb-4">
+                    <h3 className="font-semibold text-gray-900">แผนที่</h3>
+                    <Button
+                      variant="ghost"
+                      size="sm"
+                      onClick={() => setShowMapInSidebar(!showMapInSidebar)}
+                      className="text-red-600 hover:text-red-700"
+                    >
+                      {showMapInSidebar ? 'ซ่อน' : 'แสดง'}
+                    </Button>
+                  </div>
+                  {showMapInSidebar && (
+                    <div className="h-64">
+                      <SearchMap 
+                        campsites={filteredCampsites}
+                        hoveredCampsite={hoveredCampsite}
+                        onCampsiteClick={(campsiteId) => navigate(`/campsite/${campsiteId}`)}
+                      />
+                    </div>
+                  )}
+                </div>
+              </div>
+            </div>
+
+            {/* Right Column - Results List */}
+            <div className={`${view === 'list' || window.innerWidth >= 1024 ? 'block' : 'hidden'} lg:block flex-1`}>
               <SearchResultsList 
                 campsites={filteredCampsites}
                 onCampsiteHover={setHoveredCampsite}
@@ -159,15 +189,13 @@ const SearchResults = () => {
               />
             </div>
 
-            {/* Right Column - Map */}
-            <div className={`${view === 'map' || window.innerWidth >= 1024 ? 'block' : 'hidden'} lg:block lg:w-1/2`}>
-              <div className="sticky top-24">
-                <SearchMap 
-                  campsites={filteredCampsites}
-                  hoveredCampsite={hoveredCampsite}
-                  onCampsiteClick={(campsiteId) => navigate(`/campsite/${campsiteId}`)}
-                />
-              </div>
+            {/* Mobile Map View */}
+            <div className={`${view === 'map' && window.innerWidth < 1024 ? 'block' : 'hidden'} lg:hidden`}>
+              <SearchMap 
+                campsites={filteredCampsites}
+                hoveredCampsite={hoveredCampsite}
+                onCampsiteClick={(campsiteId) => navigate(`/campsite/${campsiteId}`)}
+              />
             </div>
           </div>
         </div>
