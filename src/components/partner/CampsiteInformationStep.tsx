@@ -4,7 +4,7 @@ import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Checkbox } from "@/components/ui/checkbox";
 import { Button } from "@/components/ui/button";
-import { Upload, MapPin, Home, Image, Wifi, Car, Zap, ChefHat, Shield, ShoppingCart, Coffee, Camera, Users } from "lucide-react";
+import { Upload, MapPin, Home, Image, Wifi, Car, Zap, ChefHat } from "lucide-react";
 
 interface CampsiteInformationStepProps {
   data: any;
@@ -19,24 +19,12 @@ const campTypes = [
 ];
 
 const facilities = [
-  { id: "electrical_system", label: "ระบบไฟฟ้า (แอมป์/โวลต์)", icon: Zap },
-  { id: "water_system", label: "ระบบน้ำประปา", icon: Home },
-  { id: "waste_disposal", label: "จุดทิ้งน้ำเสีย/จุดทิ้งขยะ", icon: Home },
+  { id: "toilet", label: "ห้องน้ำ", icon: Home },
+  { id: "electricity", label: "ไฟฟ้า", icon: Zap },
+  { id: "parking", label: "ที่จอดรถ", icon: Car },
   { id: "wifi", label: "Wi-Fi", icon: Wifi },
-  { id: "bathroom_shower", label: "ห้องน้ำและห้องอาบน้ำ", icon: Home },
-  { id: "accessible_toilet", label: "ห้องสุขาสำหรับคนพิการ", icon: Home },
-  { id: "cooking_area", label: "จุดทำอาหาร (ครัวกลาง/เตาปิ้งย่าง)", icon: ChefHat },
-  { id: "fire_pit", label: "ก่อไฟได้", icon: Home },
-  { id: "rest_area", label: "บริเวณพักผ่อน/ลานกางเต็นท์", icon: Home },
-  { id: "additional_parking", label: "พื้นที่สำหรับจอดรถยนต์เสริม", icon: Car },
-  { id: "security_system", label: "ระบบรักษาความปลอดภัย (กล้อง CCTV, รปภ.)", icon: Shield },
-  { id: "lighting", label: "แสงสว่างในพื้นที่จอดรถและทางเดิน", icon: Zap },
-  { id: "convenience_store", label: "ร้านสะดวกซื้อ", icon: ShoppingCart },
-  { id: "restaurant_cafe", label: "ร้านอาหาร/คาเฟ่", icon: Coffee },
-  { id: "laundry_service", label: "บริการซักรีด", icon: Home },
-  { id: "ev_charging", label: "จุดชาร์จรถยนต์ไฟฟ้า", icon: Zap },
-  { id: "activities", label: "กิจกรรมในที่พัก", icon: Users },
-  { id: "equipment_rental", label: "เช่าอุปกรณ์", icon: Home },
+  { id: "kitchen", label: "ครัว", icon: ChefHat },
+  { id: "shower", label: "ฝักบัว", icon: Home },
 ];
 
 const CampsiteInformationStep = ({ data, onDataChange }: CampsiteInformationStepProps) => {
@@ -193,7 +181,7 @@ const CampsiteInformationStep = ({ data, onDataChange }: CampsiteInformationStep
       {/* Facilities */}
       <div className="space-y-3">
         <Label className="text-sm font-medium">สิ่งอำนวยความสะดวก (Facilities)</Label>
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-3">
+        <div className="grid grid-cols-2 md:grid-cols-3 gap-3">
           {facilities.map((facility) => (
             <div key={facility.id} className="flex items-center space-x-2">
               <Checkbox
