@@ -17,7 +17,7 @@ const Footer = () => {
   };
 
   const handlePartnerLogin = () => {
-    navigate("/partner-login");
+    window.location.href = "https://preview--rvn-camp.lovable.app/partner/login";
   };
 
   const handleAdminLogin = () => {
