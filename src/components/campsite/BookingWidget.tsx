@@ -6,7 +6,7 @@ import { Calendar } from "@/components/ui/calendar";
 import { Popover, PopoverContent, PopoverTrigger } from "@/components/ui/popover";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
 import { Badge } from "@/components/ui/badge";
-import { CalendarIcon, Users, MapPin, Calendar as CalendarDays, ChevronDown } from "lucide-react";
+import { CalendarIcon, Users, MapPin, Calendar as CalendarDays } from "lucide-react";
 import { format, differenceInDays } from "date-fns";
 import { cn } from "@/lib/utils";
 import { DateRange } from "react-day-picker";
@@ -38,7 +38,6 @@ const BookingWidget = ({ campsite }: BookingWidgetProps) => {
   const [searchParams] = useSearchParams();
   const [selectedOption, setSelectedOption] = useState<StayOption | null>(null);
   const [guests, setGuests] = useState(2);
-  const [showVehicleDetails, setShowVehicleDetails] = useState(false);
   
   // Get dates from search params if available
   const checkinParam = searchParams.get('checkin');
@@ -105,7 +104,7 @@ const BookingWidget = ({ campsite }: BookingWidgetProps) => {
 
   return (
     <div className="space-y-6">
-      <Card className="sticky top-20">
+      <Card>
         <CardHeader>
           <CardTitle className="flex items-center justify-between">
             <span>จองที่พัก</span>
@@ -294,54 +293,46 @@ const BookingWidget = ({ campsite }: BookingWidgetProps) => {
         </CardContent>
       </Card>
 
-      {/* Vehicle Details Card - Separate card below Stay Options */}
+      {/* Vehicle Details Card - Always visible, not collapsible */}
       <Card className="border rounded-lg bg-white">
         <CardHeader className="pb-3">
-          <button
-            onClick={() => setShowVehicleDetails(!showVehicleDetails)}
-            className="w-full flex items-center justify-between hover:bg-gray-50 p-2 -m-2 rounded"
-          >
-            <CardTitle className="text-lg">รายละเอียดพาหนะที่รองรับ</CardTitle>
-            <ChevronDown className={`h-4 w-4 transition-transform ${showVehicleDetails ? 'rotate-180' : ''}`} />
-          </button>
+          <CardTitle className="text-lg">รายละเอียดพาหนะที่รองรับ</CardTitle>
         </CardHeader>
-        {showVehicleDetails && (
-          <CardContent className="pt-0 space-y-3 text-sm">
-            <div>
-              <h5 className="font-medium text-green-700 mb-2">🚐 รองรับ:</h5>
-              <ul className="space-y-1 text-gray-600 ml-4">
-                <li>• Campervans</li>
-                <li>• Ute with Slide-on</li>
-                <li>• Tents</li>
-              </ul>
-            </div>
-            
-            <div>
-              <h5 className="font-medium text-red-700 mb-2">❌ ไม่รองรับ:</h5>
-              <ul className="space-y-1 text-gray-600 ml-4">
-                <li>• Caravans</li>
-                <li>• Fifth Wheels</li>
-                <li>• Motorhomes</li>
-              </ul>
-            </div>
+        <CardContent className="pt-0 space-y-3 text-sm">
+          <div>
+            <h5 className="font-medium text-green-700 mb-2">🚐 รองรับ:</h5>
+            <ul className="space-y-1 text-gray-600 ml-4">
+              <li>• Campervans</li>
+              <li>• Ute with Slide-on</li>
+              <li>• Tents</li>
+            </ul>
+          </div>
+          
+          <div>
+            <h5 className="font-medium text-red-700 mb-2">❌ ไม่รองรับ:</h5>
+            <ul className="space-y-1 text-gray-600 ml-4">
+              <li>• Caravans</li>
+              <li>• Fifth Wheels</li>
+              <li>• Motorhomes</li>
+            </ul>
+          </div>
 
-            <div className="border-t pt-3 space-y-2">
-              <p><span className="font-medium">📏 ความยาวรถ:</span> ไม่เกิน 18 เมตร</p>
-              <p><span className="font-medium">🅿️ พื้นที่จอด:</span> Back-in site, Concrete pad, Flat surface</p>
-              <p><span className="font-medium">↔️ Drive-through:</span> จำกัด (First-come, first-serve)</p>
-              <p><span className="font-medium">🧯 Slide-out:</span> รองรับ</p>
-            </div>
+          <div className="border-t pt-3 space-y-2">
+            <p><span className="font-medium">📏 ความยาวรถ:</span> ไม่เกิน 18 เมตร</p>
+            <p><span className="font-medium">🅿️ พื้นที่จอด:</span> Back-in site, Concrete pad, Flat surface</p>
+            <p><span className="font-medium">↔️ Drive-through:</span> จำกัด (First-come, first-serve)</p>
+            <p><span className="font-medium">🧯 Slide-out:</span> รองรับ</p>
+          </div>
 
-            <div className="border-t pt-3 space-y-2">
-              <h5 className="font-medium mb-2">สิ่งอำนวยความสะดวก:</h5>
-              <p><span className="font-medium">🔌 ไฟฟ้า:</span> มี (ต่ำกว่า 30 Amps)</p>
-              <p><span className="font-medium">💧 น้ำประปา:</span> มี</p>
-              <p><span className="font-medium">🚿 ท่อน้ำเสีย:</span> มี (gray water dump)</p>
-              <p><span className="font-medium">📺 TV hookup:</span> ไม่มี</p>
-              <p><span className="font-medium">🔇 เครื่องปั่นไฟ:</span> ห้ามใช้</p>
-            </div>
-          </CardContent>
-        )}
+          <div className="border-t pt-3 space-y-2">
+            <h5 className="font-medium mb-2">สิ่งอำนวยความสะดวก:</h5>
+            <p><span className="font-medium">🔌 ไฟฟ้า:</span> มี (ต่ำกว่า 30 Amps)</p>
+            <p><span className="font-medium">💧 น้ำประปา:</span> มี</p>
+            <p><span className="font-medium">🚿 ท่อน้ำเสีย:</span> มี (gray water dump)</p>
+            <p><span className="font-medium">📺 TV hookup:</span> ไม่มี</p>
+            <p><span className="font-medium">🔇 เครื่องปั่นไฟ:</span> ห้ามใช้</p>
+          </div>
+        </CardContent>
       </Card>
     </div>
   );
