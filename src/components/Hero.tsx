@@ -187,7 +187,7 @@ const Hero = () => {
                 {/* Motorhome Section */}
                 <div className="mb-6">
                   <h3 className="text-lg font-semibold text-gray-900 mb-4">ข้อมูลการเช่ารถบ้าน</h3>
-                  <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
+                  <div className="grid grid-cols-1 md:grid-cols-3 gap-4 mb-4">
                     {/* Pickup Location */}
                     <div className="text-left">
                       <label className="block text-sm font-medium text-gray-700 mb-2">
@@ -249,12 +249,37 @@ const Hero = () => {
                       </div>
                     </div>
                   </div>
+
+                  {/* Motorhome Additional Options */}
+                  <div className="flex items-center gap-6 text-sm text-gray-600">
+                    <label className="flex items-center gap-2">
+                      <input type="checkbox" className="rounded" />
+                      <span>คืนรถต่างสาขา</span>
+                    </label>
+                    <div className="flex items-center gap-4">
+                      <span>ประเภทรถที่เช่า</span>
+                      <select className="border rounded px-3 py-2">
+                        <option>Caravan</option>
+                        <option>Motorhome C class</option>
+                        <option>Camper</option>
+                        <option>Motorhome A class</option>
+                        <option>Motorhome B class</option>
+                        <option>Other vehicle</option>
+                      </select>
+                      <span>อายุผู้ขับขี่</span>
+                      <select className="border rounded px-3 py-2">
+                        <option>25-29</option>
+                        <option>30-60</option>
+                        <option>60+</option>
+                      </select>
+                    </div>
+                  </div>
                 </div>
 
                 {/* Campsite Section */}
                 <div className="mb-6">
                   <h3 className="text-lg font-semibold text-gray-900 mb-4">ข้อมูลแคมป์ไซต์</h3>
-                  <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
+                  <div className="grid grid-cols-1 md:grid-cols-4 gap-4 mb-4">
                     {/* Destination */}
                     <div className="text-left">
                       <label className="block text-sm font-medium text-gray-700 mb-2">
@@ -264,41 +289,137 @@ const Hero = () => {
                         <MapPin className="absolute left-3 top-3 w-4 h-4 text-gray-400" />
                         <input
                           type="text"
-                          placeholder="ชลบุรี เมือง สตฮุน ภูเก็ต เชท..."
+                          value={selectedDestination}
+                          onChange={(e) => setSelectedDestination(e.target.value)}
+                          onFocus={() => setShowDestinations(true)}
+                          onBlur={() => setTimeout(() => setShowDestinations(false), 200)}
+                          placeholder="เลือกจุดหมาย"
                           className="w-full pl-10 pr-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent"
                         />
+                        {showDestinations && (
+                          <div className="absolute z-50 w-full mt-1 bg-white border border-gray-300 rounded-lg shadow-lg">
+                            {popularDestinations.map((destination) => (
+                              <button
+                                key={destination}
+                                className="w-full text-left px-4 py-2 hover:bg-gray-100 first:rounded-t-lg last:rounded-b-lg"
+                                onClick={() => {
+                                  setSelectedDestination(destination);
+                                  setShowDestinations(false);
+                                }}
+                              >
+                                {destination}
+                              </button>
+                            ))}
+                          </div>
+                        )}
                       </div>
                     </div>
 
-                    {/* Check-in Date */}
+                    {/* Date Range - Check-in + Check-out */}
                     <div className="text-left">
                       <label className="block text-sm font-medium text-gray-700 mb-2">
-                        วันเช็คอิน
+                        วันเช็คอิน - วันเช็คเอาท์
+                      </label>
+                      <Popover>
+                        <PopoverTrigger asChild>
+                          <Button
+                            variant="outline"
+                            className={cn(
+                              "w-full pl-10 pr-4 py-3 h-12 justify-start text-left font-normal border-gray-300 rounded-lg hover:bg-gray-50",
+                              (!checkInDate || !checkOutDate) && "text-muted-foreground"
+                            )}
+                          >
+                            <CalendarIcon className="absolute left-3 w-4 h-4 text-gray-400" />
+                            {checkInDate && checkOutDate ? (
+                              `${format(checkInDate, "dd/MM")} - ${format(checkOutDate, "dd/MM")}`
+                            ) : (
+                              <span>เลือกวันที่</span>
+                            )}
+                          </Button>
+                        </PopoverTrigger>
+                        <PopoverContent className="w-auto p-0 bg-white z-50" align="start">
+                          <Calendar
+                            mode="range"
+                            selected={{
+                              from: checkInDate,
+                              to: checkOutDate,
+                            }}
+                            onSelect={(range) => {
+                              setCheckInDate(range?.from);
+                              setCheckOutDate(range?.to);
+                            }}
+                            initialFocus
+                            className="p-3 pointer-events-auto"
+                            numberOfMonths={2}
+                          />
+                        </PopoverContent>
+                      </Popover>
+                    </div>
+
+                    {/* Number of Guests */}
+                    <div className="text-left">
+                      <label className="block text-sm font-medium text-gray-700 mb-2">
+                        จำนวนผู้เข้าพัก
                       </label>
                       <div className="relative">
-                        <CalendarIcon className="absolute left-3 top-3 w-4 h-4 text-gray-400" />
-                        <input
-                          type="text"
-                          placeholder="พ. 16 ก.ค."
-                          className="w-full pl-10 pr-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent"
-                        />
+                        <Users className="absolute left-3 top-3 w-4 h-4 text-gray-400" />
+                        <select
+                          value={`${adults},${children}`}
+                          onChange={(e) => {
+                            const [adultCount, childCount] = e.target.value.split(',').map(Number);
+                            setAdults(adultCount);
+                            setChildren(childCount);
+                          }}
+                          className="w-full pl-10 pr-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent appearance-none bg-white"
+                        >
+                          <option value="0,0">เลือกจำนวนผู้เข้าพัก</option>
+                          <option value="1,0">1 ผู้ใหญ่</option>
+                          <option value="2,0">2 ผู้ใหญ่</option>
+                          <option value="2,1">2 ผู้ใหญ่, 1 เด็ก</option>
+                          <option value="2,2">2 ผู้ใหญ่, 2 เด็ก</option>
+                          <option value="3,0">3 ผู้ใหญ่</option>
+                          <option value="3,1">3 ผู้ใหญ่, 1 เด็ก</option>
+                          <option value="4,0">4 ผู้ใหญ่</option>
+                          <option value="4,2">4 ผู้ใหญ่, 2 เด็ก</option>
+                        </select>
+                        <ChevronDown className="absolute right-3 top-3 w-4 h-4 text-gray-400 pointer-events-none" />
                       </div>
                     </div>
 
-                    {/* Check-out Date */}
+                    {/* Accommodation Type */}
                     <div className="text-left">
                       <label className="block text-sm font-medium text-gray-700 mb-2">
-                        วันเช็คเอาท์
+                        ประเภทที่พัก
                       </label>
                       <div className="relative">
-                        <CalendarIcon className="absolute left-3 top-3 w-4 h-4 text-gray-400" />
-                        <input
-                          type="text"
-                          placeholder="ส. 19 ก.ค."
-                          className="w-full pl-10 pr-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent"
-                        />
+                        <select
+                          value={accommodationType}
+                          onChange={(e) => setAccommodationType(e.target.value)}
+                          className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent appearance-none bg-white"
+                        >
+                          <option value="">เลือกประเภทที่พัก</option>
+                          {accommodationTypes.map((type) => (
+                            <option key={type} value={type}>
+                              {type}
+                            </option>
+                          ))}
+                        </select>
+                        <ChevronDown className="absolute right-3 top-3 w-4 h-4 text-gray-400 pointer-events-none" />
                       </div>
                     </div>
+                  </div>
+
+                  {/* Pet Travel Checkbox */}
+                  <div className="mb-4">
+                    <label className="flex items-center gap-2 text-sm text-gray-700">
+                      <input
+                        type="checkbox"
+                        checked={travelWithPets}
+                        onChange={(e) => setTravelWithPets(e.target.checked)}
+                        className="rounded"
+                      />
+                      <span>เดินทางพร้อมสัตว์เลี้ยงใช่ไหม</span>
+                    </label>
                   </div>
                 </div>
 
