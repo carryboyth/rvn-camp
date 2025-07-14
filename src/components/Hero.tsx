@@ -74,7 +74,7 @@ const Hero = () => {
         </div>
 
         {/* Search Form */}
-        <div className="max-w-5xl mx-auto animate-fade-up" style={{ animationDelay: "0.4s" }}>
+        <div className="max-w-6xl mx-auto animate-fade-up" style={{ animationDelay: "0.4s" }}>
           <div className="bg-white rounded-lg shadow-xl p-6">
             {activeTab === "motorhome" ? (
               // Motorhome Rental Form
@@ -307,10 +307,10 @@ const Hero = () => {
                 </div>
               </>
             ) : (
-              // Default Campsite Form
+              // Campsite Form - All fields in one line
               <>
-                <div className="grid grid-cols-1 md:grid-cols-3 gap-4 mb-4">
-                  {/* Destination */}
+                <div className="grid grid-cols-1 md:grid-cols-6 gap-4 items-end">
+                  {/* 1. Destination */}
                   <div className="text-left">
                     <label className="block text-sm font-medium text-gray-700 mb-2">
                       จุดหมาย
@@ -345,10 +345,10 @@ const Hero = () => {
                     </div>
                   </div>
 
-                  {/* Check-in Date */}
+                  {/* 2. Date Range - Check-in + Check-out in one field */}
                   <div className="text-left">
                     <label className="block text-sm font-medium text-gray-700 mb-2">
-                      วันเช็คอิน
+                      วันเช็คอิน - วันเช็คเอาท์
                     </label>
                     <Popover>
                       <PopoverTrigger asChild>
@@ -356,110 +356,67 @@ const Hero = () => {
                           variant="outline"
                           className={cn(
                             "w-full pl-10 pr-4 py-3 h-12 justify-start text-left font-normal border-gray-300 rounded-lg hover:bg-gray-50",
-                            !checkInDate && "text-muted-foreground"
+                            (!checkInDate || !checkOutDate) && "text-muted-foreground"
                           )}
                         >
                           <CalendarIcon className="absolute left-3 w-4 h-4 text-gray-400" />
-                          {checkInDate ? format(checkInDate, "dd/MM/yyyy") : <span>เลือกวันเช็คอิน</span>}
+                          {checkInDate && checkOutDate ? (
+                            `${format(checkInDate, "dd/MM")} - ${format(checkOutDate, "dd/MM")}`
+                          ) : (
+                            <span>เลือกวันที่</span>
+                          )}
                         </Button>
                       </PopoverTrigger>
                       <PopoverContent className="w-auto p-0 bg-white z-50" align="start">
                         <Calendar
-                          mode="single"
-                          selected={checkInDate}
-                          onSelect={setCheckInDate}
+                          mode="range"
+                          selected={{
+                            from: checkInDate,
+                            to: checkOutDate,
+                          }}
+                          onSelect={(range) => {
+                            setCheckInDate(range?.from);
+                            setCheckOutDate(range?.to);
+                          }}
                           initialFocus
                           className="p-3 pointer-events-auto"
+                          numberOfMonths={2}
                         />
                       </PopoverContent>
                     </Popover>
                   </div>
 
-                  {/* Check-out Date */}
-                  <div className="text-left">
-                    <label className="block text-sm font-medium text-gray-700 mb-2">
-                      วันเช็คเอาท์
-                    </label>
-                    <Popover>
-                      <PopoverTrigger asChild>
-                        <Button
-                          variant="outline"
-                          className={cn(
-                            "w-full pl-10 pr-4 py-3 h-12 justify-start text-left font-normal border-gray-300 rounded-lg hover:bg-gray-50",
-                            !checkOutDate && "text-muted-foreground"
-                          )}
-                        >
-                          <CalendarIcon className="absolute left-3 w-4 h-4 text-gray-400" />
-                          {checkOutDate ? format(checkOutDate, "dd/MM/yyyy") : <span>เลือกวันเช็คเอาท์</span>}
-                        </Button>
-                      </PopoverTrigger>
-                      <PopoverContent className="w-auto p-0 bg-white z-50" align="start">
-                        <Calendar
-                          mode="single"
-                          selected={checkOutDate}
-                          onSelect={setCheckOutDate}
-                          initialFocus
-                          className="p-3 pointer-events-auto"
-                        />
-                      </PopoverContent>
-                    </Popover>
-                  </div>
-                </div>
-
-                {/* Number of Guests */}
-                <div className="grid grid-cols-1 md:grid-cols-2 gap-4 mb-4">
+                  {/* 3. Number of Guests - Dropdown */}
                   <div className="text-left">
                     <label className="block text-sm font-medium text-gray-700 mb-2">
                       จำนวนผู้เข้าพัก
                     </label>
-                    <div className="space-y-3">
-                      {/* Adults */}
-                      <div className="flex items-center justify-between">
-                        <span className="text-sm text-gray-700">ผู้ใหญ่≥ 18 ปี</span>
-                        <div className="flex items-center gap-3">
-                          <button
-                            type="button"
-                            onClick={() => setAdults(Math.max(0, adults - 1))}
-                            className="w-8 h-8 rounded-full border border-gray-300 flex items-center justify-center hover:bg-gray-100"
-                          >
-                            <Minus className="w-4 h-4" />
-                          </button>
-                          <span className="w-8 text-center">{adults}</span>
-                          <button
-                            type="button"
-                            onClick={() => setAdults(adults + 1)}
-                            className="w-8 h-8 rounded-full border border-gray-300 flex items-center justify-center hover:bg-gray-100"
-                          >
-                            <Plus className="w-4 h-4" />
-                          </button>
-                        </div>
-                      </div>
-                      
-                      {/* Children */}
-                      <div className="flex items-center justify-between">
-                        <span className="text-sm text-gray-700">เด็ก 0-17 ปี</span>
-                        <div className="flex items-center gap-3">
-                          <button
-                            type="button"
-                            onClick={() => setChildren(Math.max(0, children - 1))}
-                            className="w-8 h-8 rounded-full border border-gray-300 flex items-center justify-center hover:bg-gray-100"
-                          >
-                            <Minus className="w-4 h-4" />
-                          </button>
-                          <span className="w-8 text-center">{children}</span>
-                          <button
-                            type="button"
-                            onClick={() => setChildren(children + 1)}
-                            className="w-8 h-8 rounded-full border border-gray-300 flex items-center justify-center hover:bg-gray-100"
-                          >
-                            <Plus className="w-4 h-4" />
-                          </button>
-                        </div>
-                      </div>
+                    <div className="relative">
+                      <Users className="absolute left-3 top-3 w-4 h-4 text-gray-400" />
+                      <select
+                        value={`${adults},${children}`}
+                        onChange={(e) => {
+                          const [adultCount, childCount] = e.target.value.split(',').map(Number);
+                          setAdults(adultCount);
+                          setChildren(childCount);
+                        }}
+                        className="w-full pl-10 pr-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent appearance-none bg-white"
+                      >
+                        <option value="0,0">เลือกจำนวนผู้เข้าพัก</option>
+                        <option value="1,0">1 ผู้ใหญ่</option>
+                        <option value="2,0">2 ผู้ใหญ่</option>
+                        <option value="2,1">2 ผู้ใหญ่, 1 เด็ก</option>
+                        <option value="2,2">2 ผู้ใหญ่, 2 เด็ก</option>
+                        <option value="3,0">3 ผู้ใหญ่</option>
+                        <option value="3,1">3 ผู้ใหญ่, 1 เด็ก</option>
+                        <option value="4,0">4 ผู้ใหญ่</option>
+                        <option value="4,2">4 ผู้ใหญ่, 2 เด็ก</option>
+                      </select>
+                      <ChevronDown className="absolute right-3 top-3 w-4 h-4 text-gray-400 pointer-events-none" />
                     </div>
                   </div>
 
-                  {/* Accommodation Type */}
+                  {/* 4. Accommodation Type */}
                   <div className="text-left">
                     <label className="block text-sm font-medium text-gray-700 mb-2">
                       ประเภทที่พัก
@@ -480,26 +437,27 @@ const Hero = () => {
                       <ChevronDown className="absolute right-3 top-3 w-4 h-4 text-gray-400 pointer-events-none" />
                     </div>
                   </div>
-                </div>
 
-                {/* Pet Travel Checkbox */}
-                <div className="mb-6">
-                  <label className="flex items-center gap-2 text-sm text-gray-700">
-                    <input
-                      type="checkbox"
-                      checked={travelWithPets}
-                      onChange={(e) => setTravelWithPets(e.target.checked)}
-                      className="rounded"
-                    />
-                    <span>เดินทางพร้อมสัตว์เลี้ยงใช่ไหม</span>
-                  </label>
-                </div>
+                  {/* Pet Travel Checkbox - Compact */}
+                  <div className="text-left">
+                    <label className="block text-sm font-medium text-gray-700 mb-2">
+                      สัตว์เลี้ยง
+                    </label>
+                    <label className="flex items-center gap-2 text-sm text-gray-700 py-3">
+                      <input
+                        type="checkbox"
+                        checked={travelWithPets}
+                        onChange={(e) => setTravelWithPets(e.target.checked)}
+                        className="rounded"
+                      />
+                      <span>พร้อมสัตว์เลี้ยง</span>
+                    </label>
+                  </div>
 
-                {/* Search Button */}
-                <div className="flex justify-center">
-                  <button className="bg-blue-600 hover:bg-blue-700 text-white font-medium py-3 px-12 rounded-lg transition-colors flex items-center justify-center gap-2">
+                  {/* 5. Search Button */}
+                  <button className="bg-blue-600 hover:bg-blue-700 text-white font-medium py-3 px-6 rounded-lg transition-colors flex items-center justify-center gap-2 h-12">
                     <Search className="w-5 h-5" />
-                    <span>ค้นหา</span>
+                    <span className="hidden lg:inline">ค้นหา</span>
                   </button>
                 </div>
               </>
