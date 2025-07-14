@@ -163,15 +163,19 @@ const Hero = () => {
                     <span>คืนรถต่างสาขา</span>
                   </label>
                   <div className="flex items-center gap-4">
-                    <span>ประเภท/อายุผู้ขับขี่หลัก</span>
-                    <select className="border rounded px-2 py-1">
-                      <option>ไทย</option>
-                      <option>ต่างชาติ</option>
+                    <span>ประเภทรถที่เช่า</span>
+                    <select className="border rounded px-3 py-2">
+                      <option>Caravan</option>
+                      <option>Motorhome C class</option>
+                      <option>Camper</option>
+                      <option>Motorhome A class</option>
+                      <option>Motorhome B class</option>
+                      <option>Other vehicle</option>
                     </select>
-                    <span>อายุ</span>
-                    <select className="border rounded px-2 py-1">
-                      <option>30-60</option>
+                    <span>อายุผู้ขับขี่</span>
+                    <select className="border rounded px-3 py-2">
                       <option>25-29</option>
+                      <option>30-60</option>
                       <option>60+</option>
                     </select>
                   </div>
