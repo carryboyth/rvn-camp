@@ -46,15 +46,16 @@ const PromotionalSection = () => {
             {promotions.map((promo) => (
               <div
                 key={promo.id}
-                className="relative overflow-hidden min-h-[300px] rounded-xl"
-                style={{ backgroundImage: `url(${promo.image})` }}
+                className={`${promo.bgColor} relative overflow-hidden min-h-[300px] rounded-xl`}
               >
-                {/* Content Overlay */}
-                <div className="absolute inset-0 bg-black/20 rounded-xl"></div>
+                {/* Background Image */}
+                <div 
+                  className="absolute inset-0 bg-cover bg-center opacity-30"
+                  style={{ backgroundImage: `url(${promo.image})` }}
+                />
                 
                 {/* Content */}
-                <div className="relative z-10 p-6 text-white h-full flex items-center bg-cover bg-center"
-                     style={{ backgroundImage: `url(${promo.image})` }}>
+                <div className="relative z-10 p-6 text-white h-full flex items-center">
                   <div className="w-full">
                     <div className="text-xl md:text-2xl font-bold mb-2">
                       {promo.title}
