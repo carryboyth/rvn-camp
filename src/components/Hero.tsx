@@ -24,21 +24,17 @@ const Hero = () => {
       
       <div className="relative z-10 container mx-auto px-4 text-center py-16">
         {/* Main Title */}
-        <h1 className="text-3xl md:text-5xl font-bold text-white mb-4 animate-fade-up">
-          อุ่นใจทุกการเดินทางกับ CampTrip.com
+        <h1 className="text-3xl md:text-5xl font-bold text-white mb-2 animate-fade-up">
+          Discover Thailand's Beauty
         </h1>
+        <h2 className="text-3xl md:text-5xl font-bold text-white mb-4">
+          on Your Terms
+        </h2>
         
-        {/* Trust badges */}
-        <div className="flex justify-center items-center gap-8 mb-8 text-white/90 text-sm">
-          <div className="flex items-center gap-2">
-            <Check className="w-4 h-4 text-green-400" />
-            <span>ระบบการชำระเงินปลอดภัย จ่ายได้</span>
-          </div>
-          <div className="flex items-center gap-2">
-            <Check className="w-4 h-4 text-green-400" />
-            <span>ยืดอ่านไอ่ใน 30 วันที่</span>
-          </div>
-        </div>
+        {/* Subtitle */}
+        <p className="text-lg md:text-xl text-white/90 mb-8">
+          Plan your perfect road trip with our curated campervan experiences
+        </p>
 
         {/* Navigation Tabs */}
         <div className="max-w-4xl mx-auto mb-8">
