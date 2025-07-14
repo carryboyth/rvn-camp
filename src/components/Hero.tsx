@@ -1,8 +1,28 @@
-import { Search, MapPin, Calendar as CalendarIcon, Users, Check, Plane, Hotel, Train, Car, Map, Plus } from "lucide-react";
+import { Search, MapPin, Calendar as CalendarIcon, Users, Check, Plane, Hotel, Train, Car, Map, Plus, ChevronDown, Minus } from "lucide-react";
 import { useState } from "react";
+import { Calendar } from "@/components/ui/calendar";
+import { Popover, PopoverContent, PopoverTrigger } from "@/components/ui/popover";
+import { Button } from "@/components/ui/button";
+import { format } from "date-fns";
+import { cn } from "@/lib/utils";
 
 const Hero = () => {
   const [activeTab, setActiveTab] = useState("motorhome");
+  const [checkInDate, setCheckInDate] = useState<Date>();
+  const [checkOutDate, setCheckOutDate] = useState<Date>();
+  const [showDestinations, setShowDestinations] = useState(false);
+  const [adults, setAdults] = useState(0);
+  const [children, setChildren] = useState(0);
+  const [selectedDestination, setSelectedDestination] = useState("");
+  const [accommodationType, setAccommodationType] = useState("");
+  const [travelWithPets, setTravelWithPets] = useState(false);
+  
+  const popularDestinations = ["กรุงเทพฯ", "เชียงใหม่", "กระบี่", "ภูเก็ต", "พัทยา"];
+  const accommodationTypes = [
+    "ลานกางเต็นท์/แคมป์ไซต์",
+    "จุดจอดรถบ้าน / คาราวาน", 
+    "บ้านพัก / โรงแรม"
+  ];
 
   const tabs = [
     { id: "motorhome", label: "เช่ารถบ้าน", icon: Car },
@@ -249,7 +269,7 @@ const Hero = () => {
                     {/* Check-in Date */}
                     <div className="text-left">
                       <label className="block text-sm font-medium text-gray-700 mb-2">
-                        วันเข้าพัก
+                        วันเช็คอิน
                       </label>
                       <div className="relative">
                         <CalendarIcon className="absolute left-3 top-3 w-4 h-4 text-gray-400" />
@@ -264,7 +284,7 @@ const Hero = () => {
                     {/* Check-out Date */}
                     <div className="text-left">
                       <label className="block text-sm font-medium text-gray-700 mb-2">
-                        วันคืนพัก
+                        วันเช็คเอาท์
                       </label>
                       <div className="relative">
                         <CalendarIcon className="absolute left-3 top-3 w-4 h-4 text-gray-400" />
@@ -289,7 +309,7 @@ const Hero = () => {
             ) : (
               // Default Campsite Form
               <>
-                <div className="grid grid-cols-1 md:grid-cols-4 gap-4 items-end">
+                <div className="grid grid-cols-1 md:grid-cols-3 gap-4 mb-4">
                   {/* Destination */}
                   <div className="text-left">
                     <label className="block text-sm font-medium text-gray-700 mb-2">
@@ -299,65 +319,188 @@ const Hero = () => {
                       <MapPin className="absolute left-3 top-3 w-4 h-4 text-gray-400" />
                       <input
                         type="text"
-                        placeholder="ชลบุรี เมือง สตฮุน ภูเก็ต เชท..."
+                        value={selectedDestination}
+                        onChange={(e) => setSelectedDestination(e.target.value)}
+                        onFocus={() => setShowDestinations(true)}
+                        onBlur={() => setTimeout(() => setShowDestinations(false), 200)}
+                        placeholder="เลือกจุดหมาย"
                         className="w-full pl-10 pr-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent"
                       />
+                      {showDestinations && (
+                        <div className="absolute z-50 w-full mt-1 bg-white border border-gray-300 rounded-lg shadow-lg">
+                          {popularDestinations.map((destination) => (
+                            <button
+                              key={destination}
+                              className="w-full text-left px-4 py-2 hover:bg-gray-100 first:rounded-t-lg last:rounded-b-lg"
+                              onClick={() => {
+                                setSelectedDestination(destination);
+                                setShowDestinations(false);
+                              }}
+                            >
+                              {destination}
+                            </button>
+                          ))}
+                        </div>
+                      )}
                     </div>
                   </div>
 
                   {/* Check-in Date */}
                   <div className="text-left">
                     <label className="block text-sm font-medium text-gray-700 mb-2">
-                      วันเข้าพัก
+                      วันเช็คอิน
                     </label>
-                    <div className="relative">
-                      <CalendarIcon className="absolute left-3 top-3 w-4 h-4 text-gray-400" />
-                      <input
-                        type="text"
-                        placeholder="พ. 16 ก.ค."
-                        className="w-full pl-10 pr-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent"
-                      />
-                    </div>
+                    <Popover>
+                      <PopoverTrigger asChild>
+                        <Button
+                          variant="outline"
+                          className={cn(
+                            "w-full pl-10 pr-4 py-3 h-12 justify-start text-left font-normal border-gray-300 rounded-lg hover:bg-gray-50",
+                            !checkInDate && "text-muted-foreground"
+                          )}
+                        >
+                          <CalendarIcon className="absolute left-3 w-4 h-4 text-gray-400" />
+                          {checkInDate ? format(checkInDate, "dd/MM/yyyy") : <span>เลือกวันเช็คอิน</span>}
+                        </Button>
+                      </PopoverTrigger>
+                      <PopoverContent className="w-auto p-0 bg-white z-50" align="start">
+                        <Calendar
+                          mode="single"
+                          selected={checkInDate}
+                          onSelect={setCheckInDate}
+                          initialFocus
+                          className="p-3 pointer-events-auto"
+                        />
+                      </PopoverContent>
+                    </Popover>
                   </div>
 
                   {/* Check-out Date */}
                   <div className="text-left">
                     <label className="block text-sm font-medium text-gray-700 mb-2">
-                      วันคืนพัก
+                      วันเช็คเอาท์
                     </label>
-                    <div className="relative">
-                      <CalendarIcon className="absolute left-3 top-3 w-4 h-4 text-gray-400" />
-                      <input
-                        type="text"
-                        placeholder="ส. 19 ก.ค."
-                        className="w-full pl-10 pr-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent"
-                      />
+                    <Popover>
+                      <PopoverTrigger asChild>
+                        <Button
+                          variant="outline"
+                          className={cn(
+                            "w-full pl-10 pr-4 py-3 h-12 justify-start text-left font-normal border-gray-300 rounded-lg hover:bg-gray-50",
+                            !checkOutDate && "text-muted-foreground"
+                          )}
+                        >
+                          <CalendarIcon className="absolute left-3 w-4 h-4 text-gray-400" />
+                          {checkOutDate ? format(checkOutDate, "dd/MM/yyyy") : <span>เลือกวันเช็คเอาท์</span>}
+                        </Button>
+                      </PopoverTrigger>
+                      <PopoverContent className="w-auto p-0 bg-white z-50" align="start">
+                        <Calendar
+                          mode="single"
+                          selected={checkOutDate}
+                          onSelect={setCheckOutDate}
+                          initialFocus
+                          className="p-3 pointer-events-auto"
+                        />
+                      </PopoverContent>
+                    </Popover>
+                  </div>
+                </div>
+
+                {/* Number of Guests */}
+                <div className="grid grid-cols-1 md:grid-cols-2 gap-4 mb-4">
+                  <div className="text-left">
+                    <label className="block text-sm font-medium text-gray-700 mb-2">
+                      จำนวนผู้เข้าพัก
+                    </label>
+                    <div className="space-y-3">
+                      {/* Adults */}
+                      <div className="flex items-center justify-between">
+                        <span className="text-sm text-gray-700">ผู้ใหญ่≥ 18 ปี</span>
+                        <div className="flex items-center gap-3">
+                          <button
+                            type="button"
+                            onClick={() => setAdults(Math.max(0, adults - 1))}
+                            className="w-8 h-8 rounded-full border border-gray-300 flex items-center justify-center hover:bg-gray-100"
+                          >
+                            <Minus className="w-4 h-4" />
+                          </button>
+                          <span className="w-8 text-center">{adults}</span>
+                          <button
+                            type="button"
+                            onClick={() => setAdults(adults + 1)}
+                            className="w-8 h-8 rounded-full border border-gray-300 flex items-center justify-center hover:bg-gray-100"
+                          >
+                            <Plus className="w-4 h-4" />
+                          </button>
+                        </div>
+                      </div>
+                      
+                      {/* Children */}
+                      <div className="flex items-center justify-between">
+                        <span className="text-sm text-gray-700">เด็ก 0-17 ปี</span>
+                        <div className="flex items-center gap-3">
+                          <button
+                            type="button"
+                            onClick={() => setChildren(Math.max(0, children - 1))}
+                            className="w-8 h-8 rounded-full border border-gray-300 flex items-center justify-center hover:bg-gray-100"
+                          >
+                            <Minus className="w-4 h-4" />
+                          </button>
+                          <span className="w-8 text-center">{children}</span>
+                          <button
+                            type="button"
+                            onClick={() => setChildren(children + 1)}
+                            className="w-8 h-8 rounded-full border border-gray-300 flex items-center justify-center hover:bg-gray-100"
+                          >
+                            <Plus className="w-4 h-4" />
+                          </button>
+                        </div>
+                      </div>
                     </div>
                   </div>
 
-                  {/* Search Button */}
-                  <button className="bg-blue-600 hover:bg-blue-700 text-white font-medium py-3 px-8 rounded-lg transition-colors flex items-center justify-center gap-2">
+                  {/* Accommodation Type */}
+                  <div className="text-left">
+                    <label className="block text-sm font-medium text-gray-700 mb-2">
+                      ประเภทที่พัก
+                    </label>
+                    <div className="relative">
+                      <select
+                        value={accommodationType}
+                        onChange={(e) => setAccommodationType(e.target.value)}
+                        className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent appearance-none bg-white"
+                      >
+                        <option value="">เลือกประเภทที่พัก</option>
+                        {accommodationTypes.map((type) => (
+                          <option key={type} value={type}>
+                            {type}
+                          </option>
+                        ))}
+                      </select>
+                      <ChevronDown className="absolute right-3 top-3 w-4 h-4 text-gray-400 pointer-events-none" />
+                    </div>
+                  </div>
+                </div>
+
+                {/* Pet Travel Checkbox */}
+                <div className="mb-6">
+                  <label className="flex items-center gap-2 text-sm text-gray-700">
+                    <input
+                      type="checkbox"
+                      checked={travelWithPets}
+                      onChange={(e) => setTravelWithPets(e.target.checked)}
+                      className="rounded"
+                    />
+                    <span>เดินทางพร้อมสัตว์เลี้ยงใช่ไหม</span>
+                  </label>
+                </div>
+
+                {/* Search Button */}
+                <div className="flex justify-center">
+                  <button className="bg-blue-600 hover:bg-blue-700 text-white font-medium py-3 px-12 rounded-lg transition-colors flex items-center justify-center gap-2">
                     <Search className="w-5 h-5" />
                     <span>ค้นหา</span>
                   </button>
-                </div>
-
-                {/* Additional Options */}
-                <div className="mt-4 flex items-center gap-6 text-sm text-gray-600">
-                  <label className="flex items-center gap-2">
-                    <input type="checkbox" className="rounded" />
-                    <span>ค้นหาคืนละที่</span>
-                  </label>
-                  <div className="flex items-center gap-4">
-                    <span>ประเภท/ผู้เข้าพักต่อหองไนซื่อ</span>
-                    <select className="border rounded px-2 py-1">
-                      <option>ไทย</option>
-                    </select>
-                    <span>อายุ</span>
-                    <select className="border rounded px-2 py-1">
-                      <option>30-60</option>
-                    </select>
-                  </div>
                 </div>
               </>
             )}
