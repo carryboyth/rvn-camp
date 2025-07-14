@@ -2,15 +2,12 @@ import { Search, MapPin, Calendar as CalendarIcon, Users, Check, Plane, Hotel, T
 import { useState } from "react";
 
 const Hero = () => {
-  const [activeTab, setActiveTab] = useState("hotel");
+  const [activeTab, setActiveTab] = useState("motorhome");
 
   const tabs = [
-    { id: "hotel", label: "ที่พัก", icon: Hotel },
-    { id: "flight", label: "เที่ยวบิน", icon: Plane },
-    { id: "train", label: "รถไฟ", icon: Train },
-    { id: "car", label: "รถยนต์", icon: Car },
-    { id: "tour", label: "ทัวร์และตั๋วทองเที่ยว", icon: Map },
-    { id: "package", label: "เที่ยวบิน + โรงแรม", icon: Plus },
+    { id: "motorhome", label: "เช่ารถบ้าน", icon: Car },
+    { id: "campsite", label: "แคมป์ไซต์", icon: Map },
+    { id: "package", label: "เช่ารถบ้าน + แคมป์ไซต์", icon: Plus },
   ];
 
   return (
