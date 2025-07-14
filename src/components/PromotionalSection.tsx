@@ -1,37 +1,34 @@
 const PromotionalSection = () => {
+
   const promotions = [
     {
       id: 1,
-      title: "ที่พักเหนือระดับ",
-      subtitle: "กับราคาสุดพิเศษ",
-      description: "สุดคุ้ม 20% / จองวันนี้",
-      buttonText: "จองวันนี้",
-      bgColor: "bg-gradient-to-r from-blue-500 to-blue-600",
-      image: "/lovable-uploads/36e1489f-0a29-4aa0-9fa0-178c0b50d209.png",
-      discount: "20%",
-      brandLogo: "Trip.com | BUJH | Hotels"
+      title: "CampTrip x AirAsia",
+      subtitle: "Low Fare",
+      description: "ตั๋วเที่ยวบินสุดคุ้ม",
+      buttonText: "จองด่วน",
+      bgColor: "bg-gradient-to-r from-red-500 to-red-600",
+      image: "/lovable-uploads/36e1489f-0a29-4aa0-9fa0-178c0b50d209.png"
     },
     {
       id: 2,
-      title: "คุ้มสองต่อ",
-      subtitle: "เมื่อจองเที่ยวบิน",
-      description: "Trip Coins ที่ใช้ระลอกเลยคืน",
-      buttonText: "จองวันนี้",
-      bgColor: "bg-gradient-to-r from-cyan-400 to-blue-500",
-      image: "/lovable-uploads/36e1489f-0a29-4aa0-9fa0-178c0b50d209.png",
-      icon: "✈️",
-      coins: "+2"
+      title: "#DiscoverThailand",
+      subtitle: "เที่ยวกิ่วฮุ่นใน",
+      description: "โรงแรมสุดฮอต 50%",
+      period: "14 - 27 ก.ค.",
+      buttonText: "จองด่วน",
+      bgColor: "bg-gradient-to-r from-blue-600 to-purple-600",
+      image: "/lovable-uploads/36e1489f-0a29-4aa0-9fa0-178c0b50d209.png"
     },
     {
       id: 3,
-      title: "เที่ยวบินกรุงโลก",
-      subtitle: "ยกระดับการเดินทาง Singapore Airlines",
-      description: "ร่วมกับชมองเมื่อลงจอง ฿1,500",
-      buttonText: "จองวันนี้",
-      bgColor: "bg-gradient-to-r from-blue-800 to-blue-900",
-      image: "/lovable-uploads/36e1489f-0a29-4aa0-9fa0-178c0b50d209.png",
-      airline: "Singapore Airlines",
-      price: "฿1,500"
+      title: "CampTrip",
+      subtitle: "เปิดประสบการณ์",
+      description: "ท่องโลกอย่างมีระดับกับ",
+      brand: "CAMPING ADVENTURES",
+      buttonText: "จองด่วน",
+      bgColor: "bg-gradient-to-r from-green-600 to-blue-600",
+      image: "/lovable-uploads/36e1489f-0a29-4aa0-9fa0-178c0b50d209.png"
     }
   ];
 
@@ -49,64 +46,40 @@ const PromotionalSection = () => {
             {promotions.map((promo) => (
               <div
                 key={promo.id}
-                className={`${promo.bgColor} relative overflow-hidden min-h-[280px] rounded-xl shadow-lg hover:shadow-xl transition-shadow duration-300`}
+                className={`${promo.bgColor} relative overflow-hidden min-h-[300px] rounded-xl`}
               >
                 {/* Background Image */}
                 <div 
-                  className="absolute inset-0 bg-cover bg-center opacity-20"
+                  className="absolute inset-0 bg-cover bg-center opacity-30"
                   style={{ backgroundImage: `url(${promo.image})` }}
                 />
                 
                 {/* Content */}
-                <div className="relative z-10 p-6 text-white h-full flex flex-col justify-between">
-                  {/* Header */}
-                  {promo.brandLogo && (
-                    <div className="text-xs font-medium mb-2 opacity-90">
-                      {promo.brandLogo}
-                    </div>
-                  )}
-                  
-                  {/* Main Content */}
-                  <div className="flex-1">
-                    {promo.coins && (
-                      <div className="text-3xl font-bold mb-2">
-                        {promo.coins} {promo.icon}
-                      </div>
-                    )}
-                    
-                    {promo.discount && (
-                      <div className="bg-red-500 text-white px-3 py-1 rounded-full text-sm font-bold inline-block mb-3">
-                        สุดคุ้ม {promo.discount}
-                      </div>
-                    )}
-                    
-                    <h3 className="text-xl md:text-2xl font-bold mb-2 leading-tight">
+                <div className="relative z-10 p-6 text-white h-full flex items-center">
+                  <div className="w-full">
+                    <div className="text-xl md:text-2xl font-bold mb-2">
                       {promo.title}
-                    </h3>
-                    <p className="text-lg md:text-xl font-semibold mb-3 opacity-90">
+                    </div>
+                    <div className="text-lg md:text-xl font-semibold mb-3">
                       {promo.subtitle}
-                    </p>
-                    <p className="text-sm md:text-base mb-4 opacity-80">
+                    </div>
+                    <div className="text-sm md:text-base mb-2">
                       {promo.description}
-                    </p>
-                    
-                    {promo.airline && (
-                      <div className="text-sm font-medium mb-2 opacity-90">
-                        {promo.airline}
+                    </div>
+                    {promo.period && (
+                      <div className="text-xs mb-3 bg-white/20 inline-block px-2 py-1 rounded-full">
+                        {promo.period}
                       </div>
                     )}
-                    
-                    {promo.price && (
-                      <div className="text-lg font-bold mb-3">
-                        ร่วมกับชมองเมื่อลงจอง {promo.price}
+                    {promo.brand && (
+                      <div className="text-sm font-semibold mb-3">
+                        {promo.brand}
                       </div>
                     )}
+                    <button className="bg-white text-gray-800 px-4 py-2 rounded-lg font-semibold hover:bg-gray-100 transition-colors text-sm">
+                      {promo.buttonText}
+                    </button>
                   </div>
-                  
-                  {/* Button */}
-                  <button className="bg-white text-gray-800 px-6 py-2 rounded-lg font-semibold hover:bg-gray-100 transition-colors self-start">
-                    {promo.buttonText}
-                  </button>
                 </div>
               </div>
             ))}
