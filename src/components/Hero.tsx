@@ -157,8 +157,137 @@ const Hero = () => {
                   </div>
                 </div>
               </>
+            ) : activeTab === "package" ? (
+              // Combined Motorhome + Campsite Form
+              <>
+                {/* Motorhome Section */}
+                <div className="mb-6">
+                  <h3 className="text-lg font-semibold text-gray-900 mb-4">ข้อมูลการเช่ารถบ้าน</h3>
+                  <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
+                    {/* Pickup Location */}
+                    <div className="text-left">
+                      <label className="block text-sm font-medium text-gray-700 mb-2">
+                        สถานที่รับรถ
+                      </label>
+                      <div className="relative">
+                        <MapPin className="absolute left-3 top-3 w-4 h-4 text-gray-400" />
+                        <input
+                          type="text"
+                          placeholder="เมืองเริ่ม เช่น ภูเก็ต เชา..."
+                          className="w-full pl-10 pr-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+                        />
+                      </div>
+                    </div>
+
+                    {/* Pickup Date & Time */}
+                    <div className="text-left">
+                      <label className="block text-sm font-medium text-gray-700 mb-2">
+                        วันที่รับ
+                      </label>
+                      <div className="flex gap-2">
+                        <div className="relative flex-1">
+                          <CalendarIcon className="absolute left-3 top-3 w-4 h-4 text-gray-400" />
+                          <input
+                            type="text"
+                            placeholder="พ. 16 ก.ค."
+                            className="w-full pl-10 pr-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+                          />
+                        </div>
+                        <select className="px-3 py-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500">
+                          <option>10:00</option>
+                          <option>11:00</option>
+                          <option>12:00</option>
+                          <option>13:00</option>
+                        </select>
+                      </div>
+                    </div>
+
+                    {/* Return Date & Time */}
+                    <div className="text-left">
+                      <label className="block text-sm font-medium text-gray-700 mb-2">
+                        วันที่คืน
+                      </label>
+                      <div className="flex gap-2">
+                        <div className="relative flex-1">
+                          <CalendarIcon className="absolute left-3 top-3 w-4 h-4 text-gray-400" />
+                          <input
+                            type="text"
+                            placeholder="ส. 19 ก.ค."
+                            className="w-full pl-10 pr-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+                          />
+                        </div>
+                        <select className="px-3 py-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500">
+                          <option>10:00</option>
+                          <option>11:00</option>
+                          <option>12:00</option>
+                          <option>13:00</option>
+                        </select>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+
+                {/* Campsite Section */}
+                <div className="mb-6">
+                  <h3 className="text-lg font-semibold text-gray-900 mb-4">ข้อมูลแคมป์ไซต์</h3>
+                  <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
+                    {/* Destination */}
+                    <div className="text-left">
+                      <label className="block text-sm font-medium text-gray-700 mb-2">
+                        จุดหมาย
+                      </label>
+                      <div className="relative">
+                        <MapPin className="absolute left-3 top-3 w-4 h-4 text-gray-400" />
+                        <input
+                          type="text"
+                          placeholder="ชลบุรี เมือง สตฮุน ภูเก็ต เชท..."
+                          className="w-full pl-10 pr-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+                        />
+                      </div>
+                    </div>
+
+                    {/* Check-in Date */}
+                    <div className="text-left">
+                      <label className="block text-sm font-medium text-gray-700 mb-2">
+                        วันเข้าพัก
+                      </label>
+                      <div className="relative">
+                        <CalendarIcon className="absolute left-3 top-3 w-4 h-4 text-gray-400" />
+                        <input
+                          type="text"
+                          placeholder="พ. 16 ก.ค."
+                          className="w-full pl-10 pr-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+                        />
+                      </div>
+                    </div>
+
+                    {/* Check-out Date */}
+                    <div className="text-left">
+                      <label className="block text-sm font-medium text-gray-700 mb-2">
+                        วันคืนพัก
+                      </label>
+                      <div className="relative">
+                        <CalendarIcon className="absolute left-3 top-3 w-4 h-4 text-gray-400" />
+                        <input
+                          type="text"
+                          placeholder="ส. 19 ก.ค."
+                          className="w-full pl-10 pr-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+                        />
+                      </div>
+                    </div>
+                  </div>
+                </div>
+
+                {/* Search Button */}
+                <div className="flex justify-center">
+                  <button className="bg-blue-600 hover:bg-blue-700 text-white font-medium py-3 px-12 rounded-lg transition-colors flex items-center justify-center gap-2">
+                    <Search className="w-5 h-5" />
+                    <span>ค้นหา</span>
+                  </button>
+                </div>
+              </>
             ) : (
-              // Default Accommodation Form
+              // Default Campsite Form
               <>
                 <div className="grid grid-cols-1 md:grid-cols-4 gap-4 items-end">
                   {/* Destination */}
