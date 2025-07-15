@@ -184,9 +184,10 @@ const Hero = () => {
             ) : activeTab === "package" ? (
               // Combined Motorhome + Campsite Form
               <>
-                {/* Top Row - Destination */}
-                <div className="grid grid-cols-1 gap-4 mb-4">
-                  <div className="text-left">
+                {/* Single Row - All Fields */}
+                <div className="grid grid-cols-1 md:grid-cols-7 gap-4 mb-4">
+                  {/* Destination - Narrower */}
+                  <div className="text-left md:col-span-2">
                     <label className="block text-sm font-medium text-gray-700 mb-2">
                       จุดหมายปลายทาง
                     </label>
@@ -198,7 +199,7 @@ const Hero = () => {
                         onChange={(e) => setSelectedDestination(e.target.value)}
                         onFocus={() => setShowDestinations(true)}
                         onBlur={() => setTimeout(() => setShowDestinations(false), 200)}
-                        placeholder="ระยอง เมืองระยอง, ตัวเมือง, สถานที่ท่องเที่ยว"
+                        placeholder="ระยอง เมืองระยอง..."
                         className="w-full pl-10 pr-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent"
                       />
                       {showDestinations && (
@@ -219,45 +220,37 @@ const Hero = () => {
                       )}
                     </div>
                   </div>
-                </div>
 
-                {/* Second Row - Dates, Guests and Accommodation Type */}
-                <div className="grid grid-cols-1 md:grid-cols-4 gap-4 mb-4">
-                  {/* Check-in Date */}
-                  <div className="text-left">
+                  {/* Check-in and Check-out in same container */}
+                  <div className="text-left md:col-span-2">
                     <label className="block text-sm font-medium text-gray-700 mb-2">
-                      เช็คอิน
+                      เช็คอิน - เช็คเอาท์
                     </label>
-                    <div className="relative">
-                      <CalendarIcon className="absolute left-3 top-3 w-4 h-4 text-gray-400" />
-                      <input
-                        type="text"
-                        placeholder="จ. 14 ก.ค."
-                        className="w-full pl-10 pr-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent"
-                      />
+                    <div className="flex gap-2">
+                      <div className="relative flex-1">
+                        <CalendarIcon className="absolute left-3 top-3 w-4 h-4 text-gray-400" />
+                        <input
+                          type="text"
+                          placeholder="จ. 14 ก.ค."
+                          className="w-full pl-10 pr-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+                        />
+                      </div>
+                      <div className="relative flex-1">
+                        <CalendarIcon className="absolute left-3 top-3 w-4 h-4 text-gray-400" />
+                        <input
+                          type="text"
+                          placeholder="อ. 15 ก.ค."
+                          className="w-full pl-10 pr-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+                        />
+                      </div>
                     </div>
                     <div className="text-xs text-gray-500 mt-1">1 คืน</div>
                   </div>
 
-                  {/* Check-out Date */}
+                  {/* Guests */}
                   <div className="text-left">
                     <label className="block text-sm font-medium text-gray-700 mb-2">
-                      เช็คเอาท์
-                    </label>
-                    <div className="relative">
-                      <CalendarIcon className="absolute left-3 top-3 w-4 h-4 text-gray-400" />
-                      <input
-                        type="text"
-                        placeholder="อ. 15 ก.ค."
-                        className="w-full pl-10 pr-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent"
-                      />
-                    </div>
-                  </div>
-
-                  {/* Guests and Rooms */}
-                  <div className="text-left">
-                    <label className="block text-sm font-medium text-gray-700 mb-2">
-                      ห้องและผู้เข้าพัก
+                      จำนวนผู้เข้าพัก
                     </label>
                     <Popover>
                       <PopoverTrigger asChild>
@@ -267,7 +260,7 @@ const Hero = () => {
                         >
                           <Users className="absolute left-3 w-4 h-4 text-gray-400" />
                           <span>
-                            1 ห้อง, ผู้ใหญ่ {adults} คน, เด็ก {children} คน
+                            ผู้ใหญ่ {adults} เด็ก {children}
                           </span>
                           <ChevronDown className="absolute right-3 w-4 h-4 text-gray-400" />
                         </Button>
@@ -344,19 +337,35 @@ const Hero = () => {
                       <ChevronDown className="absolute right-3 top-3 w-4 h-4 text-gray-400 pointer-events-none" />
                     </div>
                   </div>
-                </div>
 
-                {/* Pet Travel Option */}
-                <div className="flex items-center gap-4 text-sm text-gray-600 mb-4">
-                  <label className="flex items-center gap-2">
-                    <input
-                      type="checkbox"
-                      checked={travelWithPets}
-                      onChange={(e) => setTravelWithPets(e.target.checked)}
-                      className="rounded"
-                    />
-                    <span>พร้อมลิฟต์สัตว์</span>
-                  </label>
+                  {/* Pet Travel Option */}
+                  <div className="text-left">
+                    <label className="block text-sm font-medium text-gray-700 mb-2">
+                      มีสัตว์เลี้ยง
+                    </label>
+                    <div className="flex items-center h-12">
+                      <label className="flex items-center gap-2">
+                        <input
+                          type="checkbox"
+                          checked={travelWithPets}
+                          onChange={(e) => setTravelWithPets(e.target.checked)}
+                          className="rounded"
+                        />
+                        <span>มีสัตว์เลี้ยง</span>
+                      </label>
+                    </div>
+                  </div>
+
+                  {/* Search Button */}
+                  <div className="text-left">
+                    <label className="block text-sm font-medium text-gray-700 mb-2 invisible">
+                      ค้นหา
+                    </label>
+                    <button className="bg-blue-600 hover:bg-blue-700 text-white font-medium py-3 px-8 rounded-lg transition-colors flex items-center justify-center gap-2 w-full h-12">
+                      <Search className="w-5 h-5" />
+                      <span>ค้นหา</span>
+                    </button>
+                  </div>
                 </div>
 
                 {/* Third Row - Vehicle Pickup/Return */}
