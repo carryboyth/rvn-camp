@@ -316,43 +316,38 @@ const Hero = () => {
                     </Popover>
                   </div>
 
-                  {/* Accommodation Type */}
+                  {/* Accommodation Type & Pet Option */}
                   <div className="text-left">
                     <label className="block text-sm font-medium text-gray-700 mb-2">
                       เลือกประเภทที่พัก
                     </label>
-                    <div className="relative">
-                      <select
-                        value={accommodationType}
-                        onChange={(e) => setAccommodationType(e.target.value)}
-                        className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent appearance-none"
-                      >
-                        <option value="">เลือกประเภทที่พัก</option>
-                        {accommodationTypes.map((type) => (
-                          <option key={type} value={type}>
-                            {type}
-                          </option>
-                        ))}
-                      </select>
-                      <ChevronDown className="absolute right-3 top-3 w-4 h-4 text-gray-400 pointer-events-none" />
-                    </div>
-                  </div>
-
-                  {/* Pet Travel Option */}
-                  <div className="text-left">
-                    <label className="block text-sm font-medium text-gray-700 mb-2">
-                      มีสัตว์เลี้ยง
-                    </label>
-                    <div className="flex items-center h-12">
-                      <label className="flex items-center gap-2">
-                        <input
-                          type="checkbox"
-                          checked={travelWithPets}
-                          onChange={(e) => setTravelWithPets(e.target.checked)}
-                          className="rounded"
-                        />
-                        <span>มีสัตว์เลี้ยง</span>
-                      </label>
+                    <div className="space-y-2">
+                      <div className="relative">
+                        <select
+                          value={accommodationType}
+                          onChange={(e) => setAccommodationType(e.target.value)}
+                          className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent appearance-none"
+                        >
+                          <option value="">เลือกประเภทที่พัก</option>
+                          {accommodationTypes.map((type) => (
+                            <option key={type} value={type}>
+                              {type}
+                            </option>
+                          ))}
+                        </select>
+                        <ChevronDown className="absolute right-3 top-3 w-4 h-4 text-gray-400 pointer-events-none" />
+                      </div>
+                      <div className="flex items-center">
+                        <label className="flex items-center gap-2">
+                          <input
+                            type="checkbox"
+                            checked={travelWithPets}
+                            onChange={(e) => setTravelWithPets(e.target.checked)}
+                            className="rounded"
+                          />
+                          <span>มีสัตว์เลี้ยง</span>
+                        </label>
+                      </div>
                     </div>
                   </div>
 
