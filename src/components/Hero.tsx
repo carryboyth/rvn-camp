@@ -185,9 +185,9 @@ const Hero = () => {
               // Combined Motorhome + Campsite Form
               <>
                 {/* Single Row - All Fields */}
-                <div className="grid grid-cols-1 md:grid-cols-7 gap-4 mb-4">
+                <div className="grid grid-cols-1 md:grid-cols-5 gap-4 mb-4">
                   {/* Destination - Narrower */}
-                  <div className="text-left md:col-span-2">
+                  <div className="text-left">
                     <label className="block text-sm font-medium text-gray-700 mb-2">
                       จุดหมายปลายทาง
                     </label>
@@ -222,7 +222,7 @@ const Hero = () => {
                   </div>
 
                   {/* Check-in and Check-out in same container */}
-                  <div className="text-left md:col-span-2">
+                  <div className="text-left">
                     <label className="block text-sm font-medium text-gray-700 mb-2">
                       เช็คอิน - เช็คเอาท์
                     </label>
@@ -349,17 +349,6 @@ const Hero = () => {
                         </label>
                       </div>
                     </div>
-                  </div>
-
-                  {/* Search Button */}
-                  <div className="text-left">
-                    <label className="block text-sm font-medium text-gray-700 mb-2 invisible">
-                      ค้นหา
-                    </label>
-                    <button className="bg-blue-600 hover:bg-blue-700 text-white font-medium py-3 px-8 rounded-lg transition-colors flex items-center justify-center gap-2 w-full h-12">
-                      <Search className="w-5 h-5" />
-                      <span>ค้นหา</span>
-                    </button>
                   </div>
                 </div>
 
