@@ -198,27 +198,12 @@ const Hero = () => {
             ) : activeTab === "package" ? (
               // Combined Motorhome + Campsite Form (Two-Row Design)
               <>
-                {/* Section Headers */}
-                <div className="mb-6">
-                  <div className="flex items-center gap-8 text-lg font-semibold text-gray-800 mb-4">
-                    <div className="flex items-center gap-2">
-                      <Map className="w-5 h-5 text-blue-600" />
-                      <span>🏕️ การจองแคมป์ไซต์</span>
-                    </div>
-                    <div className="flex items-center gap-2">
-                      <Car className="w-5 h-5 text-blue-600" />
-                      <span>🚐 การเช่ารถบ้าน</span>
-                    </div>
-                  </div>
-                </div>
-
                 {/* Row 1 - Campsite Booking Section */}
                 <div className="border-l-4 border-blue-500 pl-4 mb-6">
-                  <h3 className="text-sm font-medium text-gray-700 mb-3 flex items-center gap-2">
-                    <Map className="w-4 h-4" />
-                    🏕️ การจองแคมป์ไซต์
+                  <h3 className="text-sm font-medium text-gray-700 mb-3">
+                    จองแคมป์ไซต์ 🏕️
                   </h3>
-                  <div className="grid grid-cols-1 md:grid-cols-7 gap-4 mb-4">
+                  <div className="grid grid-cols-1 md:grid-cols-6 gap-4 mb-4">
                     {/* Destination */}
                     <div className="text-left">
                       <label className="block text-sm font-medium text-gray-700 mb-2">
@@ -254,53 +239,42 @@ const Hero = () => {
                       </div>
                     </div>
 
-                    {/* Check-in Date */}
-                    <div className="text-left">
+                    {/* Check-in & Check-out Date Range */}
+                    <div className="text-left md:col-span-2">
                       <label className="block text-sm font-medium text-gray-700 mb-2">
-                        เช็คอิน
+                        วันเข้า - วันออก
                       </label>
-                      <div className="relative">
-                        <CalendarIcon className="absolute left-3 top-3 w-4 h-4 text-gray-400" />
-                        <input
-                          type="text"
-                          placeholder="จ. 14 ก.ค."
-                          className="w-full pl-10 pr-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent"
-                        />
-                      </div>
-                    </div>
-
-                    {/* Number of Nights */}
-                    <div className="text-left">
-                      <label className="block text-sm font-medium text-gray-700 mb-2">
-                        จำนวนคืน
-                      </label>
-                      <div className="relative">
-                        <select
-                          value={nights}
-                          onChange={(e) => setNights(Number(e.target.value))}
-                          className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent appearance-none"
-                        >
-                          {[1,2,3,4,5,6,7,8,9,10].map(night => (
-                            <option key={night} value={night}>{night} คืน</option>
-                          ))}
-                        </select>
-                        <ChevronDown className="absolute right-3 top-3 w-4 h-4 text-gray-400 pointer-events-none" />
-                      </div>
-                    </div>
-
-                    {/* Check-out Date */}
-                    <div className="text-left">
-                      <label className="block text-sm font-medium text-gray-700 mb-2">
-                        เช็คเอาท์
-                      </label>
-                      <div className="relative">
-                        <CalendarIcon className="absolute left-3 top-3 w-4 h-4 text-gray-400" />
-                        <input
-                          type="text"
-                          placeholder="อ. 15 ก.ค."
-                          className="w-full pl-10 pr-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent"
-                        />
-                      </div>
+                      <Popover>
+                        <PopoverTrigger asChild>
+                          <Button
+                            variant="outline"
+                            className="w-full pl-10 pr-4 py-3 h-12 justify-start text-left font-normal border-gray-300 rounded-lg hover:bg-gray-50"
+                          >
+                            <CalendarIcon className="absolute left-3 w-4 h-4 text-gray-400" />
+                            <span className="text-sm">
+                              {checkInDate && checkOutDate
+                                ? `${format(checkInDate, "dd MMM")} - ${format(checkOutDate, "dd MMM")}`
+                                : "เลือกวันที่"}
+                            </span>
+                            <ChevronDown className="absolute right-3 w-4 h-4 text-gray-400" />
+                          </Button>
+                        </PopoverTrigger>
+                        <PopoverContent className="w-auto p-0 bg-white z-50" align="start">
+                          <Calendar
+                            mode="range"
+                            selected={{
+                              from: checkInDate,
+                              to: checkOutDate,
+                            }}
+                            onSelect={(range) => {
+                              setCheckInDate(range?.from);
+                              setCheckOutDate(range?.to);
+                            }}
+                            initialFocus
+                            className={cn("p-3 pointer-events-auto")}
+                          />
+                        </PopoverContent>
+                      </Popover>
                     </div>
 
                     {/* Room and Guest Selector */}
@@ -438,9 +412,8 @@ const Hero = () => {
 
                 {/* Row 2 - Campervan Rental Section */}
                 <div className="border-l-4 border-green-500 pl-4 mb-6">
-                  <h3 className="text-sm font-medium text-gray-700 mb-3 flex items-center gap-2">
-                    <Car className="w-4 h-4" />
-                    🚐 การเช่ารถบ้าน
+                  <h3 className="text-sm font-medium text-gray-700 mb-3">
+                    เช่ารถบ้าน 🚐
                   </h3>
                   <div className="grid grid-cols-1 md:grid-cols-6 gap-4 mb-4">
                     {/* Pick-up Location */}
@@ -449,14 +422,17 @@ const Hero = () => {
                         สถานที่รับรถ
                       </label>
                       <div className="relative">
-                        <MapPin className="absolute left-3 top-3 w-4 h-4 text-gray-400" />
-                        <input
-                          type="text"
+                        <Plane className="absolute left-3 top-3 w-4 h-4 text-gray-400" />
+                        <select
                           value={pickupLocation}
                           onChange={(e) => setPickupLocation(e.target.value)}
-                          placeholder="สถานที่รับรถ"
-                          className="w-full pl-10 pr-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent"
-                        />
+                          className="w-full pl-10 pr-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent appearance-none"
+                        >
+                          <option value="">เลือกสถานที่รับรถ</option>
+                          <option value="suvarnabhumi">สนามบินสุวรรณภูมิ (BKK)</option>
+                          <option value="donmueang">สนามบินดอนเมือง (DMK)</option>
+                        </select>
+                        <ChevronDown className="absolute right-3 top-3 w-4 h-4 text-gray-400 pointer-events-none" />
                       </div>
                     </div>
 
@@ -466,69 +442,108 @@ const Hero = () => {
                         สถานที่คืนรถ
                       </label>
                       <div className="relative">
-                        <MapPin className="absolute left-3 top-3 w-4 h-4 text-gray-400" />
-                        <input
-                          type="text"
+                        <Plane className="absolute left-3 top-3 w-4 h-4 text-gray-400" />
+                        <select
                           value={dropoffLocation}
                           onChange={(e) => setDropoffLocation(e.target.value)}
-                          placeholder="สถานที่คืนรถ"
-                          className="w-full pl-10 pr-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent"
-                        />
+                          className="w-full pl-10 pr-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent appearance-none"
+                        >
+                          <option value="">เลือกสถานที่คืนรถ</option>
+                          <option value="suvarnabhumi">สนามบินสุวรรณภูมิ (BKK)</option>
+                          <option value="donmueang">สนามบินดอนเมือง (DMK)</option>
+                        </select>
+                        <ChevronDown className="absolute right-3 top-3 w-4 h-4 text-gray-400 pointer-events-none" />
                       </div>
                     </div>
 
-                    {/* Pick-up Date and Time */}
+                    {/* Pick-up Date and Time Combined */}
                     <div className="text-left">
                       <label className="block text-sm font-medium text-gray-700 mb-2">
                         วันรับรถ
                       </label>
-                      <div className="flex gap-2">
-                        <div className="relative flex-1">
-                          <CalendarIcon className="absolute left-3 top-3 w-4 h-4 text-gray-400" />
-                          <input
-                            type="text"
-                            placeholder="16 ก.ค."
-                            className="w-full pl-10 pr-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent"
-                          />
-                        </div>
-                        <select className="px-3 py-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 text-sm">
-                          <option>10:00</option>
-                          <option>11:00</option>
-                          <option>12:00</option>
-                          <option>13:00</option>
-                          <option>14:00</option>
-                          <option>15:00</option>
-                          <option>16:00</option>
-                          <option>17:00</option>
-                        </select>
-                      </div>
+                      <Popover>
+                        <PopoverTrigger asChild>
+                          <Button
+                            variant="outline"
+                            className="w-full pl-10 pr-4 py-3 h-12 justify-start text-left font-normal border-gray-300 rounded-lg hover:bg-gray-50"
+                          >
+                            <CalendarIcon className="absolute left-3 w-4 h-4 text-gray-400" />
+                            <span className="text-sm">
+                              16 ก.ค. - 10:00
+                            </span>
+                            <ChevronDown className="absolute right-3 w-4 h-4 text-gray-400" />
+                          </Button>
+                        </PopoverTrigger>
+                        <PopoverContent className="w-80 p-4 bg-white z-50" align="start">
+                          <div className="space-y-4">
+                            <Calendar
+                              mode="single"
+                              selected={checkInDate}
+                              onSelect={setCheckInDate}
+                              initialFocus
+                              className={cn("p-3 pointer-events-auto")}
+                            />
+                            <div>
+                              <label className="block text-sm font-medium text-gray-700 mb-2">เวลา</label>
+                              <select className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500">
+                                <option>10:00</option>
+                                <option>11:00</option>
+                                <option>12:00</option>
+                                <option>13:00</option>
+                                <option>14:00</option>
+                                <option>15:00</option>
+                                <option>16:00</option>
+                                <option>17:00</option>
+                              </select>
+                            </div>
+                          </div>
+                        </PopoverContent>
+                      </Popover>
                     </div>
 
-                    {/* Return Date and Time */}
+                    {/* Return Date and Time Combined */}
                     <div className="text-left">
                       <label className="block text-sm font-medium text-gray-700 mb-2">
                         วันคืนรถ
                       </label>
-                      <div className="flex gap-2">
-                        <div className="relative flex-1">
-                          <CalendarIcon className="absolute left-3 top-3 w-4 h-4 text-gray-400" />
-                          <input
-                            type="text"
-                            placeholder="19 ก.ค."
-                            className="w-full pl-10 pr-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent"
-                          />
-                        </div>
-                        <select className="px-3 py-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 text-sm">
-                          <option>10:00</option>
-                          <option>11:00</option>
-                          <option>12:00</option>
-                          <option>13:00</option>
-                          <option>14:00</option>
-                          <option>15:00</option>
-                          <option>16:00</option>
-                          <option>17:00</option>
-                        </select>
-                      </div>
+                      <Popover>
+                        <PopoverTrigger asChild>
+                          <Button
+                            variant="outline"
+                            className="w-full pl-10 pr-4 py-3 h-12 justify-start text-left font-normal border-gray-300 rounded-lg hover:bg-gray-50"
+                          >
+                            <CalendarIcon className="absolute left-3 w-4 h-4 text-gray-400" />
+                            <span className="text-sm">
+                              19 ก.ค. - 10:00
+                            </span>
+                            <ChevronDown className="absolute right-3 w-4 h-4 text-gray-400" />
+                          </Button>
+                        </PopoverTrigger>
+                        <PopoverContent className="w-80 p-4 bg-white z-50" align="start">
+                          <div className="space-y-4">
+                            <Calendar
+                              mode="single"
+                              selected={checkOutDate}
+                              onSelect={setCheckOutDate}
+                              initialFocus
+                              className={cn("p-3 pointer-events-auto")}
+                            />
+                            <div>
+                              <label className="block text-sm font-medium text-gray-700 mb-2">เวลา</label>
+                              <select className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500">
+                                <option>10:00</option>
+                                <option>11:00</option>
+                                <option>12:00</option>
+                                <option>13:00</option>
+                                <option>14:00</option>
+                                <option>15:00</option>
+                                <option>16:00</option>
+                                <option>17:00</option>
+                              </select>
+                            </div>
+                          </div>
+                        </PopoverContent>
+                      </Popover>
                     </div>
 
                     {/* Vehicle Type */}
