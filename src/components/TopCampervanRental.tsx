@@ -55,9 +55,12 @@ const TopCampervanRental = () => {
                 <h3 className="text-lg font-semibold mb-1">{van.name}</h3>
                 <p className="text-primary font-medium mb-2">{van.price} / day</p>
                 <p className="text-muted-foreground text-sm mb-4">{van.description}</p>
-                <Link to="/rent-campervan">
-                  <Button className="w-full">Book Now</Button>
-                </Link>
+                <Button 
+                  onClick={() => window.open('https://preview--camp-vista-filters-25.lovable.app/', '_blank')}
+                  className="w-full"
+                >
+                  Book Now
+                </Button>
               </CardContent>
             </Card>
           ))}

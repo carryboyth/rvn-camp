@@ -105,7 +105,10 @@ const TopCampsite = () => {
                     <span className="text-xl font-bold text-blue-600">{campsite.price}</span>
                     <span className="text-gray-500 text-sm">/คืน</span>
                   </div>
-                  <button className="bg-blue-600 hover:bg-blue-700 text-white px-4 py-2 rounded-lg font-medium transition-colors">
+                  <button 
+                    onClick={() => window.open('https://preview--camp-vista-filters.lovable.app/', '_blank')}
+                    className="bg-blue-600 hover:bg-blue-700 text-white px-4 py-2 rounded-lg font-medium transition-colors"
+                  >
                     จองเลย
                   </button>
                 </div>
