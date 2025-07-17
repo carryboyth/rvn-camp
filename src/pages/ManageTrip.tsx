@@ -34,20 +34,45 @@ const ManageTrip = () => {
               },
             ].map((item, index) => (
               <Card key={index} className="group overflow-hidden">
-                <Link to={item.link} className="block">
-                  <div className="aspect-video overflow-hidden">
-                    <img
-                      src={item.image}
-                      alt={item.title}
-                      className="h-full w-full object-cover transition-transform duration-300 group-hover:scale-105 cursor-pointer"
-                    />
+                {index === 2 ? (
+                  <Link to={item.link} className="block">
+                    <div className="aspect-video overflow-hidden">
+                      <img
+                        src={item.image}
+                        alt={item.title}
+                        className="h-full w-full object-cover transition-transform duration-300 group-hover:scale-105 cursor-pointer"
+                      />
+                    </div>
+                    <CardContent className="p-4 text-center">
+                      <h3 className="mb-2 text-xl font-semibold">{item.title}</h3>
+                      <p className="mb-4 text-muted-foreground">{item.description}</p>
+                      <Button className="w-full">Book Now</Button>
+                    </CardContent>
+                  </Link>
+                ) : (
+                  <div 
+                    className="block cursor-pointer"
+                    onClick={() => window.open(
+                      index === 0 
+                        ? 'https://preview--camp-vista-filters-25.lovable.app/' 
+                        : 'https://lovable.dev/projects/9a02ea7c-ff63-40ad-b29b-e149dfb117ed', 
+                      '_blank'
+                    )}
+                  >
+                    <div className="aspect-video overflow-hidden">
+                      <img
+                        src={item.image}
+                        alt={item.title}
+                        className="h-full w-full object-cover transition-transform duration-300 group-hover:scale-105 cursor-pointer"
+                      />
+                    </div>
+                    <CardContent className="p-4 text-center">
+                      <h3 className="mb-2 text-xl font-semibold">{item.title}</h3>
+                      <p className="mb-4 text-muted-foreground">{item.description}</p>
+                      <Button className="w-full">Book Now</Button>
+                    </CardContent>
                   </div>
-                  <CardContent className="p-4 text-center">
-                    <h3 className="mb-2 text-xl font-semibold">{item.title}</h3>
-                    <p className="mb-4 text-muted-foreground">{item.description}</p>
-                    <Button className="w-full">Book Now</Button>
-                  </CardContent>
-                </Link>
+                )}
               </Card>
             ))}
           </div>
