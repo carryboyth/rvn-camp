@@ -55,7 +55,7 @@ const ManageTrip = () => {
                     onClick={() => window.open(
                       index === 0 
                         ? 'https://preview--camp-vista-filters-25.lovable.app/' 
-                        : 'https://lovable.dev/projects/9a02ea7c-ff63-40ad-b29b-e149dfb117ed', 
+                        : 'https://preview--camp-vista-filters.lovable.app/', 
                       '_blank'
                     )}
                   >
