@@ -21,7 +21,7 @@ const Footer = () => {
   };
 
   const handleAdminLogin = () => {
-    navigate("/admin-login");
+    window.open("https://preview--booking-admin-control.lovable.app/", "_blank");
   };
 
   return (
