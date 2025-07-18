@@ -1,3 +1,5 @@
+import { Carousel, CarouselContent, CarouselItem, CarouselNext, CarouselPrevious } from "./ui/carousel";
+
 const PromotionalSection = () => {
 
   const promotions = [
@@ -40,50 +42,58 @@ const PromotionalSection = () => {
           โปรโมชั่นและข่าวสาร
         </h2>
         
-        <div className="max-w-6xl mx-auto">
-          {/* 3 Images per Row Grid */}
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-[10px]">
-            {promotions.map((promo) => (
-              <div
-                key={promo.id}
-                className={`${promo.bgColor} relative overflow-hidden min-h-[300px] rounded-xl`}
-              >
-                {/* Background Image */}
-                <div 
-                  className="absolute inset-0 bg-cover bg-center opacity-30"
-                  style={{ backgroundImage: `url(${promo.image})` }}
-                />
-                
-                {/* Content */}
-                <div className="relative z-10 p-6 text-white h-full flex items-center">
-                  <div className="w-full">
-                    <div className="text-xl md:text-2xl font-bold mb-2">
-                      {promo.title}
-                    </div>
-                    <div className="text-lg md:text-xl font-semibold mb-3">
-                      {promo.subtitle}
-                    </div>
-                    <div className="text-sm md:text-base mb-2">
-                      {promo.description}
-                    </div>
-                    {promo.period && (
-                      <div className="text-xs mb-3 bg-white/20 inline-block px-2 py-1 rounded-full">
-                        {promo.period}
+        <div className="max-w-6xl mx-auto relative">
+          <Carousel
+            opts={{
+              align: "start",
+              loop: true,
+            }}
+            className="w-full"
+          >
+            <CarouselContent className="-ml-2 md:-ml-4">
+              {promotions.map((promo) => (
+                <CarouselItem key={promo.id} className="pl-2 md:pl-4 md:basis-1/2 lg:basis-1/3">
+                  <div className={`${promo.bgColor} relative overflow-hidden min-h-[300px] rounded-xl`}>
+                    {/* Background Image */}
+                    <div 
+                      className="absolute inset-0 bg-cover bg-center opacity-30"
+                      style={{ backgroundImage: `url(${promo.image})` }}
+                    />
+                    
+                    {/* Content */}
+                    <div className="relative z-10 p-6 text-white h-full flex items-center">
+                      <div className="w-full">
+                        <div className="text-xl md:text-2xl font-bold mb-2">
+                          {promo.title}
+                        </div>
+                        <div className="text-lg md:text-xl font-semibold mb-3">
+                          {promo.subtitle}
+                        </div>
+                        <div className="text-sm md:text-base mb-2">
+                          {promo.description}
+                        </div>
+                        {promo.period && (
+                          <div className="text-xs mb-3 bg-white/20 inline-block px-2 py-1 rounded-full">
+                            {promo.period}
+                          </div>
+                        )}
+                        {promo.brand && (
+                          <div className="text-sm font-semibold mb-3">
+                            {promo.brand}
+                          </div>
+                        )}
+                        <button className="bg-white text-gray-800 px-4 py-2 rounded-lg font-semibold hover:bg-gray-100 transition-colors text-sm">
+                          {promo.buttonText}
+                        </button>
                       </div>
-                    )}
-                    {promo.brand && (
-                      <div className="text-sm font-semibold mb-3">
-                        {promo.brand}
-                      </div>
-                    )}
-                    <button className="bg-white text-gray-800 px-4 py-2 rounded-lg font-semibold hover:bg-gray-100 transition-colors text-sm">
-                      {promo.buttonText}
-                    </button>
+                    </div>
                   </div>
-                </div>
-              </div>
-            ))}
-          </div>
+                </CarouselItem>
+              ))}
+            </CarouselContent>
+            <CarouselPrevious className="left-4" />
+            <CarouselNext className="right-4" />
+          </Carousel>
         </div>
       </div>
     </section>
