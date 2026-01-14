@@ -9,72 +9,83 @@ import MotorhomeDetailPage from "@/components/motorhome/MotorhomeDetailPage";
 const getMotorhomeData = (id: string) => {
   const baseData = {
     id: id || "1",
-    name: "Toyota HiAce Campervan Premium",
-    model: "HiAce",
-    brand: "Toyota", 
+    name: "Carryboy Motorhome",
+    model: "Triton",
+    brand: "Mitsubishi", 
     images: [
-      "/lovable-uploads/491cfd8c-5bc4-4d54-afb5-cc0adc56e139.png",
-      "/lovable-uploads/ffbe678e-abe3-4ee8-8950-91cb622e5fde.png",
-      "/lovable-uploads/31648e34-1e0e-418b-a716-4edcc750815c.png",
-      "/lovable-uploads/57b37350-81fd-4c1a-af07-400f654b5c47.png",
-      "/lovable-uploads/71ca327b-2638-4ef8-8596-5784d0446c53.png",
-      "/lovable-uploads/d8ae79a0-6073-4419-8cad-67eba89223b4.png"
+      "/lovable-uploads/motorhome-main.jpg",
+      "/lovable-uploads/motorhome-gallery-1.png",
+      "/lovable-uploads/motorhome-gallery-2.png",
+      "/lovable-uploads/motorhome-gallery-3.png"
     ],
-    price: 2500,
+    price: 5000,
     rating: 4.9,
     reviewCount: 87,
-    description: "รถบ้าน Toyota HiAce ปรับปรุงใหม่ พร้อมอุปกรณ์ครบครัน เหมาะสำหรับการเดินทางท่องเที่ยวกับครอบครัวและเพื่อน มาพร้อมครัวในตัว ห้องน้ำ และเตียงนอนที่สะดวกสบาย ขับขี่ง่าย ประหยัดน้ำมัน",
-    badges: ["ยอดนิยม", "รถใหม่", "มีโปรโมชั่น"],
+    description: "รถบ้าน Mitsubishi Triton พร้อม Carryboy Motorhome ปรับปรุงใหม่ พร้อมอุปกรณ์ครบครัน เหมาะสำหรับการเดินทางท่องเที่ยวกับครอบครัวและเพื่อน มาพร้อมครัวในตัว ห้องน้ำ และเตียงนอนที่สะดวกสบาย ขับขี่ง่าย ประหยัดน้ำมัน",
+    badges: ["Motorhome A Class"],
     specs: {
-      passengers: 6,
-      beds: 4,
+      passengers: 4,
+      beds: 2,
       transmission: "อัตโนมัติ",
       fuelType: "ดีเซล",
       year: 2023,
-      drive: "4x2"
+      drive: "4WD",
+      engine: "2.8L"
+    },
+    dimensions: {
+      length: "5,915 มม.",
+      width: "1,815 มม.",
+      height: "2,950 มม.",
+      wheelbase: "3,000 มม."
     },
     amenities: [
-      "เตียงนอน 2 ชั้น",
-      "เครื่องปรับอากาศ",
-      "ครัวในตัว พร้อมเตาแก๊ส",
-      "ตู้เย็น",
-      "ห้องน้ำ-ฝักบัว",
-      "ระบบไฟฟ้า 12V/220V",
-      "Wi-Fi ในตัว",
-      "จานชาม เครื่องครัว",
-      "โต๊ะ เก้าอี้",
-      "ผ้าปูที่นอน หมอน",
-      "พัดลมเพดาน",
-      "ไมโครเวฟ"
+      { name: "Shower", available: true },
+      { name: "Toilet", available: true },
+      { name: "Freezer", available: true },
+      { name: "Kitchen equipment", available: true },
+      { name: "Fridge", available: true },
+      { name: "Hot water", available: true },
+      { name: "GPS", available: false },
+      { name: "AC in cab", available: true },
+      { name: "AC in living area", available: true },
+      { name: "Bluetooth", available: true },
+      { name: "TV", available: true },
+      { name: "Floor heating", available: true },
+      { name: "Aux-port", available: false },
+      { name: "Solar panel", available: true },
+      { name: "Adapter to electrical connection", available: true },
+      { name: "Mosquito net", available: true }
     ],
-    location: {
-      pickup: "สนามบิน สุวรรณภูมิ",
-      dropoff: [
-        "สนามบิน สุวรรณภูมิ",
-        "สนามบิน ดอนเมือง",
-        "สถานีรถไฟหัวลำโพง",
-        "หมอชิต"
-      ],
-      coordinates: { lat: 13.6900, lng: 100.7501 }
-    },
+    addons: [
+      { id: "bedding", name: "ชุดเครื่องนอน", price: 500, description: "ผ้าปูที่นอน หมอน ผ้าห่ม" },
+      { id: "camping_gear", name: "อุปกรณ์แคมป์ปิ้ง", price: 800, description: "โต๊ะพับ เก้าอี้ 4 ตัว" },
+      { id: "bbq", name: "เตาปิ้งย่าง", price: 300, description: "เตาปิ้งย่างพร้อมถ่าน" },
+      { id: "bike_rack", name: "แร็คจักรยาน", price: 400, description: "แร็คสำหรับจักรยาน 2 คัน" },
+      { id: "gps", name: "GPS นำทาง", price: 200, description: "อุปกรณ์นำทาง GPS" },
+      { id: "child_seat", name: "เบาะนั่งเด็ก", price: 250, description: "เบาะนั่งนิรภัยสำหรับเด็ก" }
+    ],
+    insuranceOptions: [
+      { id: "basic", name: "ประกันพื้นฐาน", price: 0, description: "ประกันภัยชั้น 3 คุ้มครองความเสียหายต่อบุคคลภายนอก", coverage: "1,000,000 บาท" },
+      { id: "standard", name: "ประกันมาตรฐาน", price: 300, description: "ประกันภัยชั้น 2+ คุ้มครองความเสียหายจากอุบัติเหตุ", coverage: "2,000,000 บาท" },
+      { id: "premium", name: "ประกันพรีเมี่ยม", price: 500, description: "ประกันภัยชั้น 1 คุ้มครองครอบคลุมทุกความเสียหาย", coverage: "5,000,000 บาท" }
+    ],
+    pickupLocations: [
+      { id: "tkd", name: "TKD Fiber Co.,Ltd (CARRYBOY เครือข่าย)", address: "กรุงเทพมหานคร" },
+      { id: "suvarnabhumi", name: "สนามบิน สุวรรณภูมิ", address: "สมุทรปราการ" },
+      { id: "donmueang", name: "สนามบิน ดอนเมือง", address: "กรุงเทพมหานคร" }
+    ],
     pricing: {
-      basePrice: 2500,
+      basePrice: 5000,
       insurance: 300,
       cleaning: 500,
       deposit: 10000,
-      minDays: 2
+      minDays: 1
     },
     terms: {
       minAge: 25,
       license: ["ใบขับขี่ประเภท 1", "ใบขับขี่นานาชาติ"],
       cancellation: "ยกเลิกได้ฟรีภายใน 48 ชั่วโมงก่อนการเดินทาง",
       payment: ["โอนธนาคาร", "QR Code", "บัตรเครดิต"]
-    },
-    host: {
-      name: "คุณสมชาย",
-      avatar: "/lovable-uploads/b3b48e94-e287-44ba-807a-e228a1df866a.png",
-      joinedDate: "2020",
-      responseRate: 98
     }
   };
 
