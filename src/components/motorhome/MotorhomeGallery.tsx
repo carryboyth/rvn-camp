@@ -28,13 +28,16 @@ export const MotorhomeGallery = ({ images, name }: MotorhomeGalleryProps) => {
     setSelectedImage((prev) => (prev - 1 + images.length) % images.length);
   };
 
+  // Only display first 5 images
+  const displayImages = images.slice(0, 5);
+
   return (
     <>
-      <div className="grid grid-cols-4 gap-3 h-96 rounded-xl overflow-hidden mb-8">
-        {/* Main large image */}
+      <div className="grid grid-cols-4 grid-rows-2 gap-2 h-[400px] rounded-xl overflow-hidden mb-8">
+        {/* Main large image - left side */}
         <div className="col-span-2 row-span-2 relative group cursor-pointer">
           <img
-            src={images[0]}
+            src={displayImages[0]}
             alt={name}
             className="w-full h-full object-cover group-hover:brightness-95 transition-all duration-300"
             onClick={() => openModal(0)}
@@ -42,8 +45,8 @@ export const MotorhomeGallery = ({ images, name }: MotorhomeGalleryProps) => {
           <div className="absolute inset-0 bg-black bg-opacity-0 group-hover:bg-opacity-10 transition-all duration-300" />
         </div>
 
-        {/* Grid of smaller images */}
-        {images.slice(1, 5).map((image, index) => (
+        {/* Top right images - 2 small squares */}
+        {displayImages.slice(1, 3).map((image, index) => (
           <div key={index} className="relative group cursor-pointer">
             <img
               src={image}
@@ -52,10 +55,24 @@ export const MotorhomeGallery = ({ images, name }: MotorhomeGalleryProps) => {
               onClick={() => openModal(index + 1)}
             />
             <div className="absolute inset-0 bg-black bg-opacity-0 group-hover:bg-opacity-10 transition-all duration-300" />
-            {index === 3 && images.length > 5 && (
+          </div>
+        ))}
+
+        {/* Bottom right images - 2 small squares */}
+        {displayImages.slice(3, 5).map((image, index) => (
+          <div key={index + 2} className="relative group cursor-pointer">
+            <img
+              src={image}
+              alt={`${name} ${index + 4}`}
+              className="w-full h-full object-cover group-hover:brightness-95 transition-all duration-300"
+              onClick={() => openModal(index + 3)}
+            />
+            <div className="absolute inset-0 bg-black bg-opacity-0 group-hover:bg-opacity-10 transition-all duration-300" />
+            {/* Show "View all" overlay on last image if more than 5 total */}
+            {index === 1 && images.length > 5 && (
               <div 
                 className="absolute inset-0 bg-black bg-opacity-60 flex items-center justify-center cursor-pointer hover:bg-opacity-50 transition-all"
-                onClick={() => openModal(index + 1)}
+                onClick={() => openModal(4)}
               >
                 <div className="text-white text-center">
                   <Grid3x3 className="h-6 w-6 mx-auto mb-2" />

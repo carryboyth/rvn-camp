@@ -1,8 +1,7 @@
 
-import React, { useState } from "react";
+import React, { useRef } from "react";
 import { useNavigate } from "react-router-dom";
 import { Button } from "@/components/ui/button";
-import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import {
   ArrowLeft,
   Star,
@@ -18,7 +17,6 @@ import {
   Shield
 } from "lucide-react";
 import { MotorhomeGallery } from "./MotorhomeGallery";
-import { MotorhomeInfo } from "./MotorhomeInfo";
 import { BookingSection } from "./BookingSection";
 import { ReviewsSection } from "./ReviewsSection";
 
@@ -72,7 +70,31 @@ interface MotorhomeDetailPageProps {
 
 const MotorhomeDetailPage = ({ motorhome }: MotorhomeDetailPageProps) => {
   const navigate = useNavigate();
-  const [activeTab, setActiveTab] = useState("overview");
+  
+  // Refs for scrolling to sections
+  const overviewRef = useRef<HTMLDivElement>(null);
+  const specsRef = useRef<HTMLDivElement>(null);
+  const amenitiesRef = useRef<HTMLDivElement>(null);
+  const reviewsRef = useRef<HTMLDivElement>(null);
+  const locationRef = useRef<HTMLDivElement>(null);
+  const termsRef = useRef<HTMLDivElement>(null);
+
+  const scrollToSection = (ref: React.RefObject<HTMLDivElement>) => {
+    if (ref.current) {
+      const yOffset = -140; // Account for sticky header + tabs
+      const y = ref.current.getBoundingClientRect().top + window.pageYOffset + yOffset;
+      window.scrollTo({ top: y, behavior: 'smooth' });
+    }
+  };
+
+  const tabs = [
+    { label: "ภาพรวม", ref: overviewRef },
+    { label: "รายละเอียด", ref: specsRef },
+    { label: "สิ่งอำนวยความสะดวก", ref: amenitiesRef },
+    { label: "รีวิว", ref: reviewsRef },
+    { label: "สถานที่", ref: locationRef },
+    { label: "เงื่อนไข", ref: termsRef },
+  ];
 
   return (
     <div className="min-h-screen bg-gray-50">
@@ -165,168 +187,138 @@ const MotorhomeDetailPage = ({ motorhome }: MotorhomeDetailPageProps) => {
         {/* Image Gallery */}
         <MotorhomeGallery images={motorhome.images} name={motorhome.name} />
 
-        {/* Navigation Tabs */}
+        {/* Navigation Tabs - Scroll to section on click */}
         <div className="sticky top-16 bg-white border-b z-40 -mx-4 px-4 mb-8">
-          <Tabs value={activeTab} onValueChange={setActiveTab} className="w-full">
-            <TabsList className="grid w-full grid-cols-6 max-w-3xl bg-transparent border-0 p-0 h-12">
-              <TabsTrigger 
-                value="overview" 
-                className="data-[state=active]:bg-transparent data-[state=active]:text-blue-600 data-[state=active]:border-b-2 data-[state=active]:border-blue-600 rounded-none h-full"
+          <div className="flex gap-0 max-w-3xl">
+            {tabs.map((tab, index) => (
+              <button
+                key={index}
+                onClick={() => scrollToSection(tab.ref)}
+                className="px-4 py-3 text-sm font-medium text-gray-600 hover:text-blue-600 hover:border-b-2 hover:border-blue-600 transition-colors whitespace-nowrap"
               >
-                ภาพรวม
-              </TabsTrigger>
-              <TabsTrigger 
-                value="specs" 
-                className="data-[state=active]:bg-transparent data-[state=active]:text-blue-600 data-[state=active]:border-b-2 data-[state=active]:border-blue-600 rounded-none h-full"
-              >
-                รายละเอียด
-              </TabsTrigger>
-              <TabsTrigger 
-                value="amenities" 
-                className="data-[state=active]:bg-transparent data-[state=active]:text-blue-600 data-[state=active]:border-b-2 data-[state=active]:border-blue-600 rounded-none h-full"
-              >
-                สิ่งอำนวยความสะดวก
-              </TabsTrigger>
-              <TabsTrigger 
-                value="reviews" 
-                className="data-[state=active]:bg-transparent data-[state=active]:text-blue-600 data-[state=active]:border-b-2 data-[state=active]:border-blue-600 rounded-none h-full"
-              >
-                รีวิว
-              </TabsTrigger>
-              <TabsTrigger 
-                value="location" 
-                className="data-[state=active]:bg-transparent data-[state=active]:text-blue-600 data-[state=active]:border-b-2 data-[state=active]:border-blue-600 rounded-none h-full"
-              >
-                สถานที่
-              </TabsTrigger>
-              <TabsTrigger 
-                value="terms" 
-                className="data-[state=active]:bg-transparent data-[state=active]:text-blue-600 data-[state=active]:border-b-2 data-[state=active]:border-blue-600 rounded-none h-full"
-              >
-                เงื่อนไข
-              </TabsTrigger>
-            </TabsList>
-          </Tabs>
+                {tab.label}
+              </button>
+            ))}
+          </div>
         </div>
 
-        {/* Main Content */}
+        {/* Main Content - All sections visible */}
         <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
           {/* Left Column - Main Content */}
-          <div className="lg:col-span-2">
-            <Tabs value={activeTab} className="w-full">
-              <TabsContent value="overview" className="mt-0">
-                <MotorhomeInfo motorhome={motorhome} />
-              </TabsContent>
-              
-              <TabsContent value="specs" className="mt-0">
-                <div className="bg-white rounded-lg p-6 border">
-                  <h2 className="text-xl font-semibold mb-4">ข้อมูลทั่วไป</h2>
-                  <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-                    <div className="space-y-4">
-                      <div className="flex justify-between">
-                        <span className="text-gray-600">ผู้โดยสาร:</span>
-                        <span className="font-medium">{motorhome.specs.passengers} คน</span>
-                      </div>
-                      <div className="flex justify-between">
-                        <span className="text-gray-600">เตียงนอน:</span>
-                        <span className="font-medium">{motorhome.specs.beds} เตียง</span>
-                      </div>
-                      <div className="flex justify-between">
-                        <span className="text-gray-600">เกียร์:</span>
-                        <span className="font-medium">{motorhome.specs.transmission}</span>
-                      </div>
-                    </div>
-                    <div className="space-y-4">
-                      <div className="flex justify-between">
-                        <span className="text-gray-600">เชื้อเพลิง:</span>
-                        <span className="font-medium">{motorhome.specs.fuelType}</span>
-                      </div>
-                      <div className="flex justify-between">
-                        <span className="text-gray-600">ขับเคลื่อน:</span>
-                        <span className="font-medium">{motorhome.specs.drive}</span>
-                      </div>
-                      <div className="flex justify-between">
-                        <span className="text-gray-600">ปีที่ผลิต:</span>
-                        <span className="font-medium">{motorhome.specs.year}</span>
-                      </div>
-                    </div>
+          <div className="lg:col-span-2 space-y-8">
+            {/* Overview Section */}
+            <div ref={overviewRef} className="bg-white rounded-lg p-6 border">
+              <h2 className="text-xl font-semibold mb-4">ภาพรวม</h2>
+              <p className="text-gray-600 leading-relaxed">{motorhome.description}</p>
+            </div>
+
+            {/* Specs Section */}
+            <div ref={specsRef} className="bg-white rounded-lg p-6 border">
+              <h2 className="text-xl font-semibold mb-4">ข้อมูลทั่วไป</h2>
+              <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+                <div className="space-y-4">
+                  <div className="flex justify-between">
+                    <span className="text-gray-600">ผู้โดยสาร:</span>
+                    <span className="font-medium">{motorhome.specs.passengers} คน</span>
+                  </div>
+                  <div className="flex justify-between">
+                    <span className="text-gray-600">เตียงนอน:</span>
+                    <span className="font-medium">{motorhome.specs.beds} เตียง</span>
+                  </div>
+                  <div className="flex justify-between">
+                    <span className="text-gray-600">เกียร์:</span>
+                    <span className="font-medium">{motorhome.specs.transmission}</span>
                   </div>
                 </div>
-              </TabsContent>
-              
-              <TabsContent value="amenities" className="mt-0">
-                <div className="bg-white rounded-lg p-6 border">
-                  <h2 className="text-xl font-semibold mb-4">สิ่งอำนวยความสะดวก</h2>
-                  <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-                    {motorhome.amenities.map((amenity, index) => (
-                      <div key={index} className="flex items-center gap-3 p-3 bg-green-50 rounded-lg">
-                        <div className="w-2 h-2 bg-green-500 rounded-full"></div>
-                        <span className="text-gray-700">{amenity}</span>
-                      </div>
+                <div className="space-y-4">
+                  <div className="flex justify-between">
+                    <span className="text-gray-600">เชื้อเพลิง:</span>
+                    <span className="font-medium">{motorhome.specs.fuelType}</span>
+                  </div>
+                  <div className="flex justify-between">
+                    <span className="text-gray-600">ขับเคลื่อน:</span>
+                    <span className="font-medium">{motorhome.specs.drive}</span>
+                  </div>
+                  <div className="flex justify-between">
+                    <span className="text-gray-600">ปีที่ผลิต:</span>
+                    <span className="font-medium">{motorhome.specs.year}</span>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            {/* Amenities Section */}
+            <div ref={amenitiesRef} className="bg-white rounded-lg p-6 border">
+              <h2 className="text-xl font-semibold mb-4">สิ่งอำนวยความสะดวก</h2>
+              <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                {motorhome.amenities.map((amenity, index) => (
+                  <div key={index} className="flex items-center gap-3 p-3 bg-green-50 rounded-lg">
+                    <div className="w-2 h-2 bg-green-500 rounded-full"></div>
+                    <span className="text-gray-700">{amenity}</span>
+                  </div>
+                ))}
+              </div>
+            </div>
+
+            {/* Reviews Section */}
+            <div ref={reviewsRef}>
+              <ReviewsSection motorhome={motorhome} />
+            </div>
+
+            {/* Location Section */}
+            <div ref={locationRef} className="bg-white rounded-lg p-6 border">
+              <h2 className="text-xl font-semibold mb-4">จุดรับ-คืนรถ</h2>
+              <div className="space-y-4">
+                <div>
+                  <h3 className="font-medium mb-2">จุดรับรถ</h3>
+                  <p className="text-gray-600">{motorhome.location.pickup}</p>
+                </div>
+                <div>
+                  <h3 className="font-medium mb-2">จุดคืนรถ</h3>
+                  <div className="space-y-1">
+                    {motorhome.location.dropoff.map((location, index) => (
+                      <p key={index} className="text-gray-600">• {location}</p>
                     ))}
                   </div>
                 </div>
-              </TabsContent>
-              
-              <TabsContent value="reviews" className="mt-0">
-                <ReviewsSection motorhome={motorhome} />
-              </TabsContent>
-              
-              <TabsContent value="location" className="mt-0">
-                <div className="bg-white rounded-lg p-6 border">
-                  <h2 className="text-xl font-semibold mb-4">จุดรับ-คืนรถ</h2>
-                  <div className="space-y-4">
-                    <div>
-                      <h3 className="font-medium mb-2">จุดรับรถ</h3>
-                      <p className="text-gray-600">{motorhome.location.pickup}</p>
-                    </div>
-                    <div>
-                      <h3 className="font-medium mb-2">จุดคืนรถ</h3>
-                      <div className="space-y-1">
-                        {motorhome.location.dropoff.map((location, index) => (
-                          <p key={index} className="text-gray-600">• {location}</p>
-                        ))}
-                      </div>
-                    </div>
-                  </div>
-                  <div className="h-64 bg-gray-200 rounded-lg flex items-center justify-center mt-4">
-                    <div className="text-center">
-                      <MapPin className="h-8 w-8 text-gray-400 mx-auto mb-2" />
-                      <span className="text-gray-500">แผนที่จะแสดงที่นี่</span>
-                    </div>
-                  </div>
+              </div>
+              <div className="h-64 bg-gray-200 rounded-lg flex items-center justify-center mt-4">
+                <div className="text-center">
+                  <MapPin className="h-8 w-8 text-gray-400 mx-auto mb-2" />
+                  <span className="text-gray-500">แผนที่จะแสดงที่นี่</span>
                 </div>
-              </TabsContent>
-              
-              <TabsContent value="terms" className="mt-0">
-                <div className="bg-white rounded-lg p-6 border">
-                  <h2 className="text-xl font-semibold mb-4">เงื่อนไขการเช่า</h2>
-                  <div className="space-y-6">
-                    <div>
-                      <h3 className="font-medium mb-2">ข้อกำหนดผู้เช่า</h3>
-                      <p className="text-gray-600">อายุขั้นต่ำ: {motorhome.terms.minAge} ปี</p>
-                      <p className="text-gray-600">ใบขับขี่: {motorhome.terms.license.join(", ")}</p>
-                    </div>
-                    
-                    <div>
-                      <h3 className="font-medium mb-2">การชำระเงิน</h3>
-                      <p className="text-gray-600">ช่องทางการชำระ: {motorhome.terms.payment.join(", ")}</p>
-                      <p className="text-gray-600">เงินมัดจำ: {motorhome.pricing.deposit.toLocaleString()} บาท</p>
-                    </div>
-                    
-                    <div>
-                      <h3 className="font-medium mb-2">นโยบายยกเลิก</h3>
-                      <p className="text-gray-600">{motorhome.terms.cancellation}</p>
-                    </div>
-                  </div>
+              </div>
+            </div>
+
+            {/* Terms Section */}
+            <div ref={termsRef} className="bg-white rounded-lg p-6 border">
+              <h2 className="text-xl font-semibold mb-4">เงื่อนไขการเช่า</h2>
+              <div className="space-y-6">
+                <div>
+                  <h3 className="font-medium mb-2">ข้อกำหนดผู้เช่า</h3>
+                  <p className="text-gray-600">อายุขั้นต่ำ: {motorhome.terms.minAge} ปี</p>
+                  <p className="text-gray-600">ใบขับขี่: {motorhome.terms.license.join(", ")}</p>
                 </div>
-              </TabsContent>
-            </Tabs>
+                
+                <div>
+                  <h3 className="font-medium mb-2">การชำระเงิน</h3>
+                  <p className="text-gray-600">ช่องทางการชำระ: {motorhome.terms.payment.join(", ")}</p>
+                  <p className="text-gray-600">เงินมัดจำ: {motorhome.pricing.deposit.toLocaleString()} บาท</p>
+                </div>
+                
+                <div>
+                  <h3 className="font-medium mb-2">นโยบายยกเลิก</h3>
+                  <p className="text-gray-600">{motorhome.terms.cancellation}</p>
+                </div>
+              </div>
+            </div>
           </div>
 
           {/* Right Column - Booking Widget */}
           <div className="lg:col-span-1">
-            <BookingSection motorhome={motorhome} />
+            <div className="sticky top-36">
+              <BookingSection motorhome={motorhome} />
+            </div>
           </div>
         </div>
       </div>
