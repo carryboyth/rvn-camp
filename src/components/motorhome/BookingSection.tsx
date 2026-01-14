@@ -2,7 +2,31 @@
 import React, { useState } from "react";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent } from "@/components/ui/card";
-import { Calendar, Users, Clock, Shield, Star, Badge } from "lucide-react";
+import { Checkbox } from "@/components/ui/checkbox";
+import { RadioGroup, RadioGroupItem } from "@/components/ui/radio-group";
+import { Label } from "@/components/ui/label";
+import { Calendar, Clock, Shield, ChevronDown } from "lucide-react";
+
+interface Addon {
+  id: string;
+  name: string;
+  price: number;
+  description: string;
+}
+
+interface InsuranceOption {
+  id: string;
+  name: string;
+  price: number;
+  description: string;
+  coverage: string;
+}
+
+interface PickupLocation {
+  id: string;
+  name: string;
+  address: string;
+}
 
 interface BookingSectionProps {
   motorhome: {
@@ -16,172 +40,187 @@ interface BookingSectionProps {
     rating: number;
     reviewCount: number;
   };
+  addons?: Addon[];
+  insuranceOptions?: InsuranceOption[];
+  pickupLocations?: PickupLocation[];
 }
 
-export const BookingSection = ({ motorhome }: BookingSectionProps) => {
+export const BookingSection = ({ 
+  motorhome, 
+  addons = [], 
+  insuranceOptions = [],
+  pickupLocations = []
+}: BookingSectionProps) => {
   const [checkIn, setCheckIn] = useState("");
   const [checkOut, setCheckOut] = useState("");
-  const [guests, setGuests] = useState(2);
-  const [days, setDays] = useState(3);
+  const [pickupTime, setPickupTime] = useState("10:00");
+  const [selectedLocation, setSelectedLocation] = useState(pickupLocations[0]?.id || "");
+  const [selectedAddons, setSelectedAddons] = useState<string[]>([]);
+  const [selectedInsurance, setSelectedInsurance] = useState(insuranceOptions[0]?.id || "basic");
+  const [days, setDays] = useState(1);
 
-  const totalPrice = (motorhome.pricing.basePrice * days) + motorhome.pricing.insurance + motorhome.pricing.cleaning;
+  const handleAddonToggle = (addonId: string) => {
+    setSelectedAddons(prev => 
+      prev.includes(addonId) 
+        ? prev.filter(id => id !== addonId)
+        : [...prev, addonId]
+    );
+  };
+
+  const calculateAddonsTotal = () => {
+    return addons
+      .filter(addon => selectedAddons.includes(addon.id))
+      .reduce((sum, addon) => sum + addon.price, 0);
+  };
+
+  const getInsurancePrice = () => {
+    const insurance = insuranceOptions.find(opt => opt.id === selectedInsurance);
+    return insurance?.price || 0;
+  };
+
+  const baseTotal = motorhome.pricing.basePrice * days;
+  const addonsTotal = calculateAddonsTotal();
+  const insuranceTotal = getInsurancePrice() * days;
+  const totalPrice = baseTotal + addonsTotal + insuranceTotal;
 
   return (
-    <div className="sticky top-32">
-      <Card className="border-2">
-        <CardContent className="p-6">
-          {/* Price Header */}
-          <div className="flex items-center justify-between mb-4">
-            <div>
-              <span className="text-2xl font-bold">฿{motorhome.pricing.basePrice.toLocaleString()}</span>
-              <span className="text-gray-600 ml-1">/ วัน</span>
-            </div>
-            <div className="flex items-center gap-1">
-              <Star className="h-4 w-4 fill-yellow-400 text-yellow-400" />
-              <span className="font-medium">{motorhome.rating}</span>
-              <span className="text-gray-600 text-sm">({motorhome.reviewCount})</span>
+    <div className="space-y-4">
+      <Card className="border">
+        <CardContent className="p-4">
+          {/* Status Badge */}
+          <div className="mb-4">
+            <span className="text-sm text-gray-600">สถานะรับรถ</span>
+          </div>
+
+          {/* Pickup Time */}
+          <div className="mb-4">
+            <label className="block text-sm font-medium text-gray-700 mb-2">เวลารับรถ</label>
+            <div className="relative">
+              <select
+                value={pickupTime}
+                onChange={(e) => setPickupTime(e.target.value)}
+                className="w-full p-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-primary focus:border-transparent appearance-none bg-white"
+              >
+                <option value="08:00">08:00</option>
+                <option value="09:00">09:00</option>
+                <option value="10:00">10:00</option>
+                <option value="11:00">11:00</option>
+                <option value="12:00">12:00</option>
+                <option value="13:00">13:00</option>
+                <option value="14:00">14:00</option>
+                <option value="15:00">15:00</option>
+                <option value="16:00">16:00</option>
+              </select>
+              <Clock className="absolute right-3 top-3.5 h-5 w-5 text-gray-400 pointer-events-none" />
             </div>
           </div>
 
-          {/* Special Offer Badge */}
-          <div className="bg-orange-50 border border-orange-200 rounded-lg p-3 mb-4">
-            <div className="flex items-center gap-2 mb-1">
-              <Badge className="h-4 w-4 text-orange-600" />
-              <span className="text-sm font-medium text-orange-800">โปรโมชั่นพิเศษ</span>
-            </div>
-            <p className="text-sm text-orange-700">เช่า 7 วันขึ้นไป ลด 15%</p>
-          </div>
-
-          {/* Date Selection */}
-          <div className="space-y-4 mb-4">
-            <div className="grid grid-cols-2 gap-2">
-              <div>
-                <label className="block text-sm font-medium text-gray-700 mb-1">วันรับรถ</label>
-                <div className="relative">
-                  <input
-                    type="date"
-                    value={checkIn}
-                    onChange={(e) => setCheckIn(e.target.value)}
-                    className="w-full p-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent"
-                  />
-                  <Calendar className="absolute right-3 top-3 h-5 w-5 text-gray-400 pointer-events-none" />
-                </div>
-              </div>
-              <div>
-                <label className="block text-sm font-medium text-gray-700 mb-1">วันคืนรถ</label>
-                <div className="relative">
-                  <input
-                    type="date"
-                    value={checkOut}
-                    onChange={(e) => setCheckOut(e.target.value)}
-                    className="w-full p-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent"
-                  />
-                  <Calendar className="absolute right-3 top-3 h-5 w-5 text-gray-400 pointer-events-none" />
-                </div>
-              </div>
-            </div>
-
-            {/* Guests Selection */}
-            <div>
-              <label className="block text-sm font-medium text-gray-700 mb-1">จำนวนผู้โดยสาร</label>
-              <div className="relative">
-                <select
-                  value={guests}
-                  onChange={(e) => setGuests(Number(e.target.value))}
-                  className="w-full p-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent appearance-none"
-                >
-                  <option value={1}>1 คน</option>
-                  <option value={2}>2 คน</option>
-                  <option value={3}>3 คน</option>
-                  <option value={4}>4 คน</option>
-                  <option value={5}>5 คน</option>
-                  <option value={6}>6 คน</option>
-                </select>
-                <Users className="absolute right-3 top-3 h-5 w-5 text-gray-400 pointer-events-none" />
-              </div>
-            </div>
-
-            {/* Time Selection */}
-            <div className="grid grid-cols-2 gap-2">
-              <div>
-                <label className="block text-sm font-medium text-gray-700 mb-1">เวลารับรถ</label>
-                <div className="relative">
-                  <select className="w-full p-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent appearance-none">
-                    <option>09:00</option>
-                    <option>10:00</option>
-                    <option>11:00</option>
-                    <option>12:00</option>
-                    <option>13:00</option>
-                    <option>14:00</option>
-                  </select>
-                  <Clock className="absolute right-3 top-3 h-5 w-5 text-gray-400 pointer-events-none" />
-                </div>
-              </div>
-              <div>
-                <label className="block text-sm font-medium text-gray-700 mb-1">เวลาคืนรถ</label>
-                <div className="relative">
-                  <select className="w-full p-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent appearance-none">
-                    <option>09:00</option>
-                    <option>10:00</option>
-                    <option>11:00</option>
-                    <option>12:00</option>
-                    <option>13:00</option>
-                    <option>14:00</option>
-                  </select>
-                  <Clock className="absolute right-3 top-3 h-5 w-5 text-gray-400 pointer-events-none" />
-                </div>
-              </div>
+          {/* Pickup Location */}
+          <div className="mb-4">
+            <label className="block text-sm font-medium text-gray-700 mb-2">สถานที่รับรถ</label>
+            <div className="relative">
+              <select
+                value={selectedLocation}
+                onChange={(e) => setSelectedLocation(e.target.value)}
+                className="w-full p-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-primary focus:border-transparent appearance-none bg-white text-sm"
+              >
+                {pickupLocations.map(location => (
+                  <option key={location.id} value={location.id}>
+                    {location.name}
+                  </option>
+                ))}
+              </select>
+              <ChevronDown className="absolute right-3 top-3.5 h-5 w-5 text-gray-400 pointer-events-none" />
             </div>
           </div>
 
-          {/* Price Breakdown */}
+          {/* Price Summary */}
           <div className="border-t pt-4 mb-4">
-            <div className="space-y-2 text-sm">
-              <div className="flex justify-between">
-                <span>฿{motorhome.pricing.basePrice.toLocaleString()} × {days} วัน</span>
-                <span>฿{(motorhome.pricing.basePrice * days).toLocaleString()}</span>
-              </div>
-              <div className="flex justify-between">
-                <span>ประกันภัย</span>
-                <span>฿{motorhome.pricing.insurance.toLocaleString()}</span>
-              </div>
-              <div className="flex justify-between">
-                <span>ค่าทำความสะอาด</span>
-                <span>฿{motorhome.pricing.cleaning.toLocaleString()}</span>
-              </div>
-              <hr />
-              <div className="flex justify-between font-semibold text-base">
-                <span>รวมทั้งสิ้น</span>
-                <span>฿{totalPrice.toLocaleString()}</span>
-              </div>
+            <div className="flex justify-between mb-2">
+              <span className="text-gray-600">ราคารวม:</span>
+              <span className="font-bold">{baseTotal.toLocaleString()} THB</span>
+            </div>
+            <div className="flex justify-between text-red-600">
+              <span>ชำระเงินทันที:</span>
+              <span className="font-bold">{totalPrice.toLocaleString()} THB</span>
             </div>
           </div>
 
-          {/* Insurance Badge */}
-          <div className="bg-green-50 border border-green-200 rounded-lg p-3 mb-4">
-            <div className="flex items-center gap-2">
-              <Shield className="h-4 w-4 text-green-600" />
-              <span className="text-sm font-medium text-green-800">ประกันครอบคลุมเต็มจำนวน</span>
-            </div>
-          </div>
-
-          {/* Book Button */}
-          <Button className="w-full bg-blue-600 hover:bg-blue-700 text-white py-3 text-lg font-medium">
-            เช็ครถว่าง
-          </Button>
-
-          <p className="text-xs text-gray-500 text-center mt-2">
-            ยังไม่มีการเรียกเก็บเงิน
-          </p>
-
-          {/* Additional Info */}
-          <div className="mt-4 text-sm text-gray-600 space-y-1">
-            <p>• การเช่าขั้นต่ำ {motorhome.pricing.minDays} วัน</p>
-            <p>• เงินมัดจำ ฿{motorhome.pricing.deposit.toLocaleString()}</p>
-            <p>• ยกเลิกได้ฟรีภายใน 48 ชั่วโมง</p>
+          {/* Action Buttons */}
+          <div className="flex gap-2">
+            <Button variant="outline" className="flex-1 border-red-500 text-red-500 hover:bg-red-50">
+              เพิ่มในตระกร้า
+            </Button>
+            <Button className="flex-1 bg-green-600 hover:bg-green-700 text-white">
+              จองเลย →
+            </Button>
           </div>
         </CardContent>
       </Card>
+
+      {/* Add-ons Section */}
+      {addons.length > 0 && (
+        <Card className="border">
+          <CardContent className="p-4">
+            <h3 className="font-semibold mb-4">Add-ons เพิ่มเติม</h3>
+            <div className="space-y-3">
+              {addons.map(addon => (
+                <div key={addon.id} className="flex items-start gap-3">
+                  <Checkbox
+                    id={addon.id}
+                    checked={selectedAddons.includes(addon.id)}
+                    onCheckedChange={() => handleAddonToggle(addon.id)}
+                    className="mt-1"
+                  />
+                  <div className="flex-1">
+                    <Label htmlFor={addon.id} className="font-medium cursor-pointer">
+                      {addon.name}
+                    </Label>
+                    <p className="text-xs text-gray-500">{addon.description}</p>
+                  </div>
+                  <span className="text-sm font-medium">+฿{addon.price.toLocaleString()}</span>
+                </div>
+              ))}
+            </div>
+          </CardContent>
+        </Card>
+      )}
+
+      {/* Insurance Section */}
+      {insuranceOptions.length > 0 && (
+        <Card className="border">
+          <CardContent className="p-4">
+            <div className="flex items-center gap-2 mb-4">
+              <Shield className="h-5 w-5 text-green-600" />
+              <h3 className="font-semibold">ประกันภัย</h3>
+            </div>
+            <RadioGroup value={selectedInsurance} onValueChange={setSelectedInsurance}>
+              <div className="space-y-3">
+                {insuranceOptions.map(option => (
+                  <div key={option.id} className="flex items-start gap-3 p-3 border rounded-lg hover:border-primary transition-colors">
+                    <RadioGroupItem value={option.id} id={option.id} className="mt-1" />
+                    <div className="flex-1">
+                      <Label htmlFor={option.id} className="font-medium cursor-pointer">
+                        {option.name}
+                        {option.price === 0 && (
+                          <span className="ml-2 text-xs bg-green-100 text-green-700 px-2 py-0.5 rounded">
+                            รวมแล้ว
+                          </span>
+                        )}
+                      </Label>
+                      <p className="text-xs text-gray-500 mt-1">{option.description}</p>
+                      <p className="text-xs text-gray-400">ความคุ้มครอง: {option.coverage}</p>
+                    </div>
+                    <span className="text-sm font-medium">
+                      {option.price === 0 ? "ฟรี" : `+฿${option.price.toLocaleString()}/วัน`}
+                    </span>
+                  </div>
+                ))}
+              </div>
+            </RadioGroup>
+          </CardContent>
+        </Card>
+      )}
     </div>
   );
 };
